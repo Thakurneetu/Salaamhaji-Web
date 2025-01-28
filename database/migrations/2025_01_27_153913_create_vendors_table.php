@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->integer('country_id')->default(152);
-            $table->enum('status', ['Active', 'Inactive'])->default('Active');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

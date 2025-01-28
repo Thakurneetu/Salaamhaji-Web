@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\DataTables\CustomersDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Hash;
+
 
 class CustomerController extends Controller
 {
@@ -33,7 +35,10 @@ class CustomerController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->except('_token');
+        $data = $request->except('_token','password');
+        if($request->password != ''){
+          $data['password'] = Hash::make($request->password);
+        }
         $customer = Customer::create($data);
         DB::commit();
         Alert::toast('Customer Added Successfully','success');
@@ -66,9 +71,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+      if($request->ajax()){
+        $status = $request->status == '1' ? 1 : 0;
+        $customer->update(['status'=>$status]);
+        return response()->json([
+          'success' => true, 'message' => 'Status Updated Successfully!'
+        ]);
+      }
       try{
         DB::beginTransaction();
-        $data = $request->except('_token');
+        $data = $request->except('_token','password');
+        if($request->password != ''){
+          $data['password'] = Hash::make($request->password);
+        }
         $customer->update($data);
         DB::commit();
         Alert::toast('Customer Updated Successfully','success');

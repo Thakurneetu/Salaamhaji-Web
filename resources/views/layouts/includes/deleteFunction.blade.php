@@ -26,4 +26,45 @@
       }
     });
   }
+  function change_status(ele, id){
+    let status = '0';
+    if($(ele).prop("checked")){
+      status = '1';
+    }
+    let url = $(ele).data("route")+'/'+id;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Status will be changed!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Change it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          method: "POST",
+          url: url,
+          data: {_token: "{{csrf_token()}}", _method:'PUT', status: status},              
+        })
+        .done(function (res) {
+          if(res.success){
+            Toast.fire({
+              icon: "success",
+              title: res.message
+            });
+          }else{
+            if(status == '1') $(ele).prop("checked", false);
+            else $(ele).prop("checked", true);
+          }
+        })
+        .fail(function (err) {
+          console.log(err);              
+        });
+      }else{
+        if(status == '1') $(ele).prop("checked", false);
+        else $(ele).prop("checked", true);
+      }
+    });
+  }
 </script>

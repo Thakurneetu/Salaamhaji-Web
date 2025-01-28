@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('gender');
             $table->string('password')->nullable();
-            $table->enum('status', ['Active', 'Inactive'])->default('Active');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
