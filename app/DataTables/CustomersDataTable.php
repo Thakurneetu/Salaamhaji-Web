@@ -22,8 +22,9 @@ class CustomersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'customers.action')
-            ->setRowId('id');
+            ->addColumn('action', 'customer.action')
+            ->rawColumns(['action'])
+            ->addIndexColumn();
     }
 
     /**
@@ -42,14 +43,13 @@ class CustomersDataTable extends DataTable
         return $this->builder()
                     ->setTableId('customers-table')
                     ->columns($this->getColumns())
+                    ->responsive(true)
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
+                        Button::make('create'),
+                        Button::make('export'),
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
@@ -62,15 +62,16 @@ class CustomersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+          Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
+          Column::make('name'),
+          Column::make('email'),
+          Column::make('phone')->title('Mobile Number'),
+          Column::make('status'),
+          Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(200)
+                ->addClass('text-center'),
         ];
     }
 

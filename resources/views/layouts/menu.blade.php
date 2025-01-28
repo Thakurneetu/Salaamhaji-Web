@@ -8,6 +8,12 @@ $module=explode("/", url()->current());
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('customer.index') }}" class="nav-link {{Request::url() == route('customer.index') ? 'active' : ''}}">
+        <i class="nav-icon fas fa-users"></i>
+        <p>Manage Customer</p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('vendor-users.index') }}" class="nav-link {{Request::url() == route('vendor-users.index') ? 'active' : ''}}">
         <i class="nav-icon fas fa-users"></i>
         <p>Manage Vendors</p>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorController;
 
 Route::get('/', function () {
@@ -20,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/change-password', [DashboardController::class, 'changeForm'])->name('change_password');
   Route::post('/change-password', [DashboardController::class, 'changePassword']);
   Route::resources([
+    'customer' => CustomerController::class,
     'vendor-users' => VendorController::class,
   ]);
 });
