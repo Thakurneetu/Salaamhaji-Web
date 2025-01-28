@@ -22784,7 +22784,7 @@ html.maximized-card {
   color: #fff;
 }
 .dark-mode .card-success:not(.card-outline) > .card-header {
-  background-color: #00bc8c;
+  background-color: #08FF08;
 }
 .dark-mode .card-success:not(.card-outline) > .card-header,
 .dark-mode .card-success:not(.card-outline) > .card-header a {
@@ -25220,7 +25220,7 @@ html.maximized-card {
 }
 .dark-mode .btn-success {
   color: #fff;
-  background-color: #00bc8c;
+  background-color: #08FF08;
   border-color: #00bc8c;
   box-shadow: none;
 }

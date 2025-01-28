@@ -21,6 +21,7 @@
 
     <script src="{{ asset('plugins/datatables/jquery.js') }}"></script> 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/datatables/datatable.styles.min.css') }}" rel="stylesheet">
 
     @yield('style')

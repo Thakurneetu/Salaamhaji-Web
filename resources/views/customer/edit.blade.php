@@ -22,9 +22,9 @@
     </div>
   </div>
   
-  <div class="card card-info mx-3">
+  <div class="card card-success mx-3">
     <div class="card-header">
-      <h3 class="card-title pt-1"><i class="fa fa-edit"></i> Edit</h3>
+      <h3 class="card-title pt-1 text_black"><i class="fa fa-edit"></i> Edit</h3>
       <a href="{{ route('customer.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
     </div>
     <form action="{{ route('customer.update', $customer->id) }}" method="post" enctype="multipart/form-data">

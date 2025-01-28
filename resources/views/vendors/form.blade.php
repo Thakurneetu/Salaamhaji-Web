@@ -95,6 +95,6 @@
 </div>
 
 <div class="card-footer d-flex justify-content-center">
-  <button type="submit" class="btn btn-info">Save</button>
+  <button type="submit" class="btn btn-success text_black">Save</button>
   <a href="{{ route('vendor-users.index') }}" class="btn btn-secondary ml-3">Cancel</a>
 </div>

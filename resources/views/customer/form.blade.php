@@ -32,17 +32,10 @@
         <option value="Female" {{@$customer->gender == 'Female' ? 'selected' : ''}}>Female</option>
       </select>
     </div>
-    <div class="form-group col-md-6 col-12">
-      <label for="password">Passsword</label>
-      <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password">
-      @error('password')
-      <div class="text-danger">{{ $message }}</div>
-      @enderror
-    </div>
   </div>
 </div>
 
 <div class="card-footer d-flex justify-content-center">
-  <button type="submit" class="btn btn-info">Save</button>
+  <button type="submit" class="btn btn-success text_black">Save</button>
   <a href="{{ route('customer.index') }}" class="btn btn-secondary ml-3">Cancel</a>
 </div>

@@ -35,6 +35,7 @@
                   <i class="fas fa-wrench"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" role="menu">
+                  <a href="#" class="dropdown-item">Today</a>
                   <a href="#" class="dropdown-item">Weekly</a>
                   <a href="#" class="dropdown-item">Monthly</a>
                   <a href="#" class="dropdown-item">Yearly</a>
