@@ -27,7 +27,7 @@
       <h3 class="card-title pt-1"><i class="fas fa-user-plus"></i> Add</h3>
       <a href="{{ route('vendor-users.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
     </div>
-    <form action="{{ route('vendor-users.store') }}" method="post">
+    <form action="{{ route('vendor-users.store') }}" method="post" enctype="multipart/form-data">
       @csrf
       @include('vendors.form')
     </form>
@@ -35,5 +35,10 @@
 @endsection
 
 @section('script')
-
+<script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script>
+  $(document).ready(function () {
+    bsCustomFileInput.init();
+  });
+</script>
 @endsection

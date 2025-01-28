@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Vendor;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -23,7 +24,8 @@ class VendorsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'vendors.action')
-            ->setRowId('id');
+            ->rawColumns(['action'])
+            ->addIndexColumn();
     }
 
     /**
@@ -31,7 +33,10 @@ class VendorsDataTable extends DataTable
      */
     public function query(Vendor $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+        ->select('vendors.*', 'countries.name as country_name', 
+        DB::raw("CONCAT(vendors.address1, ' ', vendors.address2) as address"))
+        ->join('countries', 'vendors.country_id', '=', 'countries.id');
     }
 
     /**
@@ -62,7 +67,11 @@ class VendorsDataTable extends DataTable
     {
         return [
           Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
-          Column::make('name')->title('Name'),
+          Column::make('name'),
+          Column::make('address')->title('Address'),
+          Column::make('city'),
+          Column::make('state'),
+          Column::make('country_name')->title('Country'),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

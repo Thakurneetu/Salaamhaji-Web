@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', [LoginController::class, 'showLoginForm'])->name('home');
+Route::get('/home', [LoginController::class, 'showLoginForm']);
 
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
