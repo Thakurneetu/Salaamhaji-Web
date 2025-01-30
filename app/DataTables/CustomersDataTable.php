@@ -22,7 +22,7 @@ class CustomersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('status', 'customer.status')
+            ->addColumn('status', 'layouts.includes.status')
             ->addColumn('action', 'customer.action')
             ->rawColumns(['status','action'])
             ->addIndexColumn();

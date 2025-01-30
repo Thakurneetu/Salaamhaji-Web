@@ -19,7 +19,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition dark-mode login-page">
 <div class="login-box">
     <div class="login-logo">
         <!-- <img src="{{-- asset('image/logo.png') --}}" height=70 width=70 alt="logo"> -->

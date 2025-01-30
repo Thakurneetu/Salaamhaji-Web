@@ -83,8 +83,15 @@ class VendorController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $vendor = Vendor::find($id);
+      if($request->ajax()){
+        $status = $request->status == '1' ? 1 : 0;
+        $vendor->update(['status'=>$status]);
+        return response()->json([
+          'success' => true, 'message' => 'Status Updated Successfully!'
+        ]);
+      }
       try{
-        $vendor = Vendor::find($id);
         DB::beginTransaction();
         $data = $request->except('_token', 'cab_catalogue', 'food_catalogue', 'laundry_catalogue');
         $services = explode(',',$request->services);
