@@ -16,13 +16,16 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
-            $table->string('catalogue')->nullable();
             $table->string('address1')->nullable();
             $table->string('address2')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->integer('country_id')->default(152);
+            $table->string('services')->nullable();
+            $table->string('laundry_catalogue')->nullable();
+            $table->string('food_catalogue')->nullable();
+            $table->string('cab_catalogue')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

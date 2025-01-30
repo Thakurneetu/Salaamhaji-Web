@@ -4,6 +4,10 @@
   Add Vendor | 
 @endsection
 
+@section('style')
+<link rel="stylesheet" href="{{ asset('plugins/tree-select/style.css') }}">
+@endsection
+
 @section('content')
   <div class="content-header">
     <div class="container-fluid">
@@ -36,9 +40,49 @@
 
 @section('script')
 <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('plugins/tree-select/umd.js') }}"></script>
 <script>
   $(document).ready(function () {
     bsCustomFileInput.init();
+
+    const options = [
+    {
+      name: 'Laundry',
+      value: 'Laundry',
+    },
+    {
+      name: 'Food',
+      value: 'Food',
+    },
+    {
+      name: 'CAB',
+      value: 'CAB',
+    },
+  ];
+  const paidEmployementStatus = new Treeselect({
+    parentHtmlContainer: document.querySelector('#services'),
+    options: options,
+    value: [],
   });
+  
+  paidEmployementStatus.srcElement.addEventListener('input', (e) => {
+    $('#service').val(e.detail.join(','));
+    toggleFileUpload('Laundry',e.detail);
+    toggleFileUpload('Food',e.detail);
+    toggleFileUpload('CAB',e.detail);
+  })
+    
+  });
+
+  function toggleFileUpload(key, services){
+    if (services.includes(key)) {
+      $('#'+key+'-div').show();
+      $('#'+key).attr('required', true);
+    } else {
+      $('#'+key+'-div').hide();
+      $('#'+key).removeAttr('required');
+    }
+  }
+
 </script>
 @endsection

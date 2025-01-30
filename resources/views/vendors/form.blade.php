@@ -75,21 +75,66 @@
         @endforeach
       </select>
     </div>
-    <div class="form-group col-md-6 col-12">
-      <label for="exampleInputFile">Upload Catalog</label>
+    <div class="form-group col-md-6 col-12" >
+      <label>Select Services</label>
+      <input type="hidden" name="services" id="service" value="{{$vendor->services}}">
+      <div class="" id="services"></div>
+    </div>
+    <div class="form-group col-md-6 col-12" id="Laundry-div" @if(isset($services) && in_array('Laundry',$services )) style="display:block;" @else style="display:none;" @endif>
+      <label for="exampleInputFile">Upload Laundry Catalog</label>
       <div class="input-group">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="exampleInputFile" name="catalogue" required>
+          <input type="file" class="custom-file-input" id="Laundry" name="laundry_catalogue">
           <label class="custom-file-label" for="exampleInputFile">Select Catalog File</label>
         </div>
       </div>
     </div>
-    @if(@$vendor->catalogue)
-      <div class="form-group col-12">
-        <a href="{{asset($vendor->catalogue)}}" target="_blank" rel="noopener noreferrer">
-          <h5><u><i>Download Uploaded Catalog</i></u></h5>
-        </a>
+    <div class="form-group col-md-6 col-12" id="Food-div" @if(isset($services) && in_array('Food',$services )) style="display:block;" @else style="display:none;" @endif>
+      <label for="exampleInputFile">Upload Food Catalog</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="Food" name="food_catalogue">
+          <label class="custom-file-label" for="exampleInputFile">Select Catalog File</label>
+        </div>
       </div>
+    </div>
+    <div class="form-group col-md-6 col-12" id="CAB-div" @if(isset($services) && in_array('CAB',$services )) style="display:block;" @else style="display:none;" @endif>
+      <label for="cab_catalogue">Upload CAB Catalog</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="CAB" name="cab_catalogue">
+          <label class="custom-file-label" for="cab_catalogue">Select Catalog File</label>
+        </div>
+      </div>
+    </div>
+    @if(isset($services))
+      @if(in_array('Laundry',$services) && $vendor->laundry_catalogue)
+        <div class="form-group col-12">
+          <h5>
+            <a href="{{asset($vendor->laundry_catalogue)}}" target="_blank" rel="noopener noreferrer">
+              <u><i>Download Uploaded Laundry Catalog</i></u>
+            </a>
+          </h5>
+        </div>
+      @endif
+      @if(in_array('Food',$services) && $vendor->food_catalogue)
+        <div class="form-group col-12">
+          <h5>
+            <a href="{{asset($vendor->food_catalogue)}}" target="_blank" rel="noopener noreferrer">
+              <u><i>Download Uploaded Food Catalog</i></u>
+            </a>
+          </h5>
+        </div>
+      @endif
+      @if(in_array('CAB',$services) && $vendor->cab_catalogue)
+        <div class="form-group col-12">
+          <h5>
+            <a href="{{asset($vendor->cab_catalogue)}}" target="_blank" rel="noopener noreferrer">
+              <u><i>Download Uploaded CAB Catalog</i></u>
+            </a>
+          </h5>
+        </div>
+      @endif
     @endif
   </div>
 </div>

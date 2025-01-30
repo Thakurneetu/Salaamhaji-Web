@@ -49,10 +49,12 @@
         })
         .done(function (res) {
           if(res.success){
-            Toast.fire({
-              icon: "success",
-              title: res.message
-            });
+            Swal.fire({
+            title: res.message,
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+          });
           }else{
             if(status == '1') $(ele).prop("checked", false);
             else $(ele).prop("checked", true);

@@ -4,6 +4,10 @@
   Edit Vendor | 
 @endsection
 
+@section('style')
+<link rel="stylesheet" href="{{ asset('plugins/tree-select/style.css') }}">
+@endsection
+
 @section('content')
   <div class="content-header">
     <div class="container-fluid">
@@ -33,12 +37,58 @@
     </form>
   </div>
 @endsection
-
 @section('script')
 <script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('plugins/tree-select/umd.js') }}"></script>
 <script>
+  const lcu = @if($vendor->laundry_catalogue) true @else false @endif ;
+  const fcu = @if($vendor->food_catalogue) true @else false @endif ;
+  const ccu = @if($vendor->cab_catalogue) true @else false @endif ;
   $(document).ready(function () {
     bsCustomFileInput.init();
+
+    const options = [
+    {
+      name: 'Laundry',
+      value: 'Laundry',
+    },
+    {
+      name: 'Food',
+      value: 'Food',
+    },
+    {
+      name: 'CAB',
+      value: 'CAB',
+    },
+  ];
+  const paidEmployementStatus = new Treeselect({
+    parentHtmlContainer: document.querySelector('#services'),
+    options: options,
+    value: [
+      @foreach($services as $service)
+        "{{$service}}",
+      @endforeach
+    ],
   });
+  
+  paidEmployementStatus.srcElement.addEventListener('input', (e) => {
+    $('#service').val(e.detail.join(','));
+    toggleFileUpload('Laundry',e.detail,lcu);
+    toggleFileUpload('Food',e.detail,fcu);
+    toggleFileUpload('CAB',e.detail,ccu);
+  })
+    
+  });
+
+  function toggleFileUpload(key, services, uploaded){
+    if (services.includes(key)) {
+      $('#'+key+'-div').show();
+      if(!uploaded){ $('#'+key).attr('required', true); }
+    } else {
+      $('#'+key+'-div').hide();
+      if(!uploaded){ $('#'+key).removeAttr('required'); }
+    }
+  }
+
 </script>
 @endsection

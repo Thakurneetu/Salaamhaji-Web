@@ -39,8 +39,14 @@ class VendorController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token', 'catalogue');
-        if($request->hasFile('catalogue')){
-          $data['catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+        if($request->hasFile('laundry_catalogue')){
+          $data['laundry_catalogue'] = $this->save_file($request->laundry_catalogue, '/uploads/catalogue');
+        }
+        if($request->hasFile('food_catalogue')){
+          $data['food_catalogue'] = $this->save_file($request->food_catalogue, '/uploads/catalogue');
+        }
+        if($request->hasFile('cab_catalogue')){
+          $data['cab_catalogue'] = $this->save_file($request->cab_catalogue, '/uploads/catalogue');
         }
         $vendor = Vendor::create($data);
         DB::commit();
@@ -68,7 +74,8 @@ class VendorController extends Controller
     {
       $vendor = Vendor::find($id);
       $countries = Country:: get();
-      return view('vendors.edit', compact('countries','vendor'));
+      $services = explode(',',$vendor->services);
+      return view('vendors.edit', compact('countries','vendor','services'));
     }
 
     /**
@@ -79,10 +86,34 @@ class VendorController extends Controller
       try{
         $vendor = Vendor::find($id);
         DB::beginTransaction();
-        $data = $request->except('_token', 'catalogue');
-        if($request->hasFile('catalogue')){
-          $this->delete_file($vendor->catalogue);
-          $data['catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+        $data = $request->except('_token', 'cab_catalogue', 'food_catalogue', 'laundry_catalogue');
+        $services = explode(',',$request->services);
+        if($request->hasFile('laundry_catalogue')){
+          $this->delete_file($vendor->laundry_catalogue);
+          $data['laundry_catalogue'] = $this->save_file($request->laundry_catalogue, '/uploads/catalogue');
+        }else{
+          if(!in_array('Laundry',$services)){
+            $this->delete_file($vendor->laundry_catalogue);
+            $data['laundry_catalogue'] = '';
+          }
+        }
+        if($request->hasFile('food_catalogue')){
+          $this->delete_file($vendor->food_catalogue);
+          $data['food_catalogue'] = $this->save_file($request->food_catalogue, '/uploads/catalogue');
+        }else{
+          if(!in_array('Food',$services)){
+            $this->delete_file($vendor->food_catalogue);
+            $data['food_catalogue'] = '';
+          }
+        }
+        if($request->hasFile('cab_catalogue')){
+          $this->delete_file($vendor->cab_catalogue);
+          $data['cab_catalogue'] = $this->save_file($request->cab_catalogue, '/uploads/catalogue');
+        }else{
+          if(!in_array('CAB',$services)){
+            $this->delete_file($vendor->cab_catalogue);
+            $data['cab_catalogue'] = '';
+          }
         }
         $vendor->update($data);
         DB::commit();
@@ -102,7 +133,9 @@ class VendorController extends Controller
     {
       try{
         $vendor = Vendor::find($id);
-        $this->delete_file($vendor->catalogue);
+        if($vendor->laundry_catalogue) {$this->delete_file($vendor->laundry_catalogue);}
+        if($vendor->food_catalogue) {$this->delete_file($vendor->food_catalogue);}
+        if($vendor->cab_catalogue) {$this->delete_file($vendor->cab_catalogue);}
         $vendor->delete();
         Alert::toast('Vendor Deleted Successfully','success');
         return redirect()->back();

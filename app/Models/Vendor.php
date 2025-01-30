@@ -10,14 +10,17 @@ class Vendor extends Model
     'name',
     'email',
     'phone',
-    'catalogue',
     'address1',
     'address2',
     'city',
     'state',
     'zip',
     'country_id',
-    'status'
+    'status',
+    'services',
+    'laundry_catalogue',
+    'food_catalogue',
+    'cab_catalogue',
   ];
 
   public function country()
