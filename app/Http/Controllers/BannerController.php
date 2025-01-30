@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\Banner;
 use Illuminate\Http\Request;
-use App\DataTables\CustomersDataTable;
+use App\DataTables\BannerDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\HelperTrait;
+use File;
 
-
-class CustomerController extends Controller
+class BannerController extends Controller
 {
+  use HelperTrait;
     /**
      * Display a listing of the resource.
      */
-    public function index(CustomersDataTable $dataTable)
+    public function index(BannerDataTable $dataTable)
     {
-      return $dataTable->render('customer.index');
+      return $dataTable->render('banner.index');
     }
 
     /**
@@ -25,7 +26,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-      return view('customer.create');
+      return view('banner.create');
     }
 
     /**
@@ -35,14 +36,12 @@ class CustomerController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->except('_token','password');
-        if($request->password != ''){
-          $data['password'] = Hash::make($request->password);
-        }
-        $customer = Customer::create($data);
+        $data = $request->only('name');
+        $data['image'] = $this->save_file($request->image, '/uploads/banners');
+        $banner = Banner::create($data);
         DB::commit();
-        Alert::toast('Customer Added Successfully','success');
-        return redirect(route('customer.index'));
+        Alert::toast('Promotional Banner Added Successfully','success');
+        return redirect(route('banner.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -53,7 +52,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(Banner $banner)
     {
         //
     }
@@ -61,33 +60,34 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit(Banner $banner)
     {
-      return view('customer.edit', compact('customer'));
+      return view('banner.edit', compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, Banner $banner)
     {
       if($request->ajax()){
         $status = $request->status == '1' ? 1 : 0;
-        $customer->update(['status'=>$status]);
+        $banner->update(['status'=>$status]);
         return response()->json([
           'success' => true, 'message' => 'Status Updated Successfully!'
         ]);
       }
       try{
         DB::beginTransaction();
-        $data = $request->except('_token','password');
-        if($request->password != ''){
-          $data['password'] = Hash::make($request->password);
+        $data = $request->only('name');
+        if($request->hasFile('image')){
+          $this->delete_file($banner->image);
+          $data['image'] = $this->save_file($request->image, '/uploads/banners');
         }
-        $customer->update($data);
+        $banner->update($data);
         DB::commit();
-        Alert::toast('Customer Updated Successfully','success');
-        return redirect(route('customer.index'));
+        Alert::toast('Promotional Banner Updated Successfully','success');
+        return redirect(route('banner.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -98,11 +98,12 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(Banner $banner)
     {
       try{
-        $customer->delete();
-        Alert::toast('Customer Deleted Successfully','success');
+        $this->delete_file($banner->image);
+        $banner->delete();
+        Alert::toast('Promotional Banner Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {
         Alert::error($th->getMessage());

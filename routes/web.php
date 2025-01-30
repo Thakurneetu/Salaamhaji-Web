@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\BannerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,5 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::resources([
     'customer' => CustomerController::class,
     'vendor-users' => VendorController::class,
+    'banner' => BannerController::class,
   ]);
 });

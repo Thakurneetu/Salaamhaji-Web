@@ -19,6 +19,12 @@ $module=explode("/", url()->current());
         <p>Manage Vendors</p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('banner.index') }}" class="nav-link {{Request::url() == route('banner.index') ? 'active' : ''}}">
+        <i class="nav-icon fas fa-users"></i>
+        <p>Promotional Banners</p>
+    </a>
+</li>
 <li class="nav-item mb-5">
     <a class="nav-link" href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
         <i class="nav-icon fas fa-sign-out-alt"></i>
