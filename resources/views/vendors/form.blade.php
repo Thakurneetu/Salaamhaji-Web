@@ -9,6 +9,10 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
+      <label for="name"></label>
+      
+    </div>
+    <div class="form-group col-md-6 col-12">
       <label for="email">Email</label>
       <input type="email" name="email" value="{{old('email') ?? (@$vendor->email ?? '')}}" 
       class="form-control @error('email') is-invalid @enderror" placeholder="Enter Vendor Email" required>
@@ -24,6 +28,7 @@
       <div class="text-danger">{{ $message }}</div>
       @enderror
     </div>
+    <div class="col-12"><h1>Address</h1></div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Address Line 1</label>
       <input type="text" name="address1" value="{{old('address1') ?? (@$vendor->address1 ?? '')}}" 
@@ -75,6 +80,7 @@
         @endforeach
       </select>
     </div>
+    <div class="col-12"><h1>Services</h1></div>
     <div class="form-group col-md-6 col-12" >
       <label>Select Services</label>
       <input type="hidden" name="services" id="service" value="{{$vendor->services}}">

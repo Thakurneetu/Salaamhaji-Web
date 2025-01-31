@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Customer;
+use App\Models\CustomerOtp;
+use App\Http\Requests\API\CustomerLoginRequest;
+use App\Http\Requests\API\CustomerOTPRequest;
+use App\Http\Requests\API\CustomerRegisterRequest;
+use App\Http\Requests\API\ProfileRequest;
+use App\Traits\HelperTrait;
+
+class CustomerAuthController extends Controller
+{
+  use HelperTrait;
+    public function login(CustomerLoginRequest $request)
+    {
+      $checkOtp = CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->first();
+      if(!$checkOtp){
+        return response()->json([
+          'status' => false,
+          'message' => 'Invalid OTP',
+        ], 401);
+      }
+      $customer = Customer::where('phone', $request->phone)->first();
+      $token = $customer->createToken('customer-token')->plainTextToken;
+      return response()->json([
+        'status' => true,
+        'access_token' => $token,
+        'bearer' => 'Bearer '.$token,
+      ]);
+    }
+
+    public function send_otp(CustomerOTPRequest $request)
+    {
+      if($request->has('type') && $request->type == 'login_otp'){
+        $customer = Customer::where('phone', $request->phone)->first();
+        if(!$customer){
+          return response()->json([
+            'status' => false,
+            'message' => 'Phone number doesn\'t exist.',
+          ], 401);
+        }
+      }
+      $otp = $this->randomToken(4);
+      $find = CustomerOtp::where(['phone'=>$request->phone])->first();
+      if($find){
+        CustomerOtp::where(['phone'=>$request->phone])->update(['otp'=>$otp]);
+      }else{
+        CustomerOtp::create(['phone'=>$request->phone,'otp'=>$otp]);
+      }
+      return response()->json([
+        'status' => true,
+        'message' => 'OTP sent successfully',
+        'test_otp' => $otp,
+      ]);
+    }
+
+    public function register(CustomerRegisterRequest $request)
+    {
+      $checkOtp = CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->first();
+      if(!$checkOtp){
+        return response()->json([
+          'status' => false,
+          'message' => 'Invalid OTP',
+        ], 401);
+      }
+      try {
+        // Create the customer
+        $customer = Customer::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+        ]);
+
+        // Generate a Sanctum token
+        $token = $customer->createToken('customer-token')->plainTextToken;
+
+        // Return response with the token
+        return response()->json([
+            'status' => true,
+            'message' => 'Your account has been created successfully.',
+            'access_token' => $token,
+            'bearer' => 'Bearer '.$token,
+            'customer' => $customer,
+        ], 200);
+      } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage(),
+            'errors' => $th->getMessage(),
+        ], 500);
+      }
+    }
+
+    public function profile(ProfileRequest $request){
+      try {
+        $data = $request->only('name', 'email', 'phone', 'gender');
+        $customer = $request->user()->update($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Your account has been updated successfully.',
+            'customer' => $request->user(),
+        ], 200);
+      } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage(),
+            'errors' => $th->getMessage(),
+        ], 500);
+      }
+    }
+}
