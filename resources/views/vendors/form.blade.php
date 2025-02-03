@@ -118,7 +118,7 @@
         <div class="form-group col-12">
           <h5>
             <a href="{{asset($vendor->laundry_catalogue)}}" target="_blank" rel="noopener noreferrer">
-              <u><i>Download Uploaded Laundry Catalog</i></u>
+              <u><i>Download/View Uploaded Laundry Catalog</i></u>
             </a>
           </h5>
         </div>
@@ -127,7 +127,7 @@
         <div class="form-group col-12">
           <h5>
             <a href="{{asset($vendor->food_catalogue)}}" target="_blank" rel="noopener noreferrer">
-              <u><i>Download Uploaded Food Catalog</i></u>
+              <u><i>Download/View Uploaded Food Catalog</i></u>
             </a>
           </h5>
         </div>
@@ -136,7 +136,7 @@
         <div class="form-group col-12">
           <h5>
             <a href="{{asset($vendor->cab_catalogue)}}" target="_blank" rel="noopener noreferrer">
-              <u><i>Download Uploaded CAB Catalog</i></u>
+              <u><i>Download/View Uploaded CAB Catalog</i></u>
             </a>
           </h5>
         </div>

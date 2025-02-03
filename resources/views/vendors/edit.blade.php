@@ -64,15 +64,13 @@
   const paidEmployementStatus = new Treeselect({
     parentHtmlContainer: document.querySelector('#services'),
     options: options,
-    value: [
-      @foreach($services as $service)
-        "{{$service}}",
-      @endforeach
-    ],
+    isSingleSelect: true,
+    value: "{{$vendor->services}}"
   });
   
   paidEmployementStatus.srcElement.addEventListener('input', (e) => {
-    $('#service').val(e.detail.join(','));
+    // $('#service').val(e.detail.join(','));
+    $('#service').val(e.detail);
     toggleFileUpload('Laundry',e.detail,lcu);
     toggleFileUpload('Food',e.detail,fcu);
     toggleFileUpload('CAB',e.detail,ccu);
@@ -81,13 +79,15 @@
   });
 
   function toggleFileUpload(key, services, uploaded){
-    if (services.includes(key)) {
+    {{--if (services.includes(key)) { --}}
+    if(services == key){
       $('#'+key+'-div').show();
       if(!uploaded){ $('#'+key).attr('required', true); }
     } else {
       $('#'+key+'-div').hide();
       if(!uploaded){ $('#'+key).removeAttr('required'); }
     }
+    
   }
 
 </script>
