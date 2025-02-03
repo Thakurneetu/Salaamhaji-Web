@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\LoundryCategoryController;
+use App\Http\Controllers\LoundryMasterController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,5 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     'customer' => CustomerController::class,
     'vendor-users' => VendorController::class,
     'banner' => BannerController::class,
+    'loundry_category' => LoundryCategoryController::class,
+    'loundry_master' => LoundryMasterController::class,
   ]);
 });
