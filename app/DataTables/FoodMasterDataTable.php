@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\LoundryCategory;
+use App\Models\FoodMaster;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class LoundryCategoryDataTable extends DataTable
+class FoodMasterDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,17 +22,22 @@ class LoundryCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'loundry_category.action')
-            ->rawColumns(['status','action'])
-            ->addIndexColumn();
+        ->addColumn('action', 'food_master.action')
+        ->editColumn('weight', function($data){
+          return $data->weight.' gm';
+        })
+        ->rawColumns(['status','action'])
+        ->addIndexColumn();
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(LoundryCategory $model): QueryBuilder
+    public function query(FoodMaster $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()
+        ->select('food_masters.*', 'food_categories.name as category')
+        ->join('food_categories', 'food_masters.category_id', '=', 'food_categories.id');
     }
 
     /**
@@ -41,7 +46,7 @@ class LoundryCategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('loundrycategory-table')
+                    ->setTableId('foodmaster-table')
                     ->columns($this->getColumns())
                     ->responsive(true)
                     ->minifiedAjax()
@@ -63,7 +68,10 @@ class LoundryCategoryDataTable extends DataTable
     {
         return [
           Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
-          Column::make('name')->title('Category'),
+          Column::make('name')->title('item'),
+          Column::make('category')->title('Category'),
+          Column::make('price'),
+          Column::make('weight'),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -77,6 +85,6 @@ class LoundryCategoryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'LoundryCategory_' . date('YmdHis');
+        return 'FoodMaster_' . date('YmdHis');
     }
 }

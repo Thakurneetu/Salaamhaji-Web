@@ -25,7 +25,6 @@ $module=explode("/", url()->current());
         <p>Promotional Banners</p>
     </a>
 </li>
-<!-- Manage Users -->
 <li class="nav-item {{ array_intersect($module, ['loundry_category', 'loundry_master',]) ? 'menu-open' : '' }}">
   <a href="#" class="nav-link {{ array_intersect($module, ['loundry_category', 'loundry_master']) ? 'active' : '' }}">
     <i class="nav-icon fas fa-users"></i>
@@ -43,6 +42,29 @@ $module=explode("/", url()->current());
       </li>
       <li class="nav-item">
         <a href="{{route('loundry_master.index')}}" class="nav-link {{ array_intersect($module, ['loundry_master']) ? 'active' : '' }}">
+          <i class="nav-icon fab fa-vimeo-v"></i> 
+          <p>Service</p>
+        </a>
+      </li>
+  </ul>
+</li>
+<li class="nav-item {{ array_intersect($module, ['food_category', 'food_master',]) ? 'menu-open' : '' }}">
+  <a href="#" class="nav-link {{ array_intersect($module, ['food_category', 'food_master']) ? 'active' : '' }}">
+    <i class="nav-icon fas fa-users"></i>
+    <p>
+      Food Master
+      <i class="right fas fa-angle-left"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview">
+      <li class="nav-item">
+        <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
+          <i class="nav-icon fas fa-user-friends"></i>
+          <p>Category</p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{route('food_master.index')}}" class="nav-link {{ array_intersect($module, ['food_master']) ? 'active' : '' }}">
           <i class="nav-icon fab fa-vimeo-v"></i> 
           <p>Service</p>
         </a>

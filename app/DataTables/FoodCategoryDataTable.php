@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\LoundryCategory;
+use App\Models\FoodCategory;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class LoundryCategoryDataTable extends DataTable
+class FoodCategoryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,15 +22,15 @@ class LoundryCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'loundry_category.action')
-            ->rawColumns(['status','action'])
-            ->addIndexColumn();
+        ->addColumn('action', 'food_category.action')
+        ->rawColumns(['status','action'])
+        ->addIndexColumn();
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(LoundryCategory $model): QueryBuilder
+    public function query(FoodCategory $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -41,7 +41,7 @@ class LoundryCategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('loundrycategory-table')
+                    ->setTableId('foodcategory-table')
                     ->columns($this->getColumns())
                     ->responsive(true)
                     ->minifiedAjax()
@@ -77,6 +77,6 @@ class LoundryCategoryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'LoundryCategory_' . date('YmdHis');
+        return 'FoodCategory_' . date('YmdHis');
     }
 }

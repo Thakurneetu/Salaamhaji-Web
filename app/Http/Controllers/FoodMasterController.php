@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LoundryMaster;
-use App\Models\LoundryCategory;
+use App\Models\FoodMaster;
 use Illuminate\Http\Request;
-use App\DataTables\LoundryMasterDataTable;
+use App\Models\FoodCategory;
+use App\DataTables\FoodMasterDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class LoundryMasterController extends Controller
+class FoodMasterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(LoundryMasterDataTable $dataTable)
+    public function index(FoodMasterDataTable $dataTable)
     {
-      return $dataTable->render('loundry_master.index');
+      return $dataTable->render('food_master.index');
     }
 
     /**
@@ -24,8 +24,8 @@ class LoundryMasterController extends Controller
      */
     public function create()
     {
-      $categories = LoundryCategory::where('status',1)->get();
-      return view('loundry_master.create', compact('categories'));
+      $categories = FoodCategory::where('status',1)->get();
+      return view('food_master.create', compact('categories'));
     }
 
     /**
@@ -36,10 +36,10 @@ class LoundryMasterController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $customer = LoundryMaster::create($data);
+        $customer = FoodMaster::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
-        return redirect(route('loundry_master.index'));
+        return redirect(route('food_master.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -50,32 +50,32 @@ class LoundryMasterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LoundryMaster $loundryMaster)
+    public function show(FoodMaster $foodMaster)
     {
-       //
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(LoundryMaster $loundryMaster)
+    public function edit(FoodMaster $foodMaster)
     {
-      $categories = LoundryCategory::where('status',1)->get();
-      return view('loundry_master.edit', compact('loundryMaster', 'categories'));
+      $categories = FoodCategory::where('status',1)->get();
+      return view('food_master.edit', compact('foodMaster', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LoundryMaster $loundryMaster)
+    public function update(Request $request, FoodMaster $foodMaster)
     {
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $loundryMaster->update($data);
+        $foodMaster->update($data);
         DB::commit();
         Alert::toast('Service Updated Successfully','success');
-        return redirect(route('loundry_master.index'));
+        return redirect(route('food_master.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -86,10 +86,10 @@ class LoundryMasterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LoundryMaster $loundryMaster)
+    public function destroy(FoodMaster $foodMaster)
     {
       try{
-        $loundryMaster->delete();
+        $foodMaster->delete();
         Alert::toast('Service Deleted Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {

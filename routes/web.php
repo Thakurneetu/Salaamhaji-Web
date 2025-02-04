@@ -8,6 +8,8 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\LoundryCategoryController;
 use App\Http\Controllers\LoundryMasterController;
+use App\Http\Controllers\FoodCategoryController;
+use App\Http\Controllers\FoodMasterController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,5 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     'banner' => BannerController::class,
     'loundry_category' => LoundryCategoryController::class,
     'loundry_master' => LoundryMasterController::class,
+    'food_category' => FoodCategoryController::class,
+    'food_master' => FoodMasterController::class,
   ]);
 });
