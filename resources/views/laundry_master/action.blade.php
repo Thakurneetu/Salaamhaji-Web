@@ -1,5 +1,5 @@
 <div class="btn-group">
-  <a href="{{ route('loundry_master.edit', $id) }}" class='btn btn-sm btn-info tooltip-box'>
+  <a href="{{ route('laundry_master.edit', $id) }}" class='btn btn-sm btn-info tooltip-box'>
     <i class="fa fa-edit"></i>
     <div class="tooltip text-white text-xs -top-full"> 
       <span>Edit</span>
@@ -12,6 +12,6 @@
     </div>
   </a>
 </div>
-<form id="delete_form-{{$id}}" action="{{ route('loundry_master.destroy', $id) }}" method="post">
+<form id="delete_form-{{$id}}" action="{{ route('laundry_master.destroy', $id) }}" method="post">
     @csrf @method('delete')
 </form>

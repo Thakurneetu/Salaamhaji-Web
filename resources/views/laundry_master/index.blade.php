@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Loundry Service | 
+Laundry Service | 
 @endsection
 
 @section('style')
@@ -13,12 +13,12 @@ Loundry Service |
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Manage Loundry Service</h1>
+          <h1 class="m-0 text-dark">Manage Laundry Service</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item active">Loundry Service</li>
+            <li class="breadcrumb-item active">Laundry Service</li>
           </ol>
         </div>
       </div>
@@ -28,7 +28,7 @@ Loundry Service |
   <div class="container-fluid">  
     <div class="card mb-0">
       <div class="card-header">
-        <a href="{{route('loundry_master.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Loundry Service</a>
+        <a href="{{route('laundry_master.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Laundry Service</a>
       </div>
       <div class="card-body">
         {!! $dataTable->table(['class' => 'table table-bordered table-striped dataTable dtr-inline'], false) !!}

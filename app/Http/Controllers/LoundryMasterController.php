@@ -16,7 +16,7 @@ class LoundryMasterController extends Controller
      */
     public function index(LoundryMasterDataTable $dataTable)
     {
-      return $dataTable->render('loundry_master.index');
+      return $dataTable->render('laundry_master.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class LoundryMasterController extends Controller
     public function create()
     {
       $categories = LoundryCategory::where('status',1)->get();
-      return view('loundry_master.create', compact('categories'));
+      return view('laundry_master.create', compact('categories'));
     }
 
     /**
@@ -39,7 +39,7 @@ class LoundryMasterController extends Controller
         $customer = LoundryMaster::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
-        return redirect(route('loundry_master.index'));
+        return redirect(route('laundry_master.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -50,7 +50,7 @@ class LoundryMasterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LoundryMaster $loundryMaster)
+    public function show(LoundryMaster $laundryMaster)
     {
        //
     }
@@ -58,24 +58,24 @@ class LoundryMasterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(LoundryMaster $loundryMaster)
+    public function edit(LoundryMaster $laundryMaster)
     {
       $categories = LoundryCategory::where('status',1)->get();
-      return view('loundry_master.edit', compact('loundryMaster', 'categories'));
+      return view('laundry_master.edit', compact('laundryMaster', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LoundryMaster $loundryMaster)
+    public function update(Request $request, LoundryMaster $laundryMaster)
     {
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $loundryMaster->update($data);
+        $laundryMaster->update($data);
         DB::commit();
         Alert::toast('Service Updated Successfully','success');
-        return redirect(route('loundry_master.index'));
+        return redirect(route('laundry_master.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -86,10 +86,10 @@ class LoundryMasterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LoundryMaster $loundryMaster)
+    public function destroy(LoundryMaster $laundryMaster)
     {
       try{
-        $loundryMaster->delete();
+        $laundryMaster->delete();
         Alert::toast('Service Deleted Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {

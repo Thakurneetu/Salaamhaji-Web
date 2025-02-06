@@ -29,8 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     'customer' => CustomerController::class,
     'vendor-users' => VendorController::class,
     'banner' => BannerController::class,
-    'loundry_category' => LoundryCategoryController::class,
-    'loundry_master' => LoundryMasterController::class,
+    'laundry_category' => LoundryCategoryController::class,
+    'laundry_master' => LoundryMasterController::class,
     'food_category' => FoodCategoryController::class,
     'food_master' => FoodMasterController::class,
   ]);

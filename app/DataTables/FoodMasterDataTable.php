@@ -23,8 +23,8 @@ class FoodMasterDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('action', 'food_master.action')
-        ->editColumn('weight', function($data){
-          return $data->weight.' gm';
+        ->editColumn('serves', function($data){
+          return $data->serves.' People';
         })
         ->rawColumns(['status','action'])
         ->addIndexColumn();
@@ -71,7 +71,7 @@ class FoodMasterDataTable extends DataTable
           Column::make('name')->title('item'),
           Column::make('category')->title('Category'),
           Column::make('price'),
-          Column::make('weight'),
+          Column::make('serves'),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

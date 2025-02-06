@@ -22,7 +22,7 @@ class LoundryMasterDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'loundry_master.action')
+            ->addColumn('action', 'laundry_master.action')
             ->rawColumns(['status','action'])
             ->addIndexColumn();
     }

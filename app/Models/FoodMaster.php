@@ -12,7 +12,7 @@ class FoodMaster extends Model
     'category_id',
     'name',
     'price',
-    'weight',
+    'serves',
     'status',
   ];
   protected $dates = ['deleted_at'];

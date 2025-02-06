@@ -22,7 +22,7 @@ class LoundryCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'loundry_category.action')
+            ->addColumn('action', 'laundry_category.action')
             ->rawColumns(['status','action'])
             ->addIndexColumn();
     }

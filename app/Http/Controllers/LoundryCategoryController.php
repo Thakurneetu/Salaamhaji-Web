@@ -15,7 +15,7 @@ class LoundryCategoryController extends Controller
      */
     public function index(LoundryCategoryDataTable $dataTable)
     {
-      return $dataTable->render('loundry_category.index');
+      return $dataTable->render('laundry_category.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class LoundryCategoryController extends Controller
      */
     public function create()
     {
-      return view('loundry_category.create');
+      return view('laundry_category.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class LoundryCategoryController extends Controller
         $customer = LoundryCategory::create($data);
         DB::commit();
         Alert::toast('Category Added Successfully','success');
-        return redirect(route('loundry_category.index'));
+        return redirect(route('laundry_category.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -48,7 +48,7 @@ class LoundryCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LoundryCategory $loundryCategory)
+    public function show(LoundryCategory $laundryCategory)
     {
         //
     }
@@ -56,23 +56,23 @@ class LoundryCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(LoundryCategory $loundryCategory)
+    public function edit(LoundryCategory $laundryCategory)
     {
-      return view('loundry_category.edit', compact('loundryCategory'));
+      return view('laundry_category.edit', compact('laundryCategory'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LoundryCategory $loundryCategory)
+    public function update(Request $request, LoundryCategory $laundryCategory)
     {
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $loundryCategory->update($data);
+        $laundryCategory->update($data);
         DB::commit();
         Alert::toast('Category Updated Successfully','success');
-        return redirect(route('loundry_category.index'));
+        return redirect(route('laundry_category.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -83,10 +83,10 @@ class LoundryCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LoundryCategory $loundryCategory)
+    public function destroy(LoundryCategory $laundryCategory)
     {
       try{
-        $loundryCategory->delete();
+        $laundryCategory->delete();
         Alert::toast('Category Deleted Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {
