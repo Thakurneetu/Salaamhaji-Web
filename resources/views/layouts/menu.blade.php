@@ -27,7 +27,7 @@ $module=explode("/", url()->current());
 </li>
 <li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master']) ? 'menu-open' : '' }}">
   <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master']) ? 'active' : '' }}">
-    <i class="nav-icon fas fa-users"></i>
+    <i class="nav-icon fas fa-rupee-sign"></i>
     <p>
       Price Settings
       <i class="right fas fa-angle-left"></i>
@@ -36,7 +36,7 @@ $module=explode("/", url()->current());
   <ul class="nav nav-treeview">
     <li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master',]) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master']) ? 'active' : '' }}">
-        <i class="nav-icon fas fa-users"></i>
+        <i class="nav-icon fas fa-tshirt"></i>
         <p>
           Laundry Master
           <i class="right fas fa-angle-left"></i>
@@ -45,13 +45,13 @@ $module=explode("/", url()->current());
       <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="{{route('laundry_category.index')}}" class="nav-link {{ array_intersect($module, ['laundry_category']) ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-cubes"></i>
               <p>Laundry Category</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('laundry_master.index')}}" class="nav-link {{ array_intersect($module, ['laundry_master']) ? 'active' : '' }}">
-              <i class="nav-icon fab fa-vimeo-v"></i> 
+              <i class="nav-icon fas fa-layer-group"></i> 
               <p>Laundry Service</p>
             </a>
           </li>
@@ -59,7 +59,7 @@ $module=explode("/", url()->current());
     </li>
     <li class="nav-item {{ array_intersect($module, ['food_category', 'food_master',]) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link {{ array_intersect($module, ['food_category', 'food_master']) ? 'active' : '' }}">
-        <i class="nav-icon fas fa-users"></i>
+        <i class="nav-icon fas fa-pizza-slice"></i>
         <p>
           Food Master
           <i class="right fas fa-angle-left"></i>
@@ -68,14 +68,37 @@ $module=explode("/", url()->current());
       <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fas fa-cubes"></i>
               <p>Food Category</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="{{route('food_master.index')}}" class="nav-link {{ array_intersect($module, ['food_master']) ? 'active' : '' }}">
-              <i class="nav-icon fab fa-vimeo-v"></i> 
+              <i class="nav-icon fas fa-layer-group"></i> 
               <p>Food Service</p>
+            </a>
+          </li>
+      </ul>
+    </li>
+    <li class="nav-item {{ array_intersect($module, ['food_category', 'food_master',]) ? 'menu-open' : '' }}">
+      <a href="#" class="nav-link {{ array_intersect($module, ['food_category', 'food_master']) ? 'active' : '' }}">
+        <i class="nav-icon fas fa-taxi"></i>
+        <p>
+          CAB Master
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
+              <i class="nav-icon fas fas fa-truck"></i>
+              <p>Vehicles</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-map-marker-alt"></i>
+              <p>Locations</p>
             </a>
           </li>
       </ul>

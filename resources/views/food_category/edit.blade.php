@@ -27,7 +27,7 @@
       <h3 class="card-title pt-1 text_black"><i class="fa fa-edit"></i> Edit</h3>
       <a href="{{ route('food_category.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
     </div>
-    <form action="{{ route('food_category.update', $laundryCategory->id) }}" method="post">
+    <form action="{{ route('food_category.update', $foodCategory->id) }}" method="post">
       @csrf @method('patch')
       @include('food_category.form')
     </form>

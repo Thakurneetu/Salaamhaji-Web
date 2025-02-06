@@ -5,14 +5,19 @@
       <span>Edit</span>
     </div>
   </a>
-  {{--
-  <a href="{{ route('vendor.service', $id) }}" class='btn btn-sm btn-light tooltip-box'>
-    <i class="fas fa-cubes"></i>
+  
+  <a href="{{ route('vendor-users.show', $id) }}" class='btn btn-sm btn-light tooltip-box'>
+    @if($services == 'Laundry')
+      <i class="fas fa-tshirt"></i>
+    @elseif($services == 'CAB')
+      <i class="fas fa-taxi"></i>
+    @else
+      <i class="fas fa-pizza-slice"></i>
+    @endif
     <div class="tooltip text-white text-xs -top-full"> 
-      <span>Service</span>
+      <span>Services</span>
     </div>
   </a>
-  --}}
   <a href="javascript:void(0);" onclick="delete_data({{$id}})" class='btn btn-sm btn-danger tooltip-box'>
     <i class="fa fa-trash"></i></i>
     <div class="tooltip text-white text-xs -top-full">
