@@ -15,6 +15,7 @@ Route::controller(CustomerAuthController::class)->group(function(){
   Route::post('/login', 'login');
   Route::post('/register', 'register');
   Route::post('/send-otp', 'send_otp');
+  Route::post('/verify-otp', 'verify_otp');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

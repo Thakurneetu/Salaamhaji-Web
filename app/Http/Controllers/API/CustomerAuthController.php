@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
 use App\Models\CustomerOtp;
-use App\Http\Requests\API\CustomerLoginRequest;
 use App\Http\Requests\API\CustomerOTPRequest;
+use App\Http\Requests\API\CustomerVerifyOtpRequest;
 use App\Http\Requests\API\CustomerRegisterRequest;
 use App\Http\Requests\API\ProfileRequest;
 use App\Traits\HelperTrait;
@@ -16,23 +16,6 @@ use App\Traits\HelperTrait;
 class CustomerAuthController extends Controller
 {
   use HelperTrait;
-    public function login(CustomerLoginRequest $request)
-    {
-      $checkOtp = CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->first();
-      if(!$checkOtp){
-        return response()->json([
-          'status' => false,
-          'message' => 'Invalid OTP',
-        ], 401);
-      }
-      $customer = Customer::where('phone', $request->phone)->first();
-      $token = $customer->createToken('customer-token')->plainTextToken;
-      return response()->json([
-        'status' => true,
-        'access_token' => $token,
-        'bearer' => 'Bearer '.$token,
-      ]);
-    }
 
     public function send_otp(CustomerOTPRequest $request)
     {
@@ -59,7 +42,7 @@ class CustomerAuthController extends Controller
       ]);
     }
 
-    public function register(CustomerRegisterRequest $request)
+    public function verify_otp(CustomerVerifyOtpRequest $request)
     {
       $checkOtp = CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->first();
       if(!$checkOtp){
@@ -68,6 +51,34 @@ class CustomerAuthController extends Controller
           'message' => 'Invalid OTP',
         ], 401);
       }
+
+      if($request->has('type') && $request->type == 'login'){
+        $customer = Customer::where('phone', $request->phone)->first();
+        $customer->update(['country_code'=>$request->country_code]);
+        $token = $customer->createToken('customer-token')->plainTextToken;
+        return response()->json([
+          'status' => true,
+          "message" => "OTP Verified Successfully.",
+          'access_token' => $token,
+          'bearer' => 'Bearer '.$token,
+        ]);
+      }
+
+      return response()->json([
+        'status' => true,
+        'message' => 'OTP Verified Successfully.',
+      ]);
+    }
+
+    public function register(CustomerRegisterRequest $request)
+    {
+      // $checkOtp = CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->first();
+      // if(!$checkOtp){
+      //   return response()->json([
+      //     'status' => false,
+      //     'message' => 'Invalid OTP',
+      //   ], 401);
+      // }
       try {
         // Create the customer
         $customer = Customer::create([
