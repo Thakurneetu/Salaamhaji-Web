@@ -80,10 +80,10 @@
         @endforeach
       </select>
     </div>
-    <div class="col-12"><h1>Services</h1></div>
+    <div class="col-12"><h1>Service</h1></div>
     <div class="form-group col-md-6 col-12" >
-      <label>Select Services</label>
-      <input type="hidden" name="services" id="service" value="{{$vendor->services}}">
+      <label>Select Service</label>
+      <input type="hidden" name="services" id="service" value="{{@$vendor->services}}">
       <div class="" id="services"></div>
     </div>
     <div class="form-group col-md-6 col-12" id="Laundry-div" @if(isset($services) && in_array('Laundry',$services )) style="display:block;" @else style="display:none;" @endif>

@@ -6,12 +6,14 @@
     </div>
   </a>
   
-  <a href="{{ route('vendor-users.show', $id) }}" class='btn btn-sm btn-light tooltip-box'>
     @if($services == 'Laundry')
+      <a href="{{ route('vendor_laundry_service.index', ['id'=>$id]) }}" class='btn btn-sm btn-light tooltip-box'>
       <i class="fas fa-tshirt"></i>
     @elseif($services == 'CAB')
+      <a href="#" class='btn btn-sm btn-light tooltip-box'>
       <i class="fas fa-taxi"></i>
     @else
+      <a href="{{ route('vendor_food_service.index', ['id'=>$id]) }}" class='btn btn-sm btn-light tooltip-box'>
       <i class="fas fa-pizza-slice"></i>
     @endif
     <div class="tooltip text-white text-xs -top-full"> 

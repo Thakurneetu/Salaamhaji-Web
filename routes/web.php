@@ -10,6 +10,8 @@ use App\Http\Controllers\LoundryCategoryController;
 use App\Http\Controllers\LoundryMasterController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodMasterController;
+use App\Http\Controllers\VendorLaundryServiceController;
+use App\Http\Controllers\VendorFoodServiceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,5 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     'laundry_master' => LoundryMasterController::class,
     'food_category' => FoodCategoryController::class,
     'food_master' => FoodMasterController::class,
+    'vendor_laundry_service' => VendorLaundryServiceController::class,
+    'vendor_food_service' => VendorFoodServiceController::class,
   ]);
 });
