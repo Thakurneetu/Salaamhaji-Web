@@ -37,5 +37,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::apiResource('laundry-cart', LaundryCartController::class);
+    Route::get('clear-laundry-cart', [LaundryCartController::class, 'clear']);
 });
 

@@ -111,4 +111,17 @@ class LaundryCartController extends Controller
           'message' => 'Removed from cart successfully.',
         ]);
     }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function clear(Request $request)
+    {
+      $ids = LaundryCart::where('customer_id',$request->user()->id)->pluck('id');
+      LaundryCartItem::whereIn('laundry_cart_id', $ids)->delete();
+      LaundryCart::where('customer_id',$request->user()->id)->delete();
+        return response()->json([
+          'status' => true,
+          'message' => 'Cart Cleared successfully.',
+        ]);
+    }
 }
