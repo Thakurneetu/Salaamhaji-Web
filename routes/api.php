@@ -6,6 +6,7 @@ use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\FoodController;
 use App\Http\Controllers\API\LaundryController;
 use App\Http\Controllers\API\CustomerAuthController;
+use App\Http\Controllers\API\LaundryCartController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -34,5 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
       Route::get('laundry/categories', 'categories');
       Route::get('laundry/category-services/{id}', 'services');
     });
+
+    Route::apiResource('laundry-cart', LaundryCartController::class);
 });
 

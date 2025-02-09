@@ -19,7 +19,7 @@ class LaundryController extends Controller
     }
     public function services($id)
     {
-      $services = LoundryMaster::select('id', 'name','price')->where('status', 1)->get();
+      $services = LoundryMaster::select('id', 'name','price')->where('category_id', $id)->where('status', 1)->get();
       return response()->json([
         'status' => true,
         'services' => $services,
