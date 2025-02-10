@@ -80,8 +80,8 @@ $module=explode("/", url()->current());
           </li>
       </ul>
     </li>
-    <li class="nav-item {{ array_intersect($module, ['food_category', 'food_master',]) ? 'menu-open' : '' }}">
-      <a href="#" class="nav-link {{ array_intersect($module, ['food_category', 'food_master']) ? 'active' : '' }}">
+    <li class="nav-item {{ array_intersect($module, []) ? 'menu-open' : '' }}">
+      <a href="#" class="nav-link {{ array_intersect($module, []) ? 'active' : '' }}">
         <i class="nav-icon fas fa-taxi"></i>
         <p>
           CAB Master
@@ -90,13 +90,13 @@ $module=explode("/", url()->current());
       </a>
       <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, []) ? 'active' : '' }}">
               <i class="nav-icon fas fas fa-truck"></i>
               <p>Vehicles</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, []) ? 'active' : '' }}">
               <i class="nav-icon fas fa-map-marker-alt"></i>
               <p>Locations</p>
             </a>
