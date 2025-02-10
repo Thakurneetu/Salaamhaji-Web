@@ -33,6 +33,18 @@
       <div class="text-danger">{{ $message }}</div>
       @enderror
     </div>
+    <div class="form-group col-md-6 col-12">
+      <label for="cab_catalogue">Item Image</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="image" name="image" {{@$foodMaster->image != '' ? '' : 'required'}}>
+          <label class="custom-file-label" for="cab_catalogue">Select Item Image</label>
+        </div>
+      </div>
+    </div>
+    @if(isset($foodMaster) && $foodMaster->image)
+      <img style='width:250px' src="{{asset(@$foodMaster->image)}}" alt='Image'>
+    @endif
   </div>
 </div>
 

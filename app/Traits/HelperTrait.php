@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Models\LeaveType;
 use Spatie\Permission\Models\Role;
+use Intervention\Image\Laravel\Facades\Image;
 
 trait HelperTrait {
 
@@ -35,5 +36,53 @@ trait HelperTrait {
   private function delete_file($file_path){
     File::delete(public_path().$file_path);
   }
+
+  private function createThumbnail($path, $width, $height)
+  {
+    try{
+      $img = ImageCreateFromString(file_get_contents($path));
+      if ($img === false) {
+          return false;
+      }
+
+      // Get original dimensions
+      $originalWidth = imagesx($img);
+      $originalHeight = imagesy($img);
+
+      // Calculate the scaling ratio
+      $ratio = max($width / $originalWidth, $height / $originalHeight);
+
+      // Calculate new dimensions
+      $newWidth = $originalWidth * $ratio;
+      $newHeight = $originalHeight * $ratio;
+
+      // Create a new image with the new dimensions
+      $newImg = imagecreatetruecolor($newWidth, $newHeight);
+
+      // Resize the image
+      imagecopyresampled($newImg, $img, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+      // Crop the image to the desired size
+      $offsetX = ($newWidth - $width) / 2;
+      $offsetY = ($newHeight - $height) / 2;
+      $croppedImg = imagecreatetruecolor($width, $height);
+      imagecopy($croppedImg, $newImg, 0, 0, $offsetX, $offsetY, $width, $height);
+
+      // Save the thumbnail
+      $thumbnailPath = dirname($path) . '/thumbnails/' . basename($path);
+      imagejpeg($croppedImg, $thumbnailPath);
+
+      // Free up memory
+      imagedestroy($img);
+      imagedestroy($newImg);
+      imagedestroy($croppedImg);
+
+      return $thumbnailPath;
+    }catch(\Exception $e){
+      return false;
+    }
+  }
+
+
 
 }

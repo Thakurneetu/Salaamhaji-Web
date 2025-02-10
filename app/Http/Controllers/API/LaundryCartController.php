@@ -26,7 +26,7 @@ class LaundryCartController extends Controller
         'status' => true,
         'subtotal' => $subtotal,
         'tax' => $tax,
-        'grand_total' => (string) ($subtotal + $tax),
+        'grand_total' => (string) number_format($subtotal + $tax, 2),
         'cart' => $carts,
       ]);
     }

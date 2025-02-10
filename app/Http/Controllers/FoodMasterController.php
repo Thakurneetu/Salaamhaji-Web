@@ -8,9 +8,14 @@ use App\Models\FoodCategory;
 use App\DataTables\FoodMasterDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Traits\HelperTrait;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+// use Intervention\Image\Laravel\Facades\Image;
 
 class FoodMasterController extends Controller
 {
+  use HelperTrait;
     /**
      * Display a listing of the resource.
      */
@@ -36,6 +41,13 @@ class FoodMasterController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
+        $data['image'] = $this->save_file($request->image, '/uploads/food_items');
+        $image_name = explode('/',$data['image']);
+        $thumb = $this->createThumbnail(public_path($data['image']), 100, 100);
+        $data['thumbnail'] = $data['image'];
+        if($thumb){
+          $data['thumbnail'] = '/uploads/food_items/thumbnails/'.end($image_name);
+        }
         $customer = FoodMaster::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
@@ -72,12 +84,24 @@ class FoodMasterController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
+        if($request->hasFile('image')){
+          $this->delete_file($foodMaster->image);
+          $this->delete_file($foodMaster->thumbnail);
+          $data['image'] = $this->save_file($request->image, '/uploads/food_items');
+          $image_name = explode('/',$data['image']);
+          $thumb = $this->createThumbnail(public_path($data['image']), 100, 100);
+          $data['thumbnail'] = $data['image'];
+          if($thumb){
+            $data['thumbnail'] = '/uploads/food_items/thumbnails/'.end($image_name);
+          }
+        }
         $foodMaster->update($data);
         DB::commit();
         Alert::toast('Service Updated Successfully','success');
         return redirect(route('food_master.index'));
       }catch (\Throwable $th) {
         DB::rollback();
+        dd($th);
         Alert::error($th->getMessage());
         return redirect()->back();
       }

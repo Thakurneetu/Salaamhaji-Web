@@ -14,6 +14,27 @@ class FoodMaster extends Model
     'price',
     'serves',
     'status',
+    'image',
+    'thumbnail'
   ];
   protected $dates = ['deleted_at'];
+  protected $hidden = ['image','thumbnail'];
+  protected $appends = ['image_url', 'thumb_url'];
+
+  public function getImageUrlAttribute()
+  {
+    if($this->image != ''){
+      return asset($this->image);
+    }else{
+      return '';
+    }
+  }
+  public function getThumbUrlAttribute()
+  {
+    if($this->thumbnail != ''){
+      return asset($this->thumbnail);
+    }else{
+      return '';
+    }
+  }
 }

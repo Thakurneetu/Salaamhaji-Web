@@ -7,6 +7,7 @@ use App\Http\Controllers\API\FoodController;
 use App\Http\Controllers\API\LaundryController;
 use App\Http\Controllers\API\CustomerAuthController;
 use App\Http\Controllers\API\LaundryCartController;
+use App\Http\Controllers\API\FoodCartController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -38,5 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('laundry-cart', LaundryCartController::class);
     Route::get('clear-laundry-cart', [LaundryCartController::class, 'clear']);
+
+    Route::apiResource('food-cart', FoodCartController::class);
+    Route::get('clear-food-cart', [FoodCartController::class, 'clear']);
 });
 

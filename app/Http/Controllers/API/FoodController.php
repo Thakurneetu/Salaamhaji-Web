@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FoodMaster;
 use App\Models\FoodCategory;
+use App\Models\FoodCartItem;
 
 class FoodController extends Controller
 {
@@ -17,9 +18,16 @@ class FoodController extends Controller
         'categories' => $categories,
       ]);
     }
-    public function services($id)
+    public function services($id, Request $request)
     {
-      $services = FoodMaster::select('id', 'name','price','serves')->where('status', 1)->get();
+      $services = FoodMaster::select('id','category_id','name','price','serves','image','thumbnail')->where('status', 1)->get();
+      foreach ($services as $key => $service) {
+        $cart_quantity = FoodCartItem::where([
+                          'service_id'=>$service->id, 
+                          'customer_id'=>$request->user()->id
+                          ])->first();
+        $service->cart_quantity = $cart_quantity ? $cart_quantity->quantity : 0;
+      }
       return response()->json([
         'status' => true,
         'services' => $services,

@@ -26,7 +26,16 @@ class FoodMasterDataTable extends DataTable
         ->editColumn('serves', function($data){
           return $data->serves.' People';
         })
-        ->rawColumns(['status','action'])
+        ->editColumn('thumbnail', function ($data) {
+          if($data->thumbnail){
+            return "<img style='width:50px' src='" . asset($data->thumbnail) . "' alt='thumb'>";
+          }else if($data->image){
+            return "<img style='width:50px' src='" . asset($data->image) . "' alt='thumb'>";
+          }else{
+            return '';
+          }
+        })
+        ->rawColumns(['status','action','thumbnail'])
         ->addIndexColumn();
     }
 
@@ -72,6 +81,7 @@ class FoodMasterDataTable extends DataTable
           Column::make('category')->title('Category'),
           Column::make('price'),
           Column::make('serves'),
+          Column::make('thumbnail')->width('15%')->orderable(false)->addClass('text-center')->defaultContent(''),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -8,7 +8,6 @@ use App\DataTables\BannerDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Traits\HelperTrait;
-use File;
 
 class BannerController extends Controller
 {
