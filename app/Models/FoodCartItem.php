@@ -37,4 +37,14 @@ class FoodCartItem extends Model
       get: fn () => $this->service ? ($this->service->thumb_url != '' ? $this->service->thumb_url : null) : null,
     );
   }
+  public function category() : BelongsTo
+  {
+    return $this->belongsTo(FoodCategory::class);
+  }
+  protected function categoryName(): Attribute
+  {
+    return new Attribute(
+      get: fn () => $this->category ? $this->category->name : null,
+    );
+  }
 }

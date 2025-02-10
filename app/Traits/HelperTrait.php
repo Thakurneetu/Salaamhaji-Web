@@ -83,6 +83,4 @@ trait HelperTrait {
     }
   }
 
-
-
 }
