@@ -20,7 +20,6 @@ class CustomerRegisterRequest extends FormRequest
           'email' => 'required|string|email|max:255|unique:customers',
           'phone' => 'required|string||unique:customers',
           'gender' => 'required|string|max:100',
-          'otp' => 'required|max:10',
         ];
     }
 
