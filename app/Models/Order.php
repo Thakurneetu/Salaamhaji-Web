@@ -22,6 +22,9 @@ class Order extends Model
     'payment_id',
     'payment_status',
     'payment_type',
+    'address_line_1',
+    'address_line_2',
+    'landmark'
   ];
 
   public function customer() : BelongsTo

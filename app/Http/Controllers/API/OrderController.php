@@ -41,6 +41,9 @@ class OrderController extends Controller
         $order_data['uuid'] = 'SH'.$this->randomToken(8);
         $order_data['customer_id'] = $request->user()->id;
         $order_data['type'] = $type;
+        $order_data['address_line_1'] = $type;
+        $order_data['address_line_2'] = $type;
+        $order_data['landmark'] = $type;
         if($type == 'food'){
           $cart = FoodCart::where('customer_id', $request->user()->id)->first();
           $order_data['subtotal'] = number_format($cart->sum('total'), 2);
