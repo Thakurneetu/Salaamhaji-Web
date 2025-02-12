@@ -12,6 +12,18 @@
     <th>Order Date:</th>
     <td>{{date('d/m/Y',strtotime($order->created_at))}}</td>
   </tr>
+  <tr>
+    <th>Address Line One:</th>
+    <td>{{$order->address_line_1}}</td>
+  </tr>
+  <tr>
+    <th>Address Line Two:</th>
+    <td>{{$order->address_line_2}}</td>
+  </tr>
+  <tr>
+    <th>Landmark:</th>
+    <td>{{$order->landmark}}</td>
+  </tr>
   @if($order->type != 'laundry')
   <tr>
     <th>Service Date:</th>
