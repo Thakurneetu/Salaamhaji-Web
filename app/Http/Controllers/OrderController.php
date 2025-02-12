@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\LaundryOrder;
 use Illuminate\Http\Request;
+use App\DataTables\OrdersDataTable;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(OrdersDataTable $dataTable, Request $request)
     {
-        //
+      return $dataTable->with('type', $request->type??'laundry')->render('order.index');
     }
 
     /**
@@ -36,7 +40,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('order.show', compact('order'));
     }
 
     /**
@@ -52,7 +56,15 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+      if($request->type == 'laundry'){
+        LaundryOrder::find($request->order_id)->update(['status'=>$request->status]);
+      }else{
+        $order->update(['status'=>$request->status]);
+      }
+      return response()->json([
+        'success'=>true,
+        'message'=>'Status Updated Successfully.'
+      ]);
     }
 
     /**

@@ -1,0 +1,65 @@
+@extends('layouts.app')
+
+@section('title')
+  Order Details | 
+@endsection
+
+@section('content')
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Order Details</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('order.index')}}">Order</a></li>
+            <li class="breadcrumb-item active">Details</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card card-success mx-3">
+    <div class="card-header">
+      <h3 class="card-title pt-1 text_black"><i class="fa fa-edit"></i> Details</h3>
+      <a href="{{ route('order.index') }}{{request()->type == 'food' ? '?type=food' : (request()->type == 'cab' ? '?type=cab' : '')}}" class="btn btn-dark btn-sm float-right">Back</a>
+    </div>
+    <div class="card-body">
+        @include('order.customer_detail')
+        @include('order.order_detail')
+        @if($order->type == 'food')
+          @include('order.food_items')
+        @elseif($order->type == 'laundry')
+          @include('order.laundry_items')
+        @endif
+    </div>
+  </div>
+@endsection
+
+@push('scripts')
+<script>
+  function changeStatus(id, status, type){
+    $.ajax({
+      method: "POST",
+      url: "{{ route('order.update', $order->id) }}",
+      data: {_token: "{{csrf_token()}}", _method:'PUT', order_id:id, status: status, type:type},
+    })
+    .done(function (res) {
+      if(res.success){
+        Swal.fire({
+        title: res.message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      });
+      }
+    })
+    .fail(function (err) {
+      console.log(err);              
+    });
+  }
+</script>
+@endpush

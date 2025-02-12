@@ -20,7 +20,7 @@ class FoodController extends Controller
     }
     public function services($id, Request $request)
     {
-      $services = FoodMaster::select('id','category_id','name','price','serves','image','thumbnail')->where('status', 1)->get();
+      $services = FoodMaster::select('id','category_id','name','price','serves','image','thumbnail')->where('category_id', $id)->where('status', 1)->get();
       foreach ($services as $key => $service) {
         $cart_quantity = FoodCartItem::where([
                           'service_id'=>$service->id, 

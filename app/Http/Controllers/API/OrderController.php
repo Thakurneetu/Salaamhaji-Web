@@ -72,7 +72,7 @@ class OrderController extends Controller
             'message' => 'Order Placed Successfully',
           ]);
         }else if($type == 'laundry'){
-          $carts = LaundryCart::where('customer_id', $request->user()->id)->get();
+          $carts = LaundryCart::where('customer_id', $request->user()->id)->with('items')->get();
           $order_data['subtotal'] = number_format($carts->sum('total'), 2);
           $order_data['tax'] = number_format($carts->sum('total') * 5 / 100, 2);
           $order_data['grand_total'] = number_format($order_data['subtotal'] + $order_data['tax'], 2);
@@ -99,18 +99,14 @@ class OrderController extends Controller
               $item_data['total_price'] = $item->total_price;
               LaundryOrderItem::create($item_data);
             }
-            $ids = LaundryCart::where('customer_id',$request->user()->id)->pluck('id');
-            LaundryCartItem::whereIn('laundry_cart_id', $ids)->delete();
-            LaundryCart::where('customer_id',$request->user()->id)->delete();
-            return response()->json([
-              'status' => true,
-              'message' => 'Cart Cleared successfully.',
-            ]);
-            return response()->json([
-              'status' => true,
-              'message' => 'Order Placed Successfully',
-            ]);
           }
+          $ids = LaundryCart::where('customer_id',$request->user()->id)->pluck('id');
+          LaundryCartItem::whereIn('laundry_cart_id', $ids)->delete();
+          LaundryCart::where('customer_id',$request->user()->id)->delete();
+          return response()->json([
+            'status' => true,
+            'message' => 'Order Placed Successfully',
+          ]);
         }
     }
 

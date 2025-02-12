@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LaundryOrder extends Model
 {
@@ -16,4 +17,9 @@ class LaundryOrder extends Model
     'end',
     'status',
   ];
+
+  public function items() : HasMany
+  {
+    return $this->hasMany(LaundryOrderItem::class);
+  }
 }

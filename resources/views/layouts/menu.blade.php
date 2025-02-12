@@ -25,6 +25,35 @@ $module=explode("/", url()->current());
         <p>Promotional Banners</p>
     </a>
 </li>
+<li class="nav-item {{ array_intersect($module, ['order']) ? 'menu-open' : '' }}">
+  <a href="#" class="nav-link {{ array_intersect($module, ['order']) ? 'active' : '' }}">
+    <i class="nav-icon fas fa-rupee-sign"></i>
+    <p>
+      Orders
+      <i class="right fas fa-angle-left"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="{{route('order.index')}}" class="nav-link {{ ((request()->type == '' || request()->type == 'laundry') && array_intersect($module, ['order'])) ? 'active' : '' }}">
+        <i class="nav-icon fas fa-tshirt"></i>
+        <p>Laundry Orders</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{route('order.index')}}?type=food" class="nav-link {{ request()->type == 'food' ? 'active' : '' }}">
+        <i class="nav-icon fas fa-pizza-slice"></i>
+        <p>Food Orders</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{route('order.index')}}?type=cab" class="nav-link {{ request()->type == 'cab' ? 'active' : '' }}">
+        <i class="nav-icon fas fa-taxi"></i>
+        <p>CAB Orders</p>
+      </a>
+    </li>
+  </ul>
+</li>
 <li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master']) ? 'menu-open' : '' }}">
   <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master']) ? 'active' : '' }}">
     <i class="nav-icon fas fa-rupee-sign"></i>
@@ -44,13 +73,13 @@ $module=explode("/", url()->current());
       </a>
       <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('laundry_category.index')}}" class="nav-link {{ array_intersect($module, ['laundry_category']) ? 'active' : '' }}">
+            <a href="{{route('laundry_category.index')}}" class="nav-link {{ array_intersect($module, ['laundry_category']) ? 'active_child' : '' }}">
               <i class="nav-icon fas fa-cubes"></i>
               <p>Laundry Category</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('laundry_master.index')}}" class="nav-link {{ array_intersect($module, ['laundry_master']) ? 'active' : '' }}">
+            <a href="{{route('laundry_master.index')}}" class="nav-link {{ array_intersect($module, ['laundry_master']) ? 'active_child' : '' }}">
               <i class="nav-icon fas fa-layer-group"></i> 
               <p>Laundry Service</p>
             </a>
@@ -67,13 +96,13 @@ $module=explode("/", url()->current());
       </a>
       <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active' : '' }}">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active_child' : '' }}">
               <i class="nav-icon fas fas fa-cubes"></i>
               <p>Food Category</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('food_master.index')}}" class="nav-link {{ array_intersect($module, ['food_master']) ? 'active' : '' }}">
+            <a href="{{route('food_master.index')}}" class="nav-link {{ array_intersect($module, ['food_master']) ? 'active_child' : '' }}">
               <i class="nav-icon fas fa-layer-group"></i> 
               <p>Food Service</p>
             </a>
@@ -90,13 +119,13 @@ $module=explode("/", url()->current());
       </a>
       <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, []) ? 'active' : '' }}">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, []) ? 'active_child' : '' }}">
               <i class="nav-icon fas fas fa-truck"></i>
               <p>Vehicles</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, []) ? 'active' : '' }}">
+            <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, []) ? 'active_child' : '' }}">
               <i class="nav-icon fas fa-map-marker-alt"></i>
               <p>Locations</p>
             </a>
