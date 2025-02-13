@@ -27,7 +27,7 @@ class LaundryCartController extends Controller
         'subtotal' => $subtotal,
         'tax' => $tax,
         'grand_total' => (string) number_format($subtotal + $tax, 2),
-        'cart' => $carts,
+        'carts' => $carts,
       ]);
     }
 
@@ -92,7 +92,7 @@ class LaundryCartController extends Controller
     public function update(Request $request, LaundryCart $laundryCart)
     {
         $cart_data = $request->only('service_date', 'start','end');
-        $laundryCart->update($cart_data);
+        LaundryCart::where('customer_id', $laundryCart->customer_id)->update($cart_data);
         return response()->json([
           'status' => true,
           'message' => 'Service slot added successfully.',

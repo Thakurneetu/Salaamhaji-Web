@@ -41,9 +41,9 @@ class OrderController extends Controller
         $order_data['uuid'] = 'SH'.$this->randomToken(8);
         $order_data['customer_id'] = $request->user()->id;
         $order_data['type'] = $type;
-        $order_data['address_line_1'] = $type;
-        $order_data['address_line_2'] = $type;
-        $order_data['landmark'] = $type;
+        $order_data['address_line_1'] = $request->address_line_1;
+        $order_data['address_line_2'] = $request->address_line_2;
+        $order_data['landmark'] = $request->landmark;
         if($type == 'food'){
           $cart = FoodCart::where('customer_id', $request->user()->id)->first();
           $order_data['subtotal'] = number_format($cart->sum('total'), 2);
@@ -80,6 +80,9 @@ class OrderController extends Controller
           $order_data['tax'] = number_format($carts->sum('total') * 5 / 100, 2);
           $order_data['grand_total'] = number_format($order_data['subtotal'] + $order_data['tax'], 2);
           $order_data['status'] = 'Active';
+          $order_data['service_date'] = $carts->first()->service_date;
+          $order_data['start'] = $carts->first()->start;
+          $order_data['end'] = $carts->first()->end;
           // $order_data['payment_id'] = '';
           // $order_data['payment_status'] = '';
           // $order_data['payment_type'] = '';
@@ -89,9 +92,6 @@ class OrderController extends Controller
           foreach ($carts as $key => $cart) {
             $laundry_order_data['category_name'] = $cart->category_name;
             $laundry_order_data['total'] = $cart->total;
-            $laundry_order_data['service_date'] = $cart->service_date;
-            $laundry_order_data['start'] = $cart->start;
-            $laundry_order_data['end'] = $cart->end;
             $laundry_order_data['status'] = 'Active';
             $laundry_order = LaundryOrder::create($laundry_order_data);
             $item_data['laundry_order_id'] = $laundry_order->id;

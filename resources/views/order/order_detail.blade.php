@@ -24,7 +24,6 @@
     <th>Landmark:</th>
     <td>{{$order->landmark}}</td>
   </tr>
-  @if($order->type != 'laundry')
   <tr>
     <th>Service Date:</th>
     <td>{{date('d/m/Y',strtotime($order->service_date))}}</td>
@@ -44,5 +43,4 @@
       </select>
     </td>
   </tr>
-  @endif
 </table>

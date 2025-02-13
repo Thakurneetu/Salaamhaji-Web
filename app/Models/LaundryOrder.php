@@ -12,9 +12,6 @@ class LaundryOrder extends Model
     'category_name',
     'order_id',
     'total',
-    'service_date',
-    'start',
-    'end',
     'status',
   ];
 
