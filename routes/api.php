@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::post('/profile', [CustomerAuthController::class, 'profile']);
     Route::controller(HomeController::class)->group(function(){
+      Route::get('/home-page', 'home');
       Route::get('/banners', 'banners');
     });
     Route::controller(FoodController::class)->group(function(){

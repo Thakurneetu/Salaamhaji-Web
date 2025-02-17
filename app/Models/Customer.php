@@ -7,6 +7,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 class Customer extends Authenticatable
 {
@@ -29,4 +31,18 @@ class Customer extends Authenticatable
   protected $casts = ['password' => 'hashed'];
 
   protected $dates = ['deleted_at'];
+
+  public function orders() : HasMany
+  {
+    return $this->hasMany(Order::class);
+  }
+
+  public function upcomingOrders()
+  {
+      return $this->orders()
+          ->where('service_date', '>=', date('Y-m-d'))
+          ->orderBy('service_date', 'asc')
+          ->orderBy('start', 'asc')
+          ->get();
+  }
 }

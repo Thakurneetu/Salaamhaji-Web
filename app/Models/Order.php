@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 class Order extends Model
 {
@@ -38,5 +39,23 @@ class Order extends Model
   public function laundry_orders() : HasMany
   {
     return $this->hasMany(LaundryOrder::class);
+  }
+
+  public function getFormattedServiceTimeAttribute()
+  {
+      $serviceDate = Carbon::parse($this->service_date);
+      $startTime = Carbon::parse($this->start);
+      $endTime = Carbon::parse($this->end);
+
+      $today = Carbon::today();
+      $isToday = $serviceDate->isSameDay($today);
+      $isNext = $serviceDate->isNextDay($today);
+
+      $dateString = $isToday ? 'Today' : ($isNext ? 'Tomorrow' : $serviceDate->format('M jS, Y'));
+
+      $startTimeString = $startTime->format('g:i A');
+      $endTimeString = $endTime->format('g:i A');
+
+      return $dateString . ', ' . $startTimeString . ' - ' . $endTimeString;
   }
 }
