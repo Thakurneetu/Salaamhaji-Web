@@ -14,13 +14,16 @@ use App\Http\Controllers\VendorLaundryServiceController;
 use App\Http\Controllers\VendorFoodServiceController;
 use App\Http\Controllers\OrderController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes(['register' => false]);
 
 Route::get('/home', [LoginController::class, 'showLoginForm']);
+
+Route::get('/', [VendorController::class, 'vendorForm']);
+Route::get('/success', [VendorController::class, 'success']);
 
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');

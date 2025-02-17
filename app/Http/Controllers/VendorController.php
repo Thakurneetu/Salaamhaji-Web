@@ -152,4 +152,11 @@ class VendorController extends Controller
         return redirect()->back();
       }
     }
+
+    public function vendorForm(){
+      return view('vendor_registration');
+    }
+    public function success(){
+      return view('registration_success');
+    }
 }
