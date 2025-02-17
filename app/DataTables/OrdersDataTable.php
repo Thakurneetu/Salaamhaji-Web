@@ -85,8 +85,8 @@ class OrdersDataTable extends DataTable
           Column::make('customer_name')->title('Customer')->sortable(false),
           Column::make('email')->sortable(false),
           Column::make('phone')->sortable(false),
-          Column::make('created_at')->title('Order Date')->sortable(false),
-          Column::make('service_date')->title('Service Date')->sortable(false),
+          Column::make('created_at')->title('Order Date'),
+          Column::make('service_date')->title('Service Date'),
           Column::make('slot')->title('Time Slot')->sortable(false),
           Column::make('status'),
           Column::computed('action')

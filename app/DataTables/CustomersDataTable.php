@@ -45,6 +45,7 @@ class CustomersDataTable extends DataTable
                     ->setTableId('customers-table')
                     ->columns($this->getColumns())
                     ->responsive(true)
+                    ->orderBy([0,'desc'])
                     ->minifiedAjax()
                     //->dom('Bfrtip')
                     ->selectStyleSingle()
@@ -63,6 +64,7 @@ class CustomersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+          Column::make('id')->visible(false),
           Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
           Column::make('name'),
           Column::make('email'),

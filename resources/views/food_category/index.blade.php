@@ -31,7 +31,7 @@ Food Category |
         <a href="{{route('food_category.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Food Category</a>
       </div>
       <div class="card-body">
-        {!! $dataTable->table(['class' => 'table table-bordered table-striped dataTable dtr-inline'], false) !!}
+        {!! $dataTable->table(['class' => 'table table-bordered table-dark table-striped dataTable dtr-inline'], false) !!}
       </div>
     </div>
   </div>    

@@ -28,7 +28,7 @@ Orders |
   <div class="container-fluid">  
     <div class="card mb-0">
       <div class="card-body">
-        {!! $dataTable->table(['class' => 'table table-bordered table-striped dataTable dtr-inline'], false) !!}
+        {!! $dataTable->table(['class' => 'table table-bordered table-dark table-striped dataTable dtr-inline'], false) !!}
       </div>
     </div>
   </div>    

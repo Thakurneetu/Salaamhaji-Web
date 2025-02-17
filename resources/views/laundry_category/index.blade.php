@@ -31,7 +31,7 @@ Laundry Category |
         <a href="{{route('laundry_category.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Laundry Category</a>
       </div>
       <div class="card-body">
-        {!! $dataTable->table(['class' => 'table table-bordered table-striped dataTable dtr-inline'], false) !!}
+        {!! $dataTable->table(['class' => 'table table-bordered table-dark table-striped dataTable dtr-inline'], false) !!}
       </div>
     </div>
   </div>    

@@ -31,7 +31,7 @@ Vendor Food Item |
         <a href="{{route('vendor_food_service.create',['id'=>request()->get('id')])}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Food Item</a>
       </div>
       <div class="card-body">
-        {!! $dataTable->table(['class' => 'table table-bordered table-striped dataTable dtr-inline'], false) !!}
+        {!! $dataTable->table(['class' => 'table table-bordered table-dark table-striped dataTable dtr-inline'], false) !!}
       </div>
     </div>
   </div>    
