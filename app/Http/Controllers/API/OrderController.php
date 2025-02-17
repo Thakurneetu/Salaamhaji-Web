@@ -38,7 +38,7 @@ class OrderController extends Controller
     {
         $type = $request->type;
         $cart_id = $request->cart_id;
-        $order_data['uuid'] = 'SH'.$this->randomToken(8);
+        $order_data['uuid'] = $this->generateUniqueOrderId();
         $order_data['customer_id'] = $request->user()->id;
         $order_data['type'] = $type;
         $order_data['address_line_1'] = $request->address_line_1;

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Holiday;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\LeaveType;
 use Spatie\Permission\Models\Role;
 use Intervention\Image\Laravel\Facades\Image;
@@ -14,6 +15,15 @@ use Intervention\Image\Laravel\Facades\Image;
 trait HelperTrait {
 
   function __construct() {
+  }
+
+  private function generateUniqueOrderId(): string
+  {
+      do {
+          $orderId = (string) mt_rand(10000000, 99999999);
+      } while (Order::where('uuid', 'SH'.$orderId)->exists());
+
+      return 'SH'.$orderId;
   }
 
   private function randomToken($n) {
