@@ -31,7 +31,7 @@ Food Item |
         <a href="{{route('food_master.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Food Item</a>
       </div>
       <div class="card-body">
-        {!! $dataTable->table(['class' => 'table table-bordered table-dark table-striped dataTable dtr-inline'], false) !!}
+        {!! $dataTable->table(['class' => 'table table-bordered table-dark dataTable dtr-inline'], false) !!}
       </div>
     </div>
   </div>    

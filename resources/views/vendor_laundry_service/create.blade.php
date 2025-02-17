@@ -14,7 +14,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{route('vendor_laundry_service.index')}}">Laundry Service list</a></li>
+            <li class="breadcrumb-item"><a href="{{route('vendor-laundry-service.index')}}">Laundry Service list</a></li>
             <li class="breadcrumb-item active">Add</li>
           </ol>
         </div>
@@ -25,9 +25,9 @@
   <div class="card card-success mx-3">
     <div class="card-header">
       <h3 class="card-title pt-1 text_black"><i class="fas fa-user-plus"></i> Add</h3>
-      <a href="{{ route('vendor_laundry_service.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
+      <a href="{{ route('vendor-laundry-service.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
     </div>
-    <form action="{{ route('vendor_laundry_service.store') }}" method="post">
+    <form action="{{ route('vendor-laundry-service.store') }}" method="post">
       @csrf
       <input type="hidden" name="vendor_id" value="{{$vendor_id}}">
       @include('vendor_laundry_service.form')

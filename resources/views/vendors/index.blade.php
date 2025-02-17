@@ -31,7 +31,7 @@ Vendor |
         <a href="{{route('vendor-users.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Vendor</a>
       </div>
       <div class="card-body">
-        {!! $dataTable->table(['class' => 'table table-bordered table-dark table-striped dataTable dtr-inline'], false) !!}
+        {!! $dataTable->table(['class' => 'table table-bordered table-dark dataTable dtr-inline'], false) !!}
       </div>
     </div>
   </div>    

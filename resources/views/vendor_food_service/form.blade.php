@@ -38,5 +38,5 @@
 
 <div class="card-footer d-flex justify-content-center">
   <button type="submit" class="btn btn-success text_black">Save</button>
-  <a href="{{ route('vendor_food_service.index') }}" class="btn btn-secondary ml-3">Cancel</a>
+  <a href="{{ route('vendor-food-service.index') }}" class="btn btn-secondary ml-3">Cancel</a>
 </div>

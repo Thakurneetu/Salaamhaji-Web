@@ -40,7 +40,7 @@ class VendorLaundryServiceController extends Controller
         $customer = VendorLaundryService::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
-        return redirect(route('vendor_laundry_service.index', ['id'=>$request->vendor_id]));
+        return redirect(route('vendor-laundry-service.index', ['id'=>$request->vendor_id]));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -76,7 +76,7 @@ class VendorLaundryServiceController extends Controller
         $vendorLaundryService->update($data);
         DB::commit();
         Alert::toast('Service Updated Successfully','success');
-        return redirect(route('vendor_laundry_service.index', ['id'=>$vendorLaundryService->vendor_id]));
+        return redirect(route('vendor-laundry-service.index', ['id'=>$vendorLaundryService->vendor_id]));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());

@@ -22,7 +22,10 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', [LoginController::class, 'showLoginForm']);
 
-Route::get('/', [VendorController::class, 'vendorForm']);
+Route::get('/', [VendorController::class, 'vendorForm'])->name('vendor.registration');
+Route::post('/', [VendorController::class, 'vendorFormSubmit']);
+Route::get('/success', [VendorController::class, 'success']);
+
 Route::get('/success', [VendorController::class, 'success']);
 
 Route::group(['middleware' => 'auth'], function () {
@@ -39,8 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
     'laundry_master' => LoundryMasterController::class,
     'food_category' => FoodCategoryController::class,
     'food_master' => FoodMasterController::class,
-    'vendor_laundry_service' => VendorLaundryServiceController::class,
-    'vendor_food_service' => VendorFoodServiceController::class,
+    'vendor-laundry-service' => VendorLaundryServiceController::class,
+    'vendor-food-service' => VendorFoodServiceController::class,
     'order' => OrderController::class,
   ]);
 });

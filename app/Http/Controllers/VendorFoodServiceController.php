@@ -14,9 +14,9 @@ class VendorFoodServiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(VendorFoodServiceDataTable $dataTable)
+    public function index(VendorFoodServiceDataTable $dataTable, Request $request)
     {
-      return $dataTable->render('vendor_food_service.index');
+      return $dataTable->with('id', $request->id)->render('vendor_food_service.index');
     }
 
     /**
@@ -40,7 +40,7 @@ class VendorFoodServiceController extends Controller
         $customer = VendorFoodService::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
-        return redirect(route('vendor_food_service.index', ['id'=>$request->vendor_id]));
+        return redirect(route('vendor-food-service.index', ['id'=>$request->vendor_id]));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -76,7 +76,7 @@ class VendorFoodServiceController extends Controller
         $vendorFoodService->update($data);
         DB::commit();
         Alert::toast('Service Updated Successfully','success');
-        return redirect(route('vendor_food_service.index', ['id'=>$vendorFoodService->vendor_id]));
+        return redirect(route('vendor-food-service.index', ['id'=>$vendorFoodService->vendor_id]));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());

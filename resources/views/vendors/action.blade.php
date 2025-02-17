@@ -5,19 +5,30 @@
       <span>Edit</span>
     </div>
   </a>
-  
     @if($services == 'Laundry')
-      <a href="{{ route('vendor_laundry_service.index', ['id'=>$id]) }}" class='btn btn-sm btn-light tooltip-box'>
+      <a href="{{ route('vendor-laundry-service.index', ['id'=>$id]) }}" class='btn btn-sm btn-primary tooltip-box'>
       <i class="fas fa-tshirt"></i>
     @elseif($services == 'CAB')
-      <a href="#" class='btn btn-sm btn-light tooltip-box'>
+      <a href="#" class='btn btn-sm btn-primary tooltip-box'>
       <i class="fas fa-taxi"></i>
     @else
-      <a href="{{ route('vendor_food_service.index', ['id'=>$id]) }}" class='btn btn-sm btn-light tooltip-box'>
+      <a href="{{ route('vendor-food-service.index', ['id'=>$id]) }}" class='btn btn-sm btn-primary tooltip-box'>
       <i class="fas fa-pizza-slice"></i>
     @endif
     <div class="tooltip text-white text-xs -top-full"> 
       <span>Services</span>
+    </div>
+  </a>
+    @if($services == 'Laundry')
+      <a href="{{asset($laundry_catalogue)}}" target="_blank" class='btn btn-sm btn-success tooltip-box'>
+    @elseif($services == 'CAB')
+      <a href="{{asset($cab_catalogue)}}" target="_blank" class='btn btn-sm btn-success tooltip-box'>
+    @else
+      <a href="{{asset($food_catalogue)}}" target="_blank" class='btn btn-sm btn-success tooltip-box'>
+    @endif
+    <i class="nav-icon text_black fas fa-layer-group"></i> 
+    <div class="tooltip text-white text-xs -top-full"> 
+      <span>Catalogue</span>
     </div>
   </a>
   <a href="javascript:void(0);" onclick="delete_data({{$id}})" class='btn btn-sm btn-danger tooltip-box'>

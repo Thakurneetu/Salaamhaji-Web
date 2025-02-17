@@ -37,7 +37,8 @@ class VendorFoodServiceDataTable extends DataTable
     {
       return $model->newQuery()
         ->select('vendor_food_services.*', 'food_categories.name as category')
-        ->join('food_categories', 'vendor_food_services.category_id', '=', 'food_categories.id');
+        ->join('food_categories', 'vendor_food_services.category_id', '=', 'food_categories.id')
+        ->where('vendor_id', $this->id);
     }
 
     /**

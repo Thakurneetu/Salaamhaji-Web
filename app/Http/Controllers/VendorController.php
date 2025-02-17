@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Traits\HelperTrait;
 use File;
+use App\Http\Requests\VendorRegisterRequest;
 
 class VendorController extends Controller
 {
@@ -27,7 +28,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-      $countries = Country:: get();
+      $countries = Country::get();
       return view('vendors.create', compact('countries'));
     }
 
@@ -73,7 +74,7 @@ class VendorController extends Controller
     public function edit($id)
     {
       $vendor = Vendor::find($id);
-      $countries = Country:: get();
+      $countries = Country::get();
       $services = explode(',',$vendor->services);
       return view('vendors.edit', compact('countries','vendor','services'));
     }
@@ -154,9 +155,29 @@ class VendorController extends Controller
     }
 
     public function vendorForm(){
-      return view('vendor_registration');
+      $countries = Country::get();
+      return view('vendor_registration', compact('countries'));
     }
-    public function success(){
-      return view('registration_success');
+    
+    public function vendorFormSubmit(VendorRegisterRequest $request){
+      try{
+        DB::beginTransaction();
+        $data = $request->except('_token', 'catalogue');
+        if($request->hasFile('catalogue')){
+          if($request->services == 'Laundry'){
+            $data['laundry_catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+          }else if($request->services == 'Food'){
+            $data['food_catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+          }else{
+            $data['cab_catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+          }
+        }
+        $vendor = Vendor::create($data);
+        DB::commit();
+        return view('registration_success');
+      }catch (\Throwable $th) {
+        DB::rollback();
+        return redirect()->back();
+      }
     }
 }
