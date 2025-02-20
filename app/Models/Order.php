@@ -10,6 +10,7 @@ use Carbon\Carbon;
 class Order extends Model
 {
   protected $fillable = [
+    'id',
     'uuid',
     'customer_id',
     'type',
