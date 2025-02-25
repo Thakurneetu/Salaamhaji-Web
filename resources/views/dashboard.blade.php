@@ -28,13 +28,12 @@
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Monthly Recap Report</h5>
-
             <div class="card-tools">
               <div class="btn-group">
                 <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                   <i class="fas fa-wrench"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                <div class="dropdown-menu dropdown-menu-right" id="demolist" role="menu">
                   <a href="#" class="dropdown-item">Today</a>
                   <a href="#" class="dropdown-item">Weekly</a>
                   <a href="#" class="dropdown-item">Monthly</a>
@@ -54,7 +53,7 @@
 
                 <div class="info-box-content">
                   <span class="info-box-text">Customers</span>
-                  <span class="info-box-number">500</span>
+                  <span class="info-box-number" id="customer_count">{{$customer_count}}</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -66,7 +65,7 @@
 
                 <div class="info-box-content">
                   <span class="info-box-text">Vendors</span>
-                  <span class="info-box-number">410</span>
+                  <span class="info-box-number" id="vendor_count">{{$vendor_count}}</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -79,7 +78,7 @@
 
                 <div class="info-box-content">
                   <span class="info-box-text">Total Orders</span>
-                  <span class="info-box-number">760</span>
+                  <span class="info-box-number" id="order_count">{{$order_count}}</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -91,7 +90,7 @@
 
                 <div class="info-box-content">
                   <span class="info-box-text">Pending Orders</span>
-                  <span class="info-box-number">2,000</span>
+                  <span class="info-box-number" id="pending_order_count">{{$pending_order_count}}</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -107,7 +106,7 @@
     </div>
     <div class="row">
       <!-- Left col -->
-      <div class="col-md-8">
+      <div class="col-md-12">
 
         <!-- TABLE: LATEST ORDERS -->
         <div class="card">
@@ -127,41 +126,37 @@
                 <thead>
                 <tr>
                   <th>Order ID</th>
+                  <th>Order Type</th>
                   <th>Customer name</th>
+                  <th>Amount</th>
                   <th>Status</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                  <td>Call of Duty IV</td>
-                  <td><span class="badge badge-success">Processing</span></td>
-                </tr>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                  <td>Samsung Smart TV</td>
-                  <td><span class="badge badge-warning">Pending</span></td>
-                </tr>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                  <td>iPhone 6 Plus</td>
-                  <td><span class="badge badge-danger">Delivered</span></td>
-                </tr>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                  <td>Call of Duty IV</td>
-                  <td><span class="badge badge-success">Processing</span></td>
-                </tr>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                  <td>Samsung Smart TV</td>
-                  <td><span class="badge badge-warning">Pending</span></td>
-                </tr>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                  <td>iPhone 6 Plus</td>
-                  <td><span class="badge badge-danger">Delivered</span></td>
-                </tr>
+                <tbody id="orders">
+                  @if($orders)
+                    @foreach($orders as $item)
+                    <tr>
+                      <td><a href="order/{{$item->id}}?type={{$item->type}}">{{$item->id}}</a></td>
+                      <td>{{$item->type}}</td>
+                      <td>{{$item->customer_name}}</td>
+                      <td>{{$item->grand_total}}</td>
+                      <td>
+                        @if($item->status=='Active')
+                        <span class="badge badge-danger">{{$item->status}}</span>
+                        @elseif($item->status=='Out for delivery')
+                        <span class="badge badge-warning">{{$item->status}}</span>
+                        @elseif($item->status=='Confirmed')
+                        <span class="badge badge-success">{{$item->status}}</span>
+                        @endif
+                      </td>
+                    </tr>
+                    @endforeach
+                  @else
+                  <tr>
+                      <td colspan="4">No Orders Found</td>
+                  </tr>
+                  @endif
+               
                 </tbody>
               </table>
             </div>
@@ -175,6 +170,10 @@
     </div>
   </div>
 </section>
+<!--<div class="loader"></div>-->
+<a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
+  <i class="stack-interface stack-up-open-big"></i>
+</a>
 @endsection
 
 @section('script')
@@ -214,5 +213,44 @@
       options: barChartOptions
     })
   })
+</script>
+
+<!-- <link rel="stylesheet" href="{{asset('css/helper.css')}}">
+<link rel="stylesheet" href="{{asset('css/sweetalert.css')}}">
+<link rel="stylesheet" href="{{asset('css/jquery.toast.css')}}">
+<script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
+<script src="{{asset('js/smooth-scroll.min.js')}}"></script>
+<script src="{{asset('js/helper.js')}}"></script>
+<script src="{{asset('js/jquery.toast.js')}}"></script>
+<script src="{{asset('js/sweetalert.min.js')}}"></script> -->
+<script>
+  
+
+  $('#demolist a ').click(function () { 
+            // alert('hi');  
+    $.ajax({
+      url: "{{ route('home') }}",
+      //container: '#dashbordForm',
+      //type: "POST",
+      //redirect: true,
+      data: {val:$(this).text(),action:'filter'},
+      success: function(response) {
+        console.log(response);
+
+        $('#customer_count').html(response.customer_count);
+        $('#order_count').html(response.order_count);
+        $('#pending_order_count').html(response.pending_order_count);
+        $('#vendor_count').html(response.vendor_count);
+        $('#orders').html(response.orders);
+        //if (response.status) {
+          
+         // swal("Sent!", response.message, "success");
+          // setInterval(function () {
+          //   window.location.reload();
+          // }, 4000);
+       // }
+      }                    
+    })
+  });
 </script>
 @endsection
