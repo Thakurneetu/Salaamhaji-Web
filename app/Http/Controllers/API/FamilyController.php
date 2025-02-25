@@ -46,7 +46,7 @@ class FamilyController extends Controller
     public function show($id, Request $request)
     {
       if($id == 'invites'){
-        $invites = FamilyInvite::where('receiver_id', $request->user()->id)->latest()->get();
+        $invites = FamilyInvite::select('id','sender_id','family_id')->with('inviter:id,name,phone')->where('receiver_id', $request->user()->id)->latest()->get();
         return response()->json([
           'status' => true,
           'invites' => $invites

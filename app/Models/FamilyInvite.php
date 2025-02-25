@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FamilyInvite extends Model
 {
@@ -12,4 +13,9 @@ class FamilyInvite extends Model
     'family_id',
     'status',
   ];
+
+  public function inviter() : BelongsTo
+  {
+    return $this->belongsTo(Customer::class, 'sender_id');
+  }
 }
