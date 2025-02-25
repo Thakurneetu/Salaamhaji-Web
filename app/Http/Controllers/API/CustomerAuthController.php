@@ -126,4 +126,21 @@ class CustomerAuthController extends Controller
         ], 500);
       }
     }
+
+    public function location(Request $request){
+      try {
+        $data = $request->only('latitude', 'longitude');
+        $customer = $request->user()->update($data);
+        return response()->json([
+            'status' => true,
+            'message' => 'Your location has been updated successfully.',
+        ], 200);
+      } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage(),
+            'errors' => $th->getMessage(),
+        ], 500);
+      }
+    }
 }

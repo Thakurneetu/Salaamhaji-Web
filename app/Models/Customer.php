@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Carbon\Carbon;
 
 class Customer extends Authenticatable
@@ -23,7 +24,10 @@ class Customer extends Authenticatable
     'gender',
     'password',
     'status',
-    'country_code'
+    'country_code',
+    'family_id',
+    'latitude',
+    'longitude'
   ];
 
   protected $hidden = ['password','deleted_at'];
@@ -44,5 +48,10 @@ class Customer extends Authenticatable
           ->orderBy('service_date', 'asc')
           ->orderBy('start', 'asc')
           ->get();
+  }
+
+  public function family() : BelongsTo
+  {
+    return $this->belongsTo(Family::class, 'family_id');
   }
 }

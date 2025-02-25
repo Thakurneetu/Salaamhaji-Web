@@ -9,6 +9,7 @@ use App\Http\Controllers\API\CustomerAuthController;
 use App\Http\Controllers\API\LaundryCartController;
 use App\Http\Controllers\API\FoodCartController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\FamilyController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::post('/profile', [CustomerAuthController::class, 'profile']);
+    Route::post('/location', [CustomerAuthController::class, 'location']);
     Route::controller(HomeController::class)->group(function(){
       Route::get('/home-page', 'home');
       Route::get('/banners', 'banners');
@@ -46,5 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('clear-food-cart', [FoodCartController::class, 'clear']);
 
     Route::apiResource('order', OrderController::class);
+
+    Route::apiResource('family', FamilyController::class);
 });
 
