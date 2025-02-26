@@ -13,6 +13,8 @@ use App\Http\Controllers\FoodMasterController;
 use App\Http\Controllers\VendorLaundryServiceController;
 use App\Http\Controllers\VendorFoodServiceController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CabController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -45,5 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     'vendor-laundry-service' => VendorLaundryServiceController::class,
     'vendor-food-service' => VendorFoodServiceController::class,
     'order' => OrderController::class,
+    'location' => LocationController::class,
+    'cab' => CabController::class,
   ]);
 });

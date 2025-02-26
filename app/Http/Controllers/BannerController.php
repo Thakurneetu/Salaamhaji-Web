@@ -102,7 +102,7 @@ class BannerController extends Controller
       try{
         $this->delete_file($banner->image);
         $banner->delete();
-        Alert::toast('Promotional Banner Successfully','success');
+        Alert::toast('Promotional Banner Deleted Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {
         Alert::error($th->getMessage());
