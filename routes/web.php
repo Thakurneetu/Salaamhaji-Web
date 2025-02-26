@@ -15,6 +15,7 @@ use App\Http\Controllers\VendorFoodServiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CabController;
+use App\Http\Controllers\LocalFareController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -49,5 +50,6 @@ Route::group(['middleware' => 'auth'], function () {
     'order' => OrderController::class,
     'location' => LocationController::class,
     'cab' => CabController::class,
+    'local-fare' => LocalFareController::class,
   ]);
 });

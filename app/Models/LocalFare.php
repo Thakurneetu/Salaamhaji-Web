@@ -4,23 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Location extends Model
+class LocalFare extends Model
 {
   use SoftDeletes;
-  
+
   protected $dates = ['deleted_at'];
 
   protected $fillable = [
-    'name',
-    'status',
+    'location_id',
+    'cab_id',
+    'price_per_hour'
   ];
 
-  public function local_fares() : HasMany
+  public function cab() : BelongsTo
   {
-    return $this->hasMany(LocalFare::class);
+    return $this->belongsTo(Cab::class);
   }
-
-
 }

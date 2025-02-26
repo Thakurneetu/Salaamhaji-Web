@@ -54,8 +54,8 @@ $module=explode("/", url()->current());
     </li>
   </ul>
 </li>
-<li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab']) ? 'menu-open' : '' }}">
-  <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab']) ? 'active' : '' }}">
+<li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab','local-fare']) ? 'menu-open' : '' }}">
+  <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab','local-fare']) ? 'active' : '' }}">
     <i class="nav-icon fas fa-rupee-sign"></i>
     <p>
       Price Settings
@@ -109,8 +109,8 @@ $module=explode("/", url()->current());
           </li>
       </ul>
     </li>
-    <li class="nav-item {{ array_intersect($module, ['location','cab']) ? 'menu-open' : '' }}">
-      <a href="#" class="nav-link {{ array_intersect($module, ['location','cab']) ? 'active' : '' }}">
+    <li class="nav-item {{ array_intersect($module, ['location','cab','local-fare']) ? 'menu-open' : '' }}">
+      <a href="#" class="nav-link {{ array_intersect($module, ['location','cab','local-fare']) ? 'active' : '' }}">
         <i class="nav-icon fas fa-taxi"></i>
         <p>
           CAB Master
@@ -128,6 +128,12 @@ $module=explode("/", url()->current());
             <a href="{{route('location.index')}}" class="nav-link {{ array_intersect($module, ['location']) ? 'active_child' : '' }}">
               <i class="nav-icon fas fa-map-marker-alt"></i>
               <p>Locations</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('local-fare.index')}}" class="nav-link {{ array_intersect($module, ['local-fare']) ? 'active_child' : '' }}">
+              <i class="nav-icon fas fa-map-marker-alt"></i>
+              <p>Local Fare</p>
             </a>
           </li>
       </ul>
