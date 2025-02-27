@@ -74,7 +74,7 @@ class VendorsDataTable extends DataTable
           Column::make('phone'),
           Column::make('email'),
           Column::make('services'),
-          Column::make('address')->title('Address'),
+          Column::make('address')->title('Address')->searchable(false),
           Column::make('status')
                 ->exportable(false)
                 ->printable(false)

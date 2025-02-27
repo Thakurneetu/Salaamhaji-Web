@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LoundryMaster extends Model
 {
@@ -15,6 +16,11 @@ class LoundryMaster extends Model
     'status',
   ];
   protected $dates = ['deleted_at'];
+
+  public function category() : BelongsTo
+  {
+    return $this->belongsTo(LoundryCategory::class, 'category_id');
+  }
 }
 
 // LoundryMaster::withTrashed()->get();

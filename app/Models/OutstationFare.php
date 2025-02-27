@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LocalFare extends Model
+class OutstationFare extends Model
 {
-
   protected $fillable = [
-    'location_id',
+    'outstation_id',
     'cab_id',
-    'price_per_hour'
+    'price'
   ];
 
   public function cab() : BelongsTo

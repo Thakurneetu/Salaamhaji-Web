@@ -16,6 +16,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CabController;
 use App\Http\Controllers\LocalFareController;
+use App\Http\Controllers\OutstationController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -51,5 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
     'location' => LocationController::class,
     'cab' => CabController::class,
     'local-fare' => LocalFareController::class,
+    'outstation-fare' => OutstationController::class,
   ]);
 });

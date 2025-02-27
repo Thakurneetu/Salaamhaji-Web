@@ -76,7 +76,7 @@ class LocalFareDataTable extends DataTable
         Column::make('id')->visible(false),
         Column::make('DT_RowIndex')->title('Sl No.')->width('8%')->addClass('text-center')->sortable(false)->searchable(false),
         Column::make('name')->title('Location')->width('45%'),
-        Column::make('fares')->width('37%')->sortable(false),
+        Column::make('fares')->width('37%')->sortable(false)->searchable(false),
         Column::computed('action')
               ->exportable(false)
               ->printable(false)

@@ -42,13 +42,14 @@ class OrdersDataTable extends DataTable
     public function query(Order $model): QueryBuilder
     {
         return $model->newQuery()
-        ->select('orders.*', 
-          'customers.name as customer_name', 
-          'customers.email as email',
-          'customers.phone as phone'
-        )
-        ->join('customers', 'orders.customer_id', '=', 'customers.id')
-        ->where('type', $this->type);
+        // ->select('orders.*', 
+        //   'customers.name as customer_name', 
+        //   'customers.email as email',
+        //   'customers.phone as phone'
+        // )
+        // ->join('customers', 'orders.customer_id', '=', 'customers.id')
+        ->where('type', $this->type)
+        ->with('customer:id,name,email,phone');
     }
 
     /**
@@ -82,12 +83,12 @@ class OrdersDataTable extends DataTable
           Column::make('id')->visible(false),
           Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
           Column::make('uuid')->title('Order ID'),
-          Column::make('customer_name')->title('Customer')->sortable(false),
-          Column::make('email')->sortable(false),
-          Column::make('phone')->sortable(false),
+          Column::make('customer.name')->title('Customer')->sortable(true),
+          Column::make('customer.email')->sortable(true),
+          Column::make('customer.phone')->sortable(true),
           Column::make('created_at')->title('Order Date'),
           Column::make('service_date')->title('Service Date'),
-          Column::make('slot')->title('Time Slot')->sortable(false),
+          Column::make('slot')->title('Time Slot')->sortable(false)->searchable(false),
           Column::make('status'),
           Column::computed('action')
                 ->exportable(false)

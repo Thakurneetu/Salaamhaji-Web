@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
-      <label>Service Location</label>
+      <label>Location</label>
       <select name="location_id" id="location" class="form-control" required>
         <option value="" selected disabled>Select Location</option>
         @foreach($locations as $_location)
@@ -16,12 +16,12 @@
           <label>CAB Type: {{$cab->type}}</label>
           <div class="row">
             <div class="form-group col-9">
-              <input type="price" name="prices[{{$cab->id}}]" 
+              <input type="number" step="any" name="prices[{{$cab->id}}]" 
               value="{{old('prices[$cab->id]') ?? (@$location ? @$location->local_fares->where('cab_id', $cab->id)->first()->price_per_hour : '') }}" 
               class="form-control" placeholder="Enter Fare / Hour">
             </div>
             <div class="form-group col-3">
-              <label for="email">Fare / Hour</label>
+              <label>Fare / Hour</label>
             </div>
           </div>
         </div>

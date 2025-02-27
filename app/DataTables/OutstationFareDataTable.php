@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\FoodMaster;
+use App\Models\Outstation;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class FoodMasterDataTable extends DataTable
+class OutstationFareDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,31 +22,27 @@ class FoodMasterDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', 'food_master.action')
-        ->editColumn('serves', function($data){
-          return $data->serves.' People';
-        })
-        ->editColumn('thumbnail', function ($data) {
-          if($data->thumbnail){
-            return "<img class='rounded' style='width:50px' src='" . asset($data->thumbnail) . "' alt='thumb'>";
-          }else if($data->image){
-            return "<img style='width:50px' src='" . asset($data->image) . "' alt='thumb'>";
-          }else{
-            return '';
+        ->addColumn('action', 'outstation_fare.action')
+        ->editColumn('fares', function ($outstation) {
+          $price = '';
+          foreach ($outstation->fares as $key => $fare) {
+            $price.= $fare->cab->type.': '.$fare->price;
+            if($key+1 < count($outstation->fares)){
+              $price.= ', ';
+            }
           }
+          return $price;
         })
-        ->rawColumns(['status','action','thumbnail'])
+        ->rawColumns(['action', 'fares'])
         ->addIndexColumn();
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(FoodMaster $model): QueryBuilder
+    public function query(Outstation $model): QueryBuilder
     {
-        return $model->newQuery()
-        ->select('food_masters.*', 'food_categories.name as category')
-        ->join('food_categories', 'food_masters.category_id', '=', 'food_categories.id');
+        return $model->newQuery()->with('origin:id,name','destination:id,name');
     }
 
     /**
@@ -55,7 +51,7 @@ class FoodMasterDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('foodmaster-table')
+                    ->setTableId('outstation-table')
                     ->columns($this->getColumns())
                     ->responsive(true)
                     ->orderBy([0,'desc'])
@@ -76,20 +72,18 @@ class FoodMasterDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-          Column::make('id')->visible(false),
-          Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
-          Column::make('name')->title('item'),
-          Column::make('category')->title('Category'),
-          Column::make('price'),
-          Column::make('serves'),
-          Column::make('thumbnail')->width('15%')->orderable(false)->addClass('text-center')->defaultContent(''),
-          Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(200)
-                ->addClass('text-center'),
-        ];
+      return [
+        Column::make('id')->visible(false),
+        Column::make('DT_RowIndex')->title('Sl No.')->width('8%')->addClass('text-center')->sortable(false)->searchable(false),
+        Column::make('origin.name')->title('Origin')->width('25%')->sortable(false),
+        Column::make('destination.name')->title('Destination')->width('25%')->sortable(false),
+        Column::make('fares')->width('32%')->sortable(false)->searchable(false),
+        Column::computed('action')
+              ->exportable(false)
+              ->printable(false)
+              ->width('10%')
+              ->addClass('text-center'),
+      ];
     }
 
     /**
@@ -97,6 +91,6 @@ class FoodMasterDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'FoodMaster_' . date('YmdHis');
+        return 'Outstation_' . date('YmdHis');
     }
 }

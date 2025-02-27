@@ -43,7 +43,9 @@
       </div>
     </div>
     @if(isset($foodMaster) && $foodMaster->image)
-      <img style='width:250px' src="{{asset(@$foodMaster->image)}}" alt='Image'>
+    <div class="form-group col-md-6 col-12">
+      <img class="rounded" style='width:250px' src="{{asset(@$foodMaster->image)}}" alt='Image'>
+      </div>
     @endif
   </div>
 </div>
