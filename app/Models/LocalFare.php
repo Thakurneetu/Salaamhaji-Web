@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class LocalFare extends Model
+class LocalFare extends Model implements Auditable
 {
+  use AuditableTrait;
 
   protected $fillable = [
     'location_id',

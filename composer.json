@@ -11,6 +11,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
+        "owen-it/laravel-auditing": "^14.0",
         "realrashid/sweet-alert": "^7.2",
         "yajra/laravel-datatables": "^11.0"
     },

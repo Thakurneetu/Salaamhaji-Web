@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Carbon\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements Auditable
 {
-  use HasFactory, HasApiTokens, SoftDeletes;
+  use HasFactory, HasApiTokens, SoftDeletes, AuditableTrait;
 
   protected $guard = 'customer';
 
