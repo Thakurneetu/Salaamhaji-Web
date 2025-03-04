@@ -29,7 +29,8 @@ class Customer extends Authenticatable implements Auditable
     'country_code',
     'family_id',
     'latitude',
-    'longitude'
+    'longitude',
+    'family_joined_at'
   ];
 
   protected $hidden = ['password','deleted_at'];

@@ -32,7 +32,7 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
-      $request->user()->update(['family_id'=>$request->family_id]);
+      $request->user()->update(['family_id'=>$request->family_id, 'family_joined_at'=>now()]);
       FamilyInvite::find($request->invite_id)->update(['status'=>'accepted']);
       return response()->json([
         'status' => true,
@@ -55,26 +55,29 @@ class FamilyController extends Controller
 
       if($id == 'members'){
         $family = Family::find($request->user()->family_id);
-        $members = [];
-        foreach ($family->members as $key => $member) {
-          if($family->head->id != $member->id) {
-            $members[$key]['id'] = $member->id;
-            $members[$key]['name'] = $member->name;
-            $members[$key]['email'] = $member->email;
-            $members[$key]['phone'] = $member->phone;
-            $members[$key]['gender'] = $member->gender;
-            $members[$key]['latitude'] = $member->latitude;
-            $members[$key]['longitude'] = $member->longitude;
+        $members = [];$head=[];
+        if($family && $family->has('members')){
+          foreach ($family->members as $key => $member) {
+            if($family->head->id != $member->id) {
+              $members[$key]['id'] = $member->id;
+              $members[$key]['name'] = $member->name;
+              $members[$key]['email'] = $member->email;
+              $members[$key]['phone'] = $member->phone;
+              $members[$key]['gender'] = $member->gender;
+              $members[$key]['latitude'] = $member->latitude;
+              $members[$key]['longitude'] = $member->longitude;
+            }
           }
         }
-        $head['id'] = $family->head->id;
-        $head['name'] = $family->head->name;
-        $head['email'] = $family->head->email;
-        $head['phone'] = $family->head->phone;
-        $head['gender'] = $family->head->gender;
-        $head['latitude'] = $family->head->latitude;
-        $head['longitude'] = $family->head->longitude;
-
+        if($family){
+          $head['id'] = $family->head->id;
+          $head['name'] = $family->head->name;
+          $head['email'] = $family->head->email;
+          $head['phone'] = $family->head->phone;
+          $head['gender'] = $family->head->gender;
+          $head['latitude'] = $family->head->latitude;
+          $head['longitude'] = $family->head->longitude;
+        }
         return response()->json([
           'status' => true,
           'head' => $head,
@@ -90,6 +93,7 @@ class FamilyController extends Controller
     {
       if(!$request->user()->family_id){
         $family = Family::create(['head_id'=>$request->user()->id]);
+        $request->user()->update(['family_id'=>$family->id, 'family_joined_at'=>now()]);
       }else{
         $family = Family::find($request->user()->family_id);
       }
@@ -106,8 +110,29 @@ class FamilyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+      if($request->has('type') AND $request->type == 'quit'){
+        $family = Family::find($request->user()->family_id);
+        if(!$family) {
+          return response()->json([
+            'status' => false,
+            'message' => 'No family found.'
+          ]);
+        }
+        if($family->head_id == $request->user()->id) {
+          if(count($family->members) > 1) {
+            $family->update(['head_id'=>$family->firstMember()->id]);
+          }else{
+            $family->delete();
+          }
+        }
+        $request->user()->update(['family_id'=> null, 'family_joined_at'=>null]);
+        return response()->json([
+          'status' => true,
+          'message' => 'Exited from family successfully.'
+        ]);
+      }
       FamilyInvite::find($id)->update(['status'=>'rejected']);
       return response()->json([
         'status' => true,
