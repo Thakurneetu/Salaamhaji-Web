@@ -112,7 +112,7 @@ class FamilyController extends Controller
      */
     public function destroy($id, Request $request)
     {
-      if($request->has('type') AND $request->type == 'quit'){
+      if($id == 'quit'){
         $family = Family::find($request->user()->family_id);
         if(!$family) {
           return response()->json([
