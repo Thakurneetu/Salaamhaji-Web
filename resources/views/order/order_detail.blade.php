@@ -12,6 +12,7 @@
     <th>Order Date:</th>
     <td>{{date('d/m/Y',strtotime($order->created_at))}}</td>
   </tr>
+  @if($order->type != 'cab')
   <tr>
     <th>Address Line One:</th>
     <td>{{$order->address_line_1}}</td>
@@ -24,6 +25,7 @@
     <th>Landmark:</th>
     <td>{{$order->landmark}}</td>
   </tr>
+  @endif
   <tr>
     <th>Service Date:</th>
     <td>{{date('d/m/Y',strtotime($order->service_date))}}</td>
@@ -43,4 +45,14 @@
       </select>
     </td>
   </tr>
+  @if($order->type == 'cab')
+  <tr>
+    <th>CAB Type:</th>
+    <td>{{$order->cab_order->cab_type}} - {{$order->cab_order->seats}} @if($order->cab_order->luggage) - {{$order->cab_order->luggage}}@endif</td>
+  </tr>
+  <tr>
+    <th>Instruction:</th>
+    <td>{{$order->cab_order->instruction}}</td>
+  </tr>
+  @endif
 </table>

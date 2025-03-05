@@ -34,6 +34,8 @@
           @include('order.food_items')
         @elseif($order->type == 'laundry')
           @include('order.laundry_items')
+        @elseif($order->type == 'cab')
+          @include('order.cab_order')
         @endif
     </div>
   </div>

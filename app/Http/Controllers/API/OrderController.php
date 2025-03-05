@@ -115,9 +115,9 @@ class OrderController extends Controller
         }else if($type == 'cab') {
           $cart = CabCart::where('customer_id', $request->user()->id)->latest()->first();
           $subtotal = $cart->tour_type == 'local' ? ($cart->hours * $cart->fare->price) : $cart->fare->price;
-          $order_data['subtotal'] = number_format($subtotal, 2);
-          $order_data['tax'] = number_format($subtotal * 5 / 100, 2);
-          $order_data['grand_total'] = number_format($order_data['subtotal'] + $order_data['tax'], 2);
+          $order_data['subtotal'] = $subtotal;
+          $order_data['tax'] = $subtotal * 5 / 100;
+          $order_data['grand_total'] = $subtotal + $subtotal * 5 / 100;
           $order_data['status'] = 'Active';
           $order_data['service_date'] = $cart->service_date;
           $order_data['start'] = $cart->start;
