@@ -14,11 +14,16 @@ class LocalFare extends Model implements Auditable
   protected $fillable = [
     'location_id',
     'cab_id',
-    'price_per_hour'
+    'price'
   ];
 
   public function cab() : BelongsTo
   {
     return $this->belongsTo(Cab::class);
+  }
+
+  public function origin() : BelongsTo
+  {
+    return $this->belongsTo(Location::class, 'location_id');
   }
 }

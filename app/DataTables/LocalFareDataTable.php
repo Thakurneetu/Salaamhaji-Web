@@ -26,7 +26,7 @@ class LocalFareDataTable extends DataTable
         ->editColumn('fares', function ($location) {
           $price = '';
           foreach ($location->local_fares as $key => $fare) {
-            $price.= $fare->cab->type.': '.$fare->price_per_hour;
+            $price.= $fare->cab->type.': '.$fare->price;
             if($key+1 < count($location->local_fares)){
               $price.= ', ';
             }

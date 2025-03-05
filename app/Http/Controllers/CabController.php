@@ -35,7 +35,7 @@ class CabController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('type','seats');
+        $data = $request->only('type','seats','luggage');
         if($request->hasFile('icon')){
           $data['icon'] = $this->save_file($request->icon, '/uploads/cab');
         }
@@ -73,7 +73,7 @@ class CabController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('type','seats');
+        $data = $request->only('type','seats','luggage');
         if($request->hasFile('icon')){
           $this->delete_file($cab->icon);
           $data['icon'] = $this->save_file($request->icon, '/uploads/cab');

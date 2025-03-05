@@ -17,6 +17,14 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
+      <label for="luggage">Luggage</label>
+      <input type="text" name="luggage" value="{{old('luggage') ?? (@$cab->luggage ?? '')}}" 
+      class="form-control @error('luggage') is-invalid @enderror" placeholder="Enter Allowed Luggage">
+      @error('luggage')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
+    </div>
+    <div class="form-group col-md-6 col-12">
       <label for="icon">Icon</label>
       <div class="input-group">
         <div class="custom-file">

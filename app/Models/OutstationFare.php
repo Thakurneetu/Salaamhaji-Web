@@ -21,4 +21,9 @@ class OutstationFare extends Model implements Auditable
   {
     return $this->belongsTo(Cab::class);
   }
+
+  public function outstation() : BelongsTo
+  {
+    return $this->belongsTo(Outstation::class);
+  }
 }

@@ -46,7 +46,7 @@ class LocalFareController extends Controller
         foreach ($prices as $key => $price) {
           if($price){
             $data['cab_id'] = $key;
-            $data['price_per_hour'] = $price;
+            $data['price'] = $price;
             LocalFare::create($data);
           }
         }
@@ -96,7 +96,7 @@ class LocalFareController extends Controller
           $data['cab_id'] = $key;
           if($price){
             LocalFare::updateOrCreate($data,[
-              'price_per_hour' => $price,
+              'price' => $price,
             ]);
           }else{
             LocalFare::where($data)->delete();

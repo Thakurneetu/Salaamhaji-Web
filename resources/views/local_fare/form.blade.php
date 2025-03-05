@@ -17,7 +17,7 @@
           <div class="row">
             <div class="form-group col-9">
               <input type="number" step="any" name="prices[{{$cab->id}}]" 
-              value="{{old('prices[$cab->id]') ?? (@$location ? @$location->local_fares->where('cab_id', $cab->id)->first()->price_per_hour : '') }}" 
+              value="{{old('prices[$cab->id]') ?? (@$location ? @$location->local_fares->where('cab_id', $cab->id)->first()->price : '') }}" 
               class="form-control" placeholder="Enter Fare / Hour">
             </div>
             <div class="form-group col-3">

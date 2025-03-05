@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('local_fares', function (Blueprint $table) {
-            $table->id();
-            $table->integer('location_id');
-            $table->integer('cab_id');
-            $table->decimal('price', 8, 2);
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('cabs', function (Blueprint $table) {
+          $table->string('luggage')->nullable();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('local_fares');
+        Schema::table('cabs', function (Blueprint $table) {
+          $table->dropColumn('luggage');
+        });
     }
 };

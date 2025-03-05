@@ -13,11 +13,13 @@ class Cab extends Model implements Auditable
   
   protected $appends = ['icon_url'];
   protected $dates = ['deleted_at'];
+  protected $hidden = ['created_at','updated_at','deleted_at', 'icon'];
   
   protected $fillable = [
     'type',
     'seats',
     'icon',
+    'luggage',
   ];
 
   public function getIconUrlAttribute()

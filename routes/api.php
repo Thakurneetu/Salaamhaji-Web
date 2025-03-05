@@ -10,6 +10,8 @@ use App\Http\Controllers\API\LaundryCartController;
 use App\Http\Controllers\API\FoodCartController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\FamilyController;
+use App\Http\Controllers\API\CabController;
+use App\Http\Controllers\API\CabCartController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -40,6 +42,11 @@ Route::middleware('auth:sanctum')->group(function () {
       Route::get('laundry/categories', 'categories');
       Route::get('laundry/category-services/{id}', 'services');
     });
+    Route::prefix('transport')->controller(CabController::class)->group(function(){
+      Route::get('/locations', 'locations');
+      Route::get('/local-fares/{id}', 'local_fares');
+      Route::get('/outstation-fares/{origin}/{destination}', 'outstation_fares');
+    });
 
     Route::apiResource('laundry-cart', LaundryCartController::class);
     Route::get('clear-laundry-cart', [LaundryCartController::class, 'clear']);
@@ -50,5 +57,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('order', OrderController::class);
 
     Route::apiResource('family', FamilyController::class);
+
+    Route::apiResource('cab-cart', CabCartController::class);
+    Route::get('clear-cab-cart', [CabCartController::class, 'clear']);
+
 });
 

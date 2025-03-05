@@ -7,6 +7,8 @@ use App\Models\LoundryMaster;
 use App\Models\LaundryCartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class LaundryCartController extends Controller
 {
@@ -16,6 +18,16 @@ class LaundryCartController extends Controller
     public function index(Request $request)
     {
       $customer_id = $request->user()->id;
+      $threshold = Carbon::now()->addHours(24);
+      $laundryCarts =  LaundryCart::where('customer_id', $customer_id)->where(function ($query) use ($threshold) {
+            $query->where(DB::raw("CONCAT(service_date, ' ', start)"), '<=', $threshold);
+        })
+        ->get();
+      foreach ($laundryCarts as $key => $laundryCart) {
+        $laundryCart->items()->delete();
+        $laundryCart->delete();
+      }
+      
       $carts = LaundryCart::select('id', 'category_id','total','service_date','start','end')
                ->with('items:id,laundry_cart_id,service_id,price_per_piece,quantity,total_price')
                ->where('customer_id', $customer_id)

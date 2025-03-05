@@ -14,6 +14,8 @@ use App\Models\FoodCartItem;
 use App\Models\FoodOrderItem;
 use App\Models\LaundryOrder;
 use App\Models\LaundryOrderItem;
+use App\Models\CabCart;
+use App\Models\CabOrder;
 use App\Traits\HelperTrait;
 
 class OrderController extends Controller
@@ -109,6 +111,38 @@ class OrderController extends Controller
           return response()->json([
             'status' => true,
             'message' => 'Order Placed Successfully',
+          ]);
+        }else if($type == 'cab') {
+          $cart = CabCart::where('customer_id', $request->user()->id)->latest()->first();
+          $subtotal = $cart->tour_type == 'local' ? ($cart->hours * $cart->fare->price) : $cart->fare->price;
+          $order_data['subtotal'] = number_format($subtotal, 2);
+          $order_data['tax'] = number_format($subtotal * 5 / 100, 2);
+          $order_data['grand_total'] = number_format($order_data['subtotal'] + $order_data['tax'], 2);
+          $order_data['status'] = 'Active';
+          $order_data['service_date'] = $cart->service_date;
+          $order_data['start'] = $cart->start;
+          $order_data['end'] = $cart->end;
+          $order = Order::create($order_data);
+
+          $cab_data['order_id'] = $order->id;
+          $cab_data['customer_id'] = $request->user()->id;
+          $cab_data['tour_type'] = $cart->tour_type;
+          $cab_data['hours'] = $cart->hours;
+          $cab_data['price'] = $cart->fare->price;
+          $cab_data['origin'] = $cart->tour_type == 'local' 
+                                  ? $cart->fare->origin->name 
+                                  : $cart->fare->outstation->origin->name;
+          $cab_data['destination'] = $cart->tour_type == 'local' ? '' : $cart->fare->outstation->destination->name;
+          $cab_data['pickup_location'] = $cart->pickup_location;
+          $cab_data['instruction'] = $cart->instruction;
+          $cab_data['cab_type'] = $cart->fare->cab->type;
+          $cab_data['seats'] = $cart->fare->cab->seats;
+          $cab_data['luggage'] = $cart->fare->cab->luggage;
+          CabOrder::create($cab_data);
+          CabCart::where('customer_id', $request->user()->id)->delete();
+          return response()->json([
+            'status' => true,
+            'message' => 'CAB Booked Successfully',
           ]);
         }
     }

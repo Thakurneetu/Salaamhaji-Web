@@ -7,6 +7,8 @@ use App\Models\FoodMaster;
 use App\Models\FoodCartItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FoodCartController extends Controller
 {
@@ -16,6 +18,15 @@ class FoodCartController extends Controller
     public function index(Request $request)
     {
       $customer_id = $request->user()->id;
+      $threshold = Carbon::now()->addHours(24);
+      $foodCarts =  FoodCart::where('customer_id', $customer_id)->where(function ($query) use ($threshold) {
+            $query->where(DB::raw("CONCAT(service_date, ' ', start)"), '<=', $threshold);
+        })
+        ->get();
+      foreach ($foodCarts as $key => $foodCart) {
+        $foodCart->items()->delete();
+        $foodCart->delete();
+      }
       $cart = FoodCart::select('id','total','service_date','start','end')
                ->with('items:id,food_cart_id,service_id,price_per_piece,quantity,total_price')
                ->where('customer_id', $customer_id)

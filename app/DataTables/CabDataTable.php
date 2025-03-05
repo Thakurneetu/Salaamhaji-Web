@@ -73,11 +73,12 @@ class CabDataTable extends DataTable
         Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
         Column::make('type')->title('CAB Type'),
         Column::make('seats'),
-        Column::make('icon')->width('15%')->orderable(false)->defaultContent(''),
+        Column::make('luggage')->width("20%"),
+        Column::make('icon')->width('7%')->orderable(false)->defaultContent('')->addClass('text-center'),
         Column::computed('action')
               ->exportable(false)
               ->printable(false)
-              ->width(200)
+              ->width("10%")
               ->addClass('text-center'),
       ];
     }
