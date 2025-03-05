@@ -93,4 +93,62 @@ trait HelperTrait {
     }
   }
 
+  private function formatOrders($orders){
+    $bookings = array();
+    $key=0;
+    foreach ($orders as $order) {
+      if($order->type == 'food'){
+        foreach ($order->food_items as $item) {
+          $bookings[$key]['id'] = $order->id;
+          $bookings[$key]['type'] = $order->type;
+          $bookings[$key]['time_slot'] = $order->formatted_service_time;
+          $bookings[$key]['service_date'] = $order->service_date;
+          $bookings[$key]['start'] = $order->start;
+          $bookings[$key]['end'] = $order->end;
+          $bookings[$key]['status'] = $order->status;
+          $bookings[$key]['quantity'] = (string)$item->quantity;
+          $bookings[$key]['price'] = $item->total_price;
+          $bookings[$key]['service_name'] = $item->service_name;
+          $bookings[$key]['from'] = '';
+          $bookings[$key]['to'] = '';
+          $bookings[$key]['pickup_location'] = '';
+          $key++;
+        }
+      }else if($order->type == 'laundry'){
+        foreach ($order->laundry_orders as $item) {
+          $bookings[$key]['id'] = $order->id;
+          $bookings[$key]['type'] = $order->type;
+          $bookings[$key]['time_slot'] = $order->formatted_service_time;
+          $bookings[$key]['service_date'] = $order->service_date;
+          $bookings[$key]['start'] = $order->start;
+          $bookings[$key]['end'] = $order->end;
+          $bookings[$key]['status'] = $order->status;
+          $bookings[$key]['quantity'] = '';
+          $bookings[$key]['price'] = $item->total;
+          $bookings[$key]['service_name'] = $item->category_name;
+          $bookings[$key]['from'] = '';
+          $bookings[$key]['to'] = '';
+          $bookings[$key]['pickup_location'] = '';
+          $key++;
+        }
+      }else if($order->type == 'cab'){
+          $bookings[$key]['id'] = $order->id;
+          $bookings[$key]['type'] = $order->type;
+          $bookings[$key]['time_slot'] = $order->formatted_service_time;
+          $bookings[$key]['service_date'] = $order->service_date;
+          $bookings[$key]['start'] = $order->start;
+          $bookings[$key]['end'] = $order->end;
+          $bookings[$key]['status'] = $order->status;
+          $bookings[$key]['quantity'] = '';
+          $bookings[$key]['price'] = $order->grand_total;
+          $bookings[$key]['service_name'] = $order->cab_order->tour_type;
+          $bookings[$key]['from'] = $order->cab_order->origin;
+          $bookings[$key]['to'] = $order->cab_order->destination;
+          $bookings[$key]['pickup_location'] = $order->cab_order->pickup_location;
+          $key++;
+      }
+    }
+    return $bookings;
+  }
+
 }

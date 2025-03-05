@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use Carbon\Carbon;
@@ -44,6 +45,10 @@ class Order extends Model implements Auditable
   public function laundry_orders() : HasMany
   {
     return $this->hasMany(LaundryOrder::class);
+  }
+  public function cab_order() : HasOne
+  {
+    return $this->hasOne(CabOrder::class);
   }
 
   public function getFormattedServiceTimeAttribute()

@@ -29,7 +29,7 @@ class OrderController extends Controller
         $orders = Order::where('customer_id', $request->user()->id)->get();
         return response()->json([
           'status' => true,
-          'orders' => $orders
+          'orders' => $this->formatOrders($orders)
         ]);
     }
 

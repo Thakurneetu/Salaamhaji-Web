@@ -50,6 +50,7 @@ class Customer extends Authenticatable implements Auditable
           ->where('service_date', '>=', date('Y-m-d'))
           ->orderBy('service_date', 'asc')
           ->orderBy('start', 'asc')
+          ->take(5)
           ->get();
   }
 
