@@ -15,8 +15,8 @@
           </thead>
           <tbody>
               <tr>
-                  <td><input type="text" class="form-control" name="all" required></td>
-                  <td><input type="text" class="form-control" name="combo" required></td>
+                  <td><input type="text" class="form-control" name="menu[][breakfast]" required></td>
+                  <td><input type="text" class="form-control" name="menu[][breakfast-lunch]" required></td>
               </tr>
           </tbody>
       </table>
@@ -43,13 +43,15 @@
               @endforeach
               <tr>
                   <td>Common <br> (Based on <br> availability) </td>
-                  <td><textarea class="form-control" name="menu['common'][breakfast]" required></textarea></td>
-                  <td><textarea class="form-control" name="menu['common'][lunch]" required></textarea></td>
-                  <td><textarea class="form-control" name="menu['common'][dinner]" required></textarea></td>
+                  <td><textarea class="form-control" name="menu[{{ strtolower($day) }}][breakfast]" required></textarea></td>
+                  <td><textarea class="form-control" name="menu[{{ strtolower($day) }}][lunch]" required></textarea></td>
+                  <td><textarea class="form-control" name="menu[{{ strtolower($day) }}][dinner]" required></textarea></td>
               </tr>
           </tbody>
       </table>
   </div>
   <div class="text-white mb-2">Note: Use ( | ) to seperate two food items. (Ex: KHEEMA | WHITE RICE | DAAL FRY)</div>
+  <hr class="border-white">
+
   <button type="submit" class="btn btn-success text_black">Save Menu</button>
 </div>

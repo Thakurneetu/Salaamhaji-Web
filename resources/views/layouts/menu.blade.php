@@ -54,7 +54,7 @@ $module=explode("/", url()->current());
     </li>
   </ul>
 </li>
-<li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab','local-fare','outstation-fare']) ? 'menu-open' : '' }}">
+<li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food-menu','food_master','location','cab','local-fare','outstation-fare']) ? 'menu-open' : '' }}">
   <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab','local-fare','outstation-fare']) ? 'active' : '' }}">
     <i class="nav-icon fas fa-rupee-sign"></i>
     <p>
@@ -86,8 +86,8 @@ $module=explode("/", url()->current());
           </li>
       </ul>
     </li>
-    <li class="nav-item {{ array_intersect($module, ['food_category', 'food_master',]) ? 'menu-open' : '' }}">
-      <a href="#" class="nav-link {{ array_intersect($module, ['food_category', 'food_master']) ? 'active' : '' }}">
+    <li class="nav-item {{ array_intersect($module, ['food-menu', 'food_master',]) ? 'menu-open' : '' }}">
+      <a href="#" class="nav-link {{ array_intersect($module, ['food-menu', 'food_master']) ? 'active' : '' }}">
         <i class="nav-icon fas fa-pizza-slice"></i>
         <p>
           Food Master
@@ -95,6 +95,13 @@ $module=explode("/", url()->current());
         </p>
       </a>
       <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{route('food-menu.index')}}" class="nav-link {{ array_intersect($module, ['food-menu']) ? 'active_child' : '' }}">
+              <i class="nav-icon fas fa-layer-group"></i> 
+              <p>Food Menu</p>
+            </a>
+          </li>
+          {{--
           <li class="nav-item">
             <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active_child' : '' }}">
               <i class="nav-icon fas fas fa-cubes"></i>
@@ -107,6 +114,7 @@ $module=explode("/", url()->current());
               <p>Food Service</p>
             </a>
           </li>
+          --}}
       </ul>
     </li>
     <li class="nav-item {{ array_intersect($module, ['location','cab','local-fare','outstation-fare']) ? 'menu-open' : '' }}">

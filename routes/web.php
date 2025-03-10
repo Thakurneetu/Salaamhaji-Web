@@ -17,6 +17,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CabController;
 use App\Http\Controllers\LocalFareController;
 use App\Http\Controllers\OutstationController;
+use App\Http\Controllers\FoodMenuController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -32,6 +33,8 @@ Route::get('/success', [VendorController::class, 'success']);
 
 Route::get('/success', [VendorController::class, 'success']);
 
+Route::get('/demo', [FoodMasterController::class, 'demo']);
+
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
   Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
@@ -46,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     'laundry_master' => LoundryMasterController::class,
     'food_category' => FoodCategoryController::class,
     'food_master' => FoodMasterController::class,
+    'food-menu' => FoodMenuController::class,
     'vendor-laundry-service' => VendorLaundryServiceController::class,
     'vendor-food-service' => VendorFoodServiceController::class,
     'order' => OrderController::class,

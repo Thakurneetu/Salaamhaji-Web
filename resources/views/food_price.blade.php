@@ -14,7 +14,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{route('food_master.index')}}">Food Menu list</a></li>
+            <li class="breadcrumb-item"><a href="{{route('food_category.index')}}">Food Menu list</a></li>
             <li class="breadcrumb-item active">Add</li>
           </ol>
         </div>
@@ -25,11 +25,11 @@
   <div class="card card-success mx-3">
     <div class="card-header">
       <h3 class="card-title pt-1 text_black"><i class="fas fa-user-plus"></i> Add</h3>
-      <a href="{{ route('food_master.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
+      <a href="{{ route('food_category.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
     </div>
-    <form action="{{ route('food_master.store') }}" method="post">
+    <form action="{{-- route('food_category.store') --}}" method="post">
       @csrf
-      @include('food_master.form')
+      @include('food_menu')
     </form>
   </div>
 @endsection
