@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
 use App\Models\Customer;
+use App\Models\Notice;
 use Carbon\Carbon;
 use App\Traits\HelperTrait;
 
@@ -30,6 +31,16 @@ class HomeController extends Controller
         'status' => true,
         'profile' => $request->user(),
         'upcoming_bookings' => $bookings
+      ]);
+    }
+
+    public function notice($module)
+    {
+      $notice = Notice::where('module', $module)->first();
+      $message = $notice ? ($notice->message ?? null) : null;
+      return response()->json([
+        'status' => true,
+        'notice' => $message,
       ]);
     }
 }

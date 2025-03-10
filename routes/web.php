@@ -18,6 +18,7 @@ use App\Http\Controllers\CabController;
 use App\Http\Controllers\LocalFareController;
 use App\Http\Controllers\OutstationController;
 use App\Http\Controllers\FoodMenuController;
+use App\Http\Controllers\NoticeController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -57,5 +58,6 @@ Route::group(['middleware' => 'auth'], function () {
     'cab' => CabController::class,
     'local-fare' => LocalFareController::class,
     'outstation-fare' => OutstationController::class,
+    'notice' => NoticeController::class,
   ]);
 });

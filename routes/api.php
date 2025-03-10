@@ -61,5 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('cab-cart', CabCartController::class);
     Route::get('clear-cab-cart', [CabCartController::class, 'clear']);
 
+    Route::get('notice/{module}', [HomeController::class, 'notice']);
+
 });
 

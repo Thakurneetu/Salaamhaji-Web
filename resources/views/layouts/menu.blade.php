@@ -54,7 +54,7 @@ $module=explode("/", url()->current());
     </li>
   </ul>
 </li>
-<li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food-menu','food_master','location','cab','local-fare','outstation-fare']) ? 'menu-open' : '' }}">
+<li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master','food-menu','notice','location','cab','local-fare','outstation-fare']) ? 'menu-open' : '' }}">
   <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master','food_category','food_master','location','cab','local-fare','outstation-fare']) ? 'active' : '' }}">
     <i class="nav-icon fas fa-rupee-sign"></i>
     <p>
@@ -63,6 +63,12 @@ $module=explode("/", url()->current());
     </p>
   </a>
   <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="{{route('notice.index')}}" class="nav-link {{ array_intersect($module, ['notice']) ? 'active_child' : '' }}">
+        <i class="nav-icon fas fa-exclamation-circle"></i>
+        <p>Notice Setting</p>
+      </a>
+    </li>
     <li class="nav-item {{ array_intersect($module, ['laundry_category', 'laundry_master',]) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link {{ array_intersect($module, ['laundry_category', 'laundry_master']) ? 'active' : '' }}">
         <i class="nav-icon fas fa-tshirt"></i>
@@ -104,7 +110,7 @@ $module=explode("/", url()->current());
           {{--
           <li class="nav-item">
             <a href="{{route('food_category.index')}}" class="nav-link {{ array_intersect($module, ['food_category']) ? 'active_child' : '' }}">
-              <i class="nav-icon fas fas fa-cubes"></i>
+              <i class="nav-icon fas fa-cubes"></i>
               <p>Food Category</p>
             </a>
           </li>
@@ -128,7 +134,7 @@ $module=explode("/", url()->current());
       <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="{{route('cab.index')}}" class="nav-link {{ array_intersect($module, ['cab']) ? 'active_child' : '' }}">
-              <i class="nav-icon fas fas fa-truck"></i>
+              <i class="nav-icon fas fa-truck"></i>
               <p>CAB Types</p>
             </a>
           </li>
