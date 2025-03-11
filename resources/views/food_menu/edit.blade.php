@@ -4,6 +4,10 @@
   Edit Food Menu | 
 @endsection
 
+@section('style')
+<link href="{{ asset('plugins/date-time-picker/bootstrap-material-datetimepicker.min.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
   <div class="content-header">
     <div class="container-fluid">
@@ -35,10 +39,17 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('plugins/date-time-picker/moment.min.js') }}" defer></script> 
+<script src="{{ asset('plugins/date-time-picker/bootstrap-material-datetimepicker.min.js') }}" defer></script>
 <script>
   $(document).ready(function () {
-    bsCustomFileInput.init();
+    $('.timepicker').bootstrapMaterialDatePicker({
+      date: false,
+      shortTime: true,
+      format: 'HH:mm',
+      switchOnClick: true,
+      clearButton: false,
+    });
   });
 </script>
 @endsection

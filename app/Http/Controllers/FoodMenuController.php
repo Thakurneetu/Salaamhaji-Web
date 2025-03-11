@@ -34,7 +34,8 @@ class FoodMenuController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('package','all_price','combo_price');
+        $data = $request->only('package','all_price','combo_price','breakfast_start','breakfast_end',
+                               'lunch_start','lunch_end','dinner_start','dinner_end',);
         $menu = FoodMenu::create($data);
         $menu_items = $request->menu;
         $item['food_menu_id'] = $menu->id;
@@ -79,7 +80,8 @@ class FoodMenuController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('package','all_price','combo_price');
+        $data = $request->only('package','all_price','combo_price','breakfast_start','breakfast_end',
+                               'lunch_start','lunch_end','dinner_start','dinner_end',);
         $foodMenu->update($data);
         $menu_items = $request->menu;
         $item['food_menu_id'] = $foodMenu->id;

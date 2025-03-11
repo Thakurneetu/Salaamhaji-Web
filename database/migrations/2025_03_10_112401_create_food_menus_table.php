@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('food_menus', function (Blueprint $table) {
             $table->id();
             $table->string('package');
+            $table->time('breakfast_start')->nullable();
+            $table->time('breakfast_end')->nullable();
+            $table->time('lunch_start')->nullable();
+            $table->time('lunch_end')->nullable();
+            $table->time('dinner_start')->nullable();
+            $table->time('dinner_end')->nullable();
+            $table->time('start')->nullable();
             $table->decimal('all_price', 8, 2)->default('0.00');
             $table->decimal('combo_price', 8, 2)->default('0.00');
             $table->timestamps();

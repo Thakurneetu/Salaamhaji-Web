@@ -22,6 +22,35 @@
       </table>
   </div>
   <div class="form-group">
+      <h4>Meal Timings</h4>
+      <table class="table table-bordered table-dark">
+          <thead>
+              <tr>
+                  <th>Meal</th>
+                  <th>Start</th>
+                  <th>End</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Breakfast</td>
+                  <td><input type="text" class="form-control timepicker" name="breakfast_start" value="{{old('breakfast_start') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->breakfast_start)) : '')}}"></td>
+                  <td><input type="text" class="form-control timepicker" name="breakfast_end" value="{{old('breakfast_end') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->breakfast_end)) : '')}}"></td>
+              </tr>
+              <tr>
+                  <td>Lunch</td>
+                  <td><input type="text" class="form-control timepicker" name="lunch_start" value="{{old('lunch_start') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->lunch_start)) : '')}}"></td>
+                  <td><input type="text" class="form-control timepicker" name="lunch_end" value="{{old('lunch_end') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->lunch_end)) : '')}}"></td>
+              </tr>
+              <tr>
+                  <td>Dinner</td>
+                  <td><input type="text" class="form-control timepicker" name="dinner_start" value="{{old('dinner_start') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->dinner_start)) : '')}}"></td>
+                  <td><input type="text" class="form-control timepicker" name="dinner_end" value="{{old('dinner_end') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->dinner_end)) : '')}}"></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  <div class="form-group">
       <label for="week_menu">Weekly Menu</label>
       <table class="table table-bordered table-dark">
           <thead>

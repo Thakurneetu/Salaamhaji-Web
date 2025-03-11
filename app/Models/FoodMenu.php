@@ -15,6 +15,12 @@ class FoodMenu extends Model implements Auditable
     'package',
     'all_price',
     'combo_price',
+    'breakfast_start',
+    'breakfast_end',
+    'lunch_start',
+    'lunch_end',
+    'dinner_start',
+    'dinner_end',
   ];
 
   public function items() : HasMany

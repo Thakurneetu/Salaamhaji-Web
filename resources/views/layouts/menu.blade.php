@@ -64,7 +64,7 @@ $module=explode("/", url()->current());
   </a>
   <ul class="nav nav-treeview">
     <li class="nav-item">
-      <a href="{{route('notice.index')}}" class="nav-link {{ array_intersect($module, ['notice']) ? 'active_child' : '' }}">
+      <a href="{{route('notice.index')}}" class="nav-link {{ array_intersect($module, ['notice']) ? 'active' : '' }}">
         <i class="nav-icon fas fa-exclamation-circle"></i>
         <p>Notice Setting</p>
       </a>

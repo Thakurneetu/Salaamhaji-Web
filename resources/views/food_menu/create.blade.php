@@ -4,6 +4,10 @@
   Add Food Menu | 
 @endsection
 
+@section('style')
+<link href="{{ asset('plugins/date-time-picker/bootstrap-material-datetimepicker.min.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
   <div class="content-header">
     <div class="container-fluid">
@@ -32,4 +36,20 @@
       @include('food_menu.form')
     </form>
   </div>
+@endsection
+
+@section('script')
+<script src="{{ asset('plugins/date-time-picker/moment.min.js') }}" defer></script> 
+<script src="{{ asset('plugins/date-time-picker/bootstrap-material-datetimepicker.min.js') }}" defer></script>
+<script>
+  $(document).ready(function () {
+    $('.timepicker').bootstrapMaterialDatePicker({
+      date: false,
+      shortTime: true,
+      format: 'HH:mm',
+      switchOnClick: true,
+      clearButton: false,
+    });
+  });
+</script>
 @endsection

@@ -54,9 +54,6 @@
     </footer>
 </div>
 
-
-@yield('script')
-
 @stack('scripts')
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="{{ asset('vendor/sweetalert/min.js') }}"></script>
@@ -79,5 +76,6 @@
     }
   }
 </script>
+@yield('script')
 </body>
 </html>

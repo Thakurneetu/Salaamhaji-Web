@@ -37,6 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(FoodController::class)->group(function(){
       Route::get('/food/categories', 'categories');
       Route::get('/food/category-services/{id}', 'services');
+      Route::get('/food/packages', 'packages');
+      Route::get('/food/menu/{id}', 'menu');
     });
     Route::controller(LaundryController::class)->group(function(){
       Route::get('laundry/categories', 'categories');
