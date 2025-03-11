@@ -15,8 +15,8 @@
           </thead>
           <tbody>
               <tr>
-                  <td><input type="text" class="form-control" name="all_price" value="{{old('all_price') ?? (@$foodMenu->all_price ?? '')}}"  ></td>
-                  <td><input type="text" class="form-control" name="combo_price" value="{{old('combo_price') ?? (@$foodMenu->combo_price ?? '')}}"  ></td>
+                  <td><input type="text" class="form-control" name="all_price" value="{{old('all_price') ?? (@$foodMenu->all_price ?? '')}}" required></td>
+                  <td><input type="text" class="form-control" name="combo_price" value="{{old('combo_price') ?? (@$foodMenu->combo_price ?? '')}}" required></td>
               </tr>
           </tbody>
       </table>
@@ -34,18 +34,18 @@
           <tbody>
               <tr>
                   <td>Breakfast</td>
-                  <td><input type="text" class="form-control timepicker" name="breakfast_start" value="{{old('breakfast_start') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->breakfast_start)) : '')}}"></td>
-                  <td><input type="text" class="form-control timepicker" name="breakfast_end" value="{{old('breakfast_end') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->breakfast_end)) : '')}}"></td>
+                  <td><input type="text" class="form-control timepicker" name="breakfast_start" value="{{old('breakfast_start') ?? ((isset($foodMenu) AND $foodMenu->breakfast_start) ? date('H:i', strtotime($foodMenu->breakfast_start)) : '')}}" required></td>
+                  <td><input type="text" class="form-control timepicker" name="breakfast_end" value="{{old('breakfast_end') ?? ((isset($foodMenu) AND $foodMenu->breakfast_end) ? date('H:i', strtotime($foodMenu->breakfast_end)) : '')}}" required></td>
               </tr>
               <tr>
                   <td>Lunch</td>
-                  <td><input type="text" class="form-control timepicker" name="lunch_start" value="{{old('lunch_start') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->lunch_start)) : '')}}"></td>
-                  <td><input type="text" class="form-control timepicker" name="lunch_end" value="{{old('lunch_end') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->lunch_end)) : '')}}"></td>
+                  <td><input type="text" class="form-control timepicker" name="lunch_start" value="{{old('lunch_start') ?? ((isset($foodMenu) AND $foodMenu->lunch_start) ? date('H:i', strtotime($foodMenu->lunch_start)) : '')}}" required></td>
+                  <td><input type="text" class="form-control timepicker" name="lunch_end" value="{{old('lunch_end') ?? ((isset($foodMenu) AND $foodMenu->lunch_end) ? date('H:i', strtotime($foodMenu->lunch_end)) : '')}}" required></td>
               </tr>
               <tr>
                   <td>Dinner</td>
-                  <td><input type="text" class="form-control timepicker" name="dinner_start" value="{{old('dinner_start') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->dinner_start)) : '')}}"></td>
-                  <td><input type="text" class="form-control timepicker" name="dinner_end" value="{{old('dinner_end') ?? (isset($foodMenu) ? date('H:i', strtotime($foodMenu->dinner_end)) : '')}}"></td>
+                  <td><input type="text" class="form-control timepicker" name="dinner_start" value="{{old('dinner_start') ?? ((isset($foodMenu) AND $foodMenu->dinner_start) ? date('H:i', strtotime($foodMenu->dinner_start)) : '')}}" required></td>
+                  <td><input type="text" class="form-control timepicker" name="dinner_end" value="{{old('dinner_end') ?? ((isset($foodMenu) AND $foodMenu->dinner_end) ? date('H:i', strtotime($foodMenu->dinner_end)) : '')}}" required></td>
               </tr>
           </tbody>
       </table>

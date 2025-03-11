@@ -20,7 +20,6 @@ return new class extends Migration
             $table->time('lunch_end')->nullable();
             $table->time('dinner_start')->nullable();
             $table->time('dinner_end')->nullable();
-            $table->time('start')->nullable();
             $table->decimal('all_price', 8, 2)->default('0.00');
             $table->decimal('combo_price', 8, 2)->default('0.00');
             $table->timestamps();

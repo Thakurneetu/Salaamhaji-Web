@@ -20,26 +20,37 @@ class FoodCartController extends Controller
       $customer_id = $request->user()->id;
       $threshold = Carbon::now()->addHours(24);
       $foodCarts =  FoodCart::where('customer_id', $customer_id)->where(function ($query) use ($threshold) {
-            $query->where(DB::raw("CONCAT(service_date, ' ', start)"), '<=', $threshold);
+            $query->where('from', '<', $threshold);
         })
-        ->get();
-      foreach ($foodCarts as $key => $foodCart) {
-        $foodCart->items()->delete();
-        $foodCart->delete();
+        ->delete();
+      $carts = FoodCart::get();
+      $subtotal = 0; $items = [];
+      foreach ($carts as $key => $cart) {
+        $items[$key]['id'] = $cart->id;
+        $items[$key]['meal'] = $cart->meal;
+        $items[$key]['package'] = $cart->package->package;
+        $items[$key]['from'] = $cart->from;
+        $items[$key]['to'] = $cart->to;
+        $items[$key]['formatted_time'] = $cart->formatted_date;
+        if($cart->meal == 'Combo') {
+          $items[$key]['price'] = $cart->package->combo_price;
+          $price = $cart->package->combo_price * $cart->quantity;
+        }else{
+          $items[$key]['price'] = $cart->package->all_price;
+          $price = $cart->package->all_price * $cart->quantity;
+        }
+        $items[$key]['quantity'] = $cart->quantity;
+        $items[$key]['total'] = number_format($price, 2, '.', '');
+        $subtotal += $price;
       }
-      $cart = FoodCart::select('id','total','service_date','start','end')
-               ->with('items:id,food_cart_id,service_id,price_per_piece,quantity,total_price')
-               ->where('customer_id', $customer_id)
-               ->first();
-      $subtotal = $cart ? number_format($cart->sum('total'), 2) : '0.00';
-      $tax = $cart ? number_format($cart->sum('total') * 5 / 100, 2) : '0.00';
-      $grand_total = $cart ? number_format($subtotal + $tax, 2) : '0.00';
+      $tax = number_format($subtotal * 5 / 100, 2, '.', '');
+      $grand_total = number_format($subtotal + ($subtotal * 5 / 100), 2, '.', '');
       return response()->json([
         'status' => true,
-        'subtotal' => $subtotal,
+        'subtotal' => number_format($subtotal, 2, '.', ''),
         'tax' => $tax,
         'grand_total' => (string) $grand_total,
-        'cart' => $cart,
+        'carts' => $items,
       ]);
     }
 
@@ -48,47 +59,14 @@ class FoodCartController extends Controller
      */
     public function store(Request $request)
     {
+      $cart_data = $request->only('meal','package_id','from','to','quantity');
       $cart_data['customer_id'] = $request->user()->id;
-
-      $cart = FoodCart::where($cart_data)->first();
-      if(!$cart){
-        $cart = FoodCart::create($cart_data);
-      }
-
-      $service = FoodMaster::find($request->service_id);
-      $item = [
-        'food_cart_id' => $cart->id,
-        'service_id' => $service->id,
-        'category_id' => $request->category_id,
-        'customer_id' => $request->user()->id
-      ];
-      if($request->quantity > 0){
-        FoodCartItem::updateOrCreate($item,[
-          'price_per_piece' => $service->price,
-          'quantity' => $request->quantity,
-          'total_price' => number_format($service->price * $request->quantity, 2)
-        ]);
-        $cart->total = FoodCartItem::where('food_cart_id', $cart->id)->sum('total_price');
-        $cart->save();
-        return response()->json([
-          'status' => true,
-          'message' => 'Item added to cart successfully.',
-          'cart_id' => $cart->id
-        ]);
-      }else{
-        FoodCartItem::where($item)->delete();
-        $cart_items = FoodCartItem::where('food_cart_id', $cart->id)->count();
-        if($cart_items == 0){
-          $cart->delete();
-        }else{
-          $cart->total = FoodCartItem::where('food_cart_id', $cart->id)->sum('total_price');
-          $cart->save();
-        }
-        return response()->json([
-          'status' => true,
-          'message' => 'Item removed from cart successfully.',
-        ]);
-      }
+      $cart = FoodCart::create($cart_data);
+      return response()->json([
+        'status' => true,
+        'message' => 'Item added to cart successfully.',
+        'cart_id' => $cart->id
+      ]);
     }
 
     /**
@@ -104,11 +82,11 @@ class FoodCartController extends Controller
      */
     public function update(Request $request, FoodCart $foodCart)
     {
-      $cart_data = $request->only('service_date', 'start','end');
+      $cart_data = $request->only('meal','package_id','from','to','quantity');
       $foodCart->update($cart_data);
       return response()->json([
         'status' => true,
-        'message' => 'Service slot added successfully.',
+        'message' => 'Cart updated successfully.',
       ]);
     }
 
@@ -117,7 +95,6 @@ class FoodCartController extends Controller
      */
     public function destroy(FoodCart $foodCart)
     {
-      $foodCart->items()->delete();
       $foodCart->delete();
       return response()->json([
         'status' => true,
@@ -130,8 +107,6 @@ class FoodCartController extends Controller
      */
     public function clear(Request $request)
     {
-      $ids = FoodCart::where('customer_id',$request->user()->id)->pluck('id');
-      FoodCartItem::whereIn('laundry_cart_id', $ids)->delete();
       FoodCart::where('customer_id',$request->user()->id)->delete();
         return response()->json([
           'status' => true,
