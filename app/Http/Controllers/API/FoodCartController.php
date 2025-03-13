@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Traits\HelperTrait;
 
 class FoodCartController extends Controller
 {
+  use HelperTrait;
     /**
      * Display a listing of the resource.
      */
@@ -23,26 +25,10 @@ class FoodCartController extends Controller
             $query->where('from', '<', $threshold);
         })
         ->delete();
-      $carts = FoodCart::get();
-      $subtotal = 0; $items = [];
-      foreach ($carts as $key => $cart) {
-        $items[$key]['id'] = $cart->id;
-        $items[$key]['meal'] = $cart->meal;
-        $items[$key]['package'] = $cart->package->package;
-        $items[$key]['from'] = $cart->from;
-        $items[$key]['to'] = $cart->to;
-        $items[$key]['formatted_time'] = $cart->formatted_date;
-        if($cart->meal == 'Combo') {
-          $items[$key]['price'] = $cart->package->combo_price;
-          $price = $cart->package->combo_price * $cart->quantity;
-        }else{
-          $items[$key]['price'] = $cart->package->all_price;
-          $price = $cart->package->all_price * $cart->quantity;
-        }
-        $items[$key]['quantity'] = $cart->quantity;
-        $items[$key]['total'] = number_format($price, 2, '.', '');
-        $subtotal += $price;
-      }
+      $carts = FoodCart::where('customer_id', $customer_id)->get();
+      $data = $this->foodOrders($carts);
+      $subtotal = $data['subtotal'];
+      $items = $data['items'];
       $tax = number_format($subtotal * 5 / 100, 2, '.', '');
       $grand_total = number_format($subtotal + ($subtotal * 5 / 100), 2, '.', '');
       return response()->json([
@@ -59,7 +45,7 @@ class FoodCartController extends Controller
      */
     public function store(Request $request)
     {
-      $cart_data = $request->only('meal','package_id','from','to','quantity');
+      $cart_data = $request->only('meal','meal_type','package_id','from','to','quantity');
       $cart_data['customer_id'] = $request->user()->id;
       $cart = FoodCart::create($cart_data);
       return response()->json([
@@ -82,7 +68,7 @@ class FoodCartController extends Controller
      */
     public function update(Request $request, FoodCart $foodCart)
     {
-      $cart_data = $request->only('meal','package_id','from','to','quantity');
+      $cart_data = $request->only('meal','meal_type','package_id','from','to','quantity');
       $foodCart->update($cart_data);
       return response()->json([
         'status' => true,

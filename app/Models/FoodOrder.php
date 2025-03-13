@@ -3,19 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class FoodMenu extends Model implements Auditable
+class FoodOrder extends Model
 {
-  use AuditableTrait;
-
   protected $fillable = [
+    'customer_id',
+    'order_id',
     'package',
-    'all_price',
-    'single_price',
-    'combo_price',
+    'meal',
+    'meal_type',
+    'from',
+    'to',
+    'quantity',
+    'price',
+    'total',
     'breakfast_start',
     'breakfast_end',
     'lunch_start',
@@ -26,6 +28,6 @@ class FoodMenu extends Model implements Auditable
 
   public function items() : HasMany
   {
-    return $this->hasMany(MenuItem::class);
+    return $this->hasMany(FoodOrderItem::class);
   }
 }

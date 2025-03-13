@@ -32,6 +32,7 @@
         @include('order.order_detail')
         @if($order->type == 'food')
           @include('order.food_items')
+          @include('order.food_menu')
         @elseif($order->type == 'laundry')
           @include('order.laundry_items')
         @elseif($order->type == 'cab')

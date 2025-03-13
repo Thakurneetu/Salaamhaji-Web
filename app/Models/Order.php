@@ -38,9 +38,9 @@ class Order extends Model implements Auditable
   {
     return $this->belongsTo(Customer::class);
   }
-  public function food_items() : HasMany
+  public function food_order() : HasOne
   {
-    return $this->hasMany(FoodOrderItem::class);
+    return $this->hasOne(FoodOrder::class);
   }
   public function laundry_orders() : HasMany
   {

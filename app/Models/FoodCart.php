@@ -14,6 +14,7 @@ class FoodCart extends Model
     'from',
     'to',
     'meal',
+    'meal_type',
     'quantity',
   ];
 

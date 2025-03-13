@@ -26,6 +26,7 @@
     <td>{{$order->landmark}}</td>
   </tr>
   @endif
+  @if($order->type != 'food')
   <tr>
     <th>Service Date:</th>
     <td>{{date('d/m/Y',strtotime($order->service_date))}}</td>
@@ -34,13 +35,16 @@
     <th>Time Slot:</th>
     <td>{{date('H:i',strtotime($order->start))}} - {{date('H:i',strtotime($order->end))}}</td>
   </tr>
+  @endif
   <tr>
     <th>Order Status:</th>
     <td>
       <select class="form-control" style="width:200px;" onchange="changeStatus({{$order->id}}, this.value, 'food')">
         <option value="Active" {{$order->status == 'Active' ? 'selected' : ''}}>Active</option>
         <option value="Confirmed" {{$order->status == 'Confirmed' ? 'selected' : ''}}>Confirmed</option>
+        @if($order->type == 'laundry')
         <option value="Out for delivery" {{$order->status == 'Out for delivery' ? 'selected' : ''}}>Out for delivery</option>
+        @endif
         <option value="Completed" {{$order->status == 'Completed' ? 'selected' : ''}}>Completed</option>
       </select>
     </td>

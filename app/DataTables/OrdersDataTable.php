@@ -21,7 +21,7 @@ class OrdersDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-      return (new EloquentDataTable($query))
+      $table = (new EloquentDataTable($query))
         ->addColumn('action', 'order.action')
         ->rawColumns(['status','action'])
         ->editColumn('created_at', function($data){
@@ -34,6 +34,16 @@ class OrdersDataTable extends DataTable
           return $data->start != '' ? date('H:i', strtotime($data->start)).'-'.date('H:i', strtotime($data->end)) : '';
         })
         ->addIndexColumn();
+        
+        if($this->type == 'food') {
+          $table->editColumn('food_order.from', function($data){
+            return $data->food_order->from != '' ? date('d/m/Y', strtotime($data->food_order->from)) : '';
+          });
+          $table->editColumn('food_order.to', function($data){
+            return $data->food_order->to != '' ? date('d/m/Y', strtotime($data->food_order->to)) : '';
+          });
+        }
+        return $table;
     }
 
     /**
@@ -49,7 +59,7 @@ class OrdersDataTable extends DataTable
         // )
         // ->join('customers', 'orders.customer_id', '=', 'customers.id')
         ->where('type', $this->type)
-        ->with('customer:id,name,email,phone');
+        ->with('customer:id,name,email,phone', 'food_order:order_id,from,to');
     }
 
     /**
@@ -87,14 +97,21 @@ class OrdersDataTable extends DataTable
           Column::make('customer.email')->sortable(true),
           Column::make('customer.phone')->sortable(true),
           Column::make('created_at')->title('Order Date'),
-          Column::make('service_date')->title('Service Date'),
-          Column::make('slot')->title('Time Slot')->sortable(false)->searchable(false),
-          Column::make('status'),
-          Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->addClass('text-center')
         ];
+
+        if($this->type != 'food') {
+          $columns[] = Column::make('service_date')->title('Service Date');
+          $columns[] = Column::make('slot')->title('Time Slot')->sortable(false)->searchable(false);
+        }else{
+          $columns[] = Column::make('food_order.from')->title('From Date')->sortable(false)->searchable(false);
+          $columns[] = Column::make('food_order.to')->title('To Date')->sortable(false)->searchable(false);
+        }
+
+        $columns[] = Column::make('status');
+        $columns[] = Column::computed('action')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->addClass('text-center');
 
         return $columns;
     }

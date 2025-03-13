@@ -51,7 +51,7 @@ class CustomerAuthController extends Controller
           'message' => 'Invalid OTP',
         ], 401);
       }
-
+      CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->delete();
       if($request->has('type') && $request->type == 'login'){
         $customer = Customer::where('phone', $request->phone)->first();
         $customer->update(['country_code'=>$request->country_code]);

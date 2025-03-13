@@ -11,12 +11,10 @@ class FoodOrderItem extends Model implements Auditable
   use AuditableTrait;
   
   protected $fillable = [
-    'order_id',
-    'customer_id',
-    'category_name',
-    'service_name',
-    'price_per_piece',
-    'quantity',
-    'total_price',
+    'food_order_id',
+    'date',
+    'day',
+    'meal',
+    'meal_items',
   ];
 }

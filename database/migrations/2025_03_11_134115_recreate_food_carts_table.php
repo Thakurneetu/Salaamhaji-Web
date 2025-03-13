@@ -18,7 +18,8 @@ return new class extends Migration
         $table->id();
         $table->integer('customer_id');
         $table->integer('package_id');
-        $table->enum('meal', ['All','Combo'])->default('All');
+        $table->enum('meal', ['All','Combo','Single'])->default('All');
+        $table->enum('meal_type', ['breakfast','lunch','dinner','breakfast-lunch','breakfast-dinner','lunch-dinner'])->nullable();
         $table->date('from')->nullable();
         $table->date('to')->nullable();
         $table->integer('quantity')->default(1);

@@ -151,4 +151,30 @@ trait HelperTrait {
     return $bookings;
   }
 
+  private function foodOrders($carts){
+    $subtotal = 0; $items = [];
+    foreach ($carts as $key => $cart) {
+      $items[$key]['id'] = $cart->id;
+      $items[$key]['meal'] = $cart->meal;
+      $items[$key]['package'] = $cart->package->package;
+      $items[$key]['from'] = $cart->from;
+      $items[$key]['to'] = $cart->to;
+      $items[$key]['formatted_time'] = $cart->formatted_date;
+      if($cart->meal == 'Combo') {
+        $items[$key]['price'] = $cart->package->combo_price;
+        $price = $cart->package->combo_price * $cart->quantity;
+      }else if($cart->meal == 'Single') {
+        $items[$key]['price'] = $cart->package->single_price;
+        $price = $cart->package->single_price * $cart->quantity;
+      }else {
+        $items[$key]['price'] = $cart->package->all_price;
+        $price = $cart->package->all_price * $cart->quantity;
+      }
+      $items[$key]['quantity'] = $cart->quantity;
+      $items[$key]['total'] = number_format($price, 2, '.', '');
+      $subtotal += $price;
+    }
+    return ['subtotal'=>$subtotal, 'items'=>$items];
+  }
+
 }

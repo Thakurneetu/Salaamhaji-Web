@@ -11,12 +11,15 @@ use App\Models\LaundryCartItem;
 use App\Models\FoodCart;
 use App\Models\FoodMaster;
 use App\Models\FoodCartItem;
+use App\Models\FoodOrder;
 use App\Models\FoodOrderItem;
 use App\Models\LaundryOrder;
 use App\Models\LaundryOrderItem;
 use App\Models\CabCart;
 use App\Models\CabOrder;
 use App\Traits\HelperTrait;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -38,6 +41,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+      try{
+        DB::beginTransaction();
         $type = $request->type;
         $cart_id = $request->cart_id;
         $order_data['uuid'] = $this->generateUniqueOrderId();
@@ -47,47 +52,90 @@ class OrderController extends Controller
         $order_data['address_line_2'] = $request->address_line_2;
         $order_data['landmark'] = $request->landmark;
         if($type == 'food'){
-          $cart = FoodCart::where('customer_id', $request->user()->id)->first();
-          $order_data['subtotal'] = number_format($cart->sum('total'), 2);
-          $order_data['tax'] = number_format($cart->sum('total') * 5 / 100, 2);
-          $order_data['grand_total'] = number_format($order_data['subtotal'] + $order_data['tax'], 2);
-          $order_data['service_date'] = $cart->service_date;
-          $order_data['start'] = $cart->start;
-          $order_data['end'] = $cart->end;
-          $order_data['status'] = 'Active';
-          // $order_data['payment_id'] = '';
-          // $order_data['payment_status'] = '';
-          // $order_data['payment_type'] = '';
-          $order = Order::create($order_data);
-          $item_data['order_id'] = $order->id;
-          $item_data['customer_id'] = $request->user()->id;
-          foreach ($cart->items as $key => $item) {
-            $item_data['category_name'] = $item->category_name;
-            $item_data['service_name'] = $item->service_name;
-            $item_data['price_per_piece'] = $item->price_per_piece;
-            $item_data['quantity'] = $item->quantity;
-            $item_data['total_price'] = $item->total_price;
-            FoodOrderItem::create($item_data);
+          $carts = FoodCart::where('customer_id', $request->user()->id)->get();
+          foreach ($carts as $key => $cart) {
+            if($cart->meal == 'Combo') {
+              $order_data['subtotal'] = $cart->package->combo_price * $cart->quantity;
+            }else if($cart->meal == 'Single') {
+              $order_data['subtotal'] = $cart->package->single_price * $cart->quantity;
+            }else {
+              $order_data['subtotal'] = $cart->package->all_price * $cart->quantity;
+            }
+            $order_data['tax'] = $order_data['subtotal'] * 5 / 100;
+            $order_data['grand_total'] = $order_data['subtotal'] + ($order_data['subtotal'] * 5 / 100);
+            $order_data['status'] = 'Active';
+            $order = Order::create($order_data);
+            $food_data['customer_id'] = $request->user()->id;
+            $food_data['order_id'] = $order->id;
+            $food_data['package'] = $cart->package->package;
+            $food_data['meal'] = $cart->meal;
+            $food_data['meal_type'] = $cart->meal_type;
+            $food_data['from'] = $cart->from;
+            $food_data['to'] = $cart->to ?? $cart->from;
+            $food_data['quantity'] = $cart->quantity;
+            $food_data['price'] = $order_data['subtotal'] / $cart->quantity;
+            $food_data['total'] = $order_data['subtotal'];
+            $food_data['breakfast_start'] = $cart->package->breakfast_start;
+            $food_data['breakfast_end'] = $cart->package->breakfast_end;
+            $food_data['lunch_start'] = $cart->package->lunch_start;
+            $food_data['lunch_end'] = $cart->package->lunch_end;
+            $food_data['dinner_start'] = $cart->package->dinner_start;
+            $food_data['dinner_end'] = $cart->package->dinner_end;
+            $food_order = FoodOrder::create($food_data);
+
+            $startDate = Carbon::parse($cart->from);
+            $endDate = $cart->to ? Carbon::parse($cart->to) : Carbon::parse($cart->from);
+            $dates=[];
+            if($cart->meal == 'All') {
+              $meals = ['breakfast', 'lunch', 'dinner'];
+            }else if($cart->meal == 'Combo') {
+              $meals = explode('-', $cart->meal_type);
+            }else {
+              $meals = [$cart->meal_type];
+            }
+            while ($startDate <= $endDate) {
+              $date = $startDate->toDateString();
+              $day = strtolower($startDate->format('l'));
+              $dates[] = [
+                'date' => $date,
+                'day' => $day,
+              ];
+              foreach($meals as $meal) {
+                $food_item['food_order_id'] = $food_order->id;
+                $food_item['date'] = $date;
+                $food_item['day'] = $day;
+                $food_item['meal'] = $meal;
+                $food_item['meal_items'] = $cart->package->items->where('day',$day)->where('meal',$meal)->first()->meal_items;
+                FoodOrderItem::create($food_item);
+              }
+              $startDate->addDay();
+            }
+            foreach($meals as $meal) {
+              $food_item['food_order_id'] = $food_order->id;
+              $food_item['date'] = null;
+              $food_item['day'] = 'common';
+              $food_item['meal'] = $meal;
+              $food_item['meal_items'] = $cart->package->items->where('day','common')->where('meal',$meal)->first()->meal_items;
+              if($food_item['meal_items']) {
+                FoodOrderItem::create($food_item);
+              }
+            }
           }
-          $ids = FoodCart::where('customer_id',$request->user()->id)->pluck('id');
-          FoodCartItem::whereIn('food_cart_id', $ids)->delete();
           FoodCart::where('customer_id',$request->user()->id)->delete();
+          DB::commit();
           return response()->json([
             'status' => true,
             'message' => 'Order Placed Successfully',
           ]);
         }else if($type == 'laundry'){
           $carts = LaundryCart::where('customer_id', $request->user()->id)->with('items')->get();
-          $order_data['subtotal'] = number_format($carts->sum('total'), 2);
-          $order_data['tax'] = number_format($carts->sum('total') * 5 / 100, 2);
-          $order_data['grand_total'] = number_format($order_data['subtotal'] + $order_data['tax'], 2);
+          $order_data['subtotal'] = $carts->sum('total');
+          $order_data['tax'] = $carts->sum('total') * 5 / 100;
+          $order_data['grand_total'] = $order_data['subtotal'] + $order_data['tax'];
           $order_data['status'] = 'Active';
           $order_data['service_date'] = $carts->first()->service_date;
           $order_data['start'] = $carts->first()->start;
           $order_data['end'] = $carts->first()->end;
-          // $order_data['payment_id'] = '';
-          // $order_data['payment_status'] = '';
-          // $order_data['payment_type'] = '';
           $order = Order::create($order_data);
           $laundry_order_data['order_id'] = $order->id;
           $laundry_order_data['customer_id'] = $request->user()->id;
@@ -108,6 +156,7 @@ class OrderController extends Controller
           $ids = LaundryCart::where('customer_id',$request->user()->id)->pluck('id');
           LaundryCartItem::whereIn('laundry_cart_id', $ids)->delete();
           LaundryCart::where('customer_id',$request->user()->id)->delete();
+          DB::commit();
           return response()->json([
             'status' => true,
             'message' => 'Order Placed Successfully',
@@ -140,11 +189,19 @@ class OrderController extends Controller
           $cab_data['luggage'] = $cart->fare->cab->luggage;
           CabOrder::create($cab_data);
           CabCart::where('customer_id', $request->user()->id)->delete();
+          DB::commit();
           return response()->json([
             'status' => true,
             'message' => 'CAB Booked Successfully',
           ]);
         }
+      }catch (\Throwable $th) {
+        DB::rollback();
+        return response()->json([
+          'status' => false,
+          'error' => $th->getMessage()
+        ]);
+      }
     }
 
     /**
