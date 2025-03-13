@@ -179,7 +179,7 @@ class OrderController extends Controller
           $cab_data['hours'] = $cart->hours;
           $cab_data['price'] = $cart->fare->price;
           $cab_data['origin'] = $cart->tour_type == 'local' 
-                                  ? $cart->fare->origin->name 
+                                  ? $cart->tour_location
                                   : $cart->fare->outstation->origin->name;
           $cab_data['destination'] = $cart->tour_type == 'local' ? '' : $cart->fare->outstation->destination->name;
           $cab_data['pickup_location'] = $cart->pickup_location;

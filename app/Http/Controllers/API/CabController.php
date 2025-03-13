@@ -24,9 +24,9 @@ class CabController extends Controller
       ]);
     }
 
-    public function local_fares($id)
+    public function local_fares()
     {
-      $fares = LocalFare::where('location_id', $id)->get();
+      $fares = LocalFare::get();
       $data = [];
       foreach ($fares as $key => $fare) {
         $data[$key]['id'] = $fare->id;

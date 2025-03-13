@@ -33,10 +33,10 @@ class CabCartController extends Controller
         $carts[$key]['hours'] = $tour->hours;
         $carts[$key]['price'] = $tour->fare->price;
         $carts[$key]['total_price'] = $tour->tour_type == 'local' 
-                                      ? number_format($tour->hours * $tour->fare->price, 2) 
-                                      : number_format($tour->fare->price, 2);
+                                      ? number_format($tour->hours * $tour->fare->price, 2, '.', '') 
+                                      : number_format($tour->fare->price, 2, '.', '');
         $carts[$key]['origin'] = $tour->tour_type == 'local' 
-                                 ? $tour->fare->origin->name 
+                                 ? $tour->tour_location
                                  : $tour->fare->outstation->origin->name;
         $carts[$key]['destination'] = $tour->tour_type == 'local' ? '' : $tour->fare->outstation->destination->name;
         $carts[$key]['pickup_location'] = $tour->pickup_location;
@@ -49,9 +49,9 @@ class CabCartController extends Controller
       }
       return response()->json([
         'status' => true,
-        'subtotal' => number_format($subtotal, 2),
-        'tax' => number_format($subtotal * 5 / 100, 2),
-        'grand_total' => number_format($subtotal + $subtotal * 5 / 100, 2),
+        'subtotal' => number_format($subtotal, 2, '.', '') ,
+        'tax' => number_format($subtotal * 5 / 100, 2, '.', '') ,
+        'grand_total' => number_format($subtotal + $subtotal * 5 / 100, 2, '.', '') ,
         'carts' => $carts
       ]);
     }
@@ -62,7 +62,7 @@ class CabCartController extends Controller
     public function store(Request $request)
     {
         $data = $request->only('tour_type','service_date','start','end','fare_id',
-                               'instruction','pickup_location','hours');
+                               'instruction','pickup_location','hours','tour_location');
         if($request->tour_type == 'outstation'){
           $data['hours'] = null;
           $data['pickup_location'] = null;

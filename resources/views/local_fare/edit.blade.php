@@ -27,7 +27,7 @@
       <h3 class="card-title pt-1 text_black"><i class="fa fa-edit"></i> Edit</h3>
       <a href="{{ route('local-fare.index') }}" class="btn btn-dark btn-sm float-right">Back</a>
     </div>
-    <form action="{{ route('local-fare.update', $location->id) }}" method="post">
+    <form action="{{ route('local-fare.update', $cab->id) }}" method="post">
       @csrf @method('patch')
       @include('local_fare.form')
     </form>

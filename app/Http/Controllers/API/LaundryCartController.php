@@ -32,13 +32,12 @@ class LaundryCartController extends Controller
                ->with('items:id,laundry_cart_id,service_id,price_per_piece,quantity,total_price')
                ->where('customer_id', $customer_id)
                ->get();
-      $subtotal = number_format($carts->sum('total'), 2);
-      $tax = number_format($carts->sum('total') * 5 / 100, 2);
+      $subtotal = $carts->sum('total');
       return response()->json([
         'status' => true,
-        'subtotal' => $subtotal,
-        'tax' => $tax,
-        'grand_total' => (string) number_format($subtotal + $tax, 2),
+        'subtotal' => number_format($subtotal, 2, '.', ''),
+        'tax' =>number_format($subtotal * 5 / 100, 2, '.', ''),
+        'grand_total' => (string) number_format($subtotal + ($subtotal * 5 / 100), 2, '.', ''),
         'carts' => $carts,
       ]);
     }
@@ -65,7 +64,7 @@ class LaundryCartController extends Controller
         LaundryCartItem::updateOrCreate($item,[
           'price_per_piece' => $service->price,
           'quantity' => $request->quantity,
-          'total_price' => number_format($service->price * $request->quantity, 2)
+          'total_price' => number_format($service->price * $request->quantity, 2, '.', '')
         ]);
         $cart->total = LaundryCartItem::where('laundry_cart_id', $cart->id)->sum('total_price');
         $cart->save();

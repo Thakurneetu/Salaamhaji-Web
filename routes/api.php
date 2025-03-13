@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::prefix('transport')->controller(CabController::class)->group(function(){
       Route::get('/locations', 'locations');
-      Route::get('/local-fares/{id}', 'local_fares');
+      Route::get('/local-fares', 'local_fares');
       Route::get('/outstation-fares/{origin}/{destination}', 'outstation_fares');
     });
 

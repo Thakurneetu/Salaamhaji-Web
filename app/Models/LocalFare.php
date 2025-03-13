@@ -12,7 +12,6 @@ class LocalFare extends Model implements Auditable
   use AuditableTrait;
 
   protected $fillable = [
-    'location_id',
     'cab_id',
     'price'
   ];
@@ -20,10 +19,5 @@ class LocalFare extends Model implements Auditable
   public function cab() : BelongsTo
   {
     return $this->belongsTo(Cab::class);
-  }
-
-  public function origin() : BelongsTo
-  {
-    return $this->belongsTo(Location::class, 'location_id');
   }
 }

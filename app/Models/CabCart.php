@@ -9,6 +9,7 @@ class CabCart extends Model
 {
   protected $fillable = [
     'customer_id','tour_type','service_date','start','end','fare_id','pickup_location','hours','instruction',
+    'tour_location'
   ];
 
   public function fare() : BelongsTo

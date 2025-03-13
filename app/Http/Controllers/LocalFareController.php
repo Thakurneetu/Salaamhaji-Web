@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cab;
-use App\Models\Location;
 use App\Models\LocalFare;
 use Illuminate\Http\Request;
 use App\DataTables\LocalFareDataTable;
@@ -25,9 +24,8 @@ class LocalFareController extends Controller
      */
     public function create()
     {
-      $cabs = Cab::get();
-      $locations = Location::doesntHave('local_fares')->get();
-      return view('local_fare.create', compact('locations','cabs'));
+      $cabs = Cab::doesntHave('local_fare')->get();
+      return view('local_fare.create', compact('cabs'));
     }
 
     /**
@@ -36,23 +34,12 @@ class LocalFareController extends Controller
     public function store(Request $request)
     {
       try{
-        $data = $request->only('location_id');
-        $prices = $request->prices;
-        if (empty(array_filter($prices, fn($value) => !is_null($value)))) {
-          Alert::toast('Please provide atleast one price.','warning');
-          return redirect()->back()->withInput();
-        }
         DB::beginTransaction();
-        foreach ($prices as $key => $price) {
-          if($price){
-            $data['cab_id'] = $key;
-            $data['price'] = $price;
-            LocalFare::create($data);
-          }
-        }
+        $data = $request->only('cab_id','price');
+        LocalFare::create($data);
         DB::commit();
-        Alert::toast('Fares Added Successfully','success');
-        return redirect(route('outstation-fare.index'));
+        Alert::toast('Fare Added Successfully','success');
+        return redirect(route('local-fare.index'));
       }catch (\Throwable $th) {
         DB::rollback();
         Alert::error($th->getMessage());
@@ -74,9 +61,8 @@ class LocalFareController extends Controller
     public function edit($id)
     {
       $cabs = Cab::get();
-      $locations = Location::whereId($id)->get();
-      $location = Location::find($id);
-      return view('local_fare.edit', compact('locations','cabs','location'));
+      $cab = Cab::find($id);
+      return view('local_fare.edit', compact('cabs','cab'));
     }
 
     /**
@@ -85,25 +71,12 @@ class LocalFareController extends Controller
     public function update(Request $request, $id)
     {
       try{
-        $data = $request->only('location_id');
-        $prices = $request->prices;
-        if (empty(array_filter($prices, fn($value) => !is_null($value)))) {
-          Alert::toast('Please provide atleast one price.','warning');
-          return redirect()->back()->withInput();
-        }
+        $data = $request->only('cab_id');
+        $price = $request->only('price');
         DB::beginTransaction();
-        foreach ($prices as $key => $price) {
-          $data['cab_id'] = $key;
-          if($price){
-            LocalFare::updateOrCreate($data,[
-              'price' => $price,
-            ]);
-          }else{
-            LocalFare::where($data)->delete();
-          }
-        }
+        LocalFare::updateOrCreate($data,$price);
         DB::commit();
-        Alert::toast('Fares Updated Successfully','success');
+        Alert::toast('Fare Updated Successfully','success');
         return redirect(route('local-fare.index'));
       }catch (\Throwable $th) {
         DB::rollback();
@@ -118,8 +91,8 @@ class LocalFareController extends Controller
     public function destroy($id)
     {
       try{
-        LocalFare::where('location_id', $id)->delete();
-        Alert::toast('Local Fares Deleted Successfully','success');
+        LocalFare::where('cab_id', $id)->delete();
+        Alert::toast('Local Fare Deleted Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {
         Alert::error($th->getMessage());
