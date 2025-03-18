@@ -5,6 +5,7 @@ namespace App\Http\Requests\API;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class CustomerRegisterRequest extends FormRequest
 {
@@ -17,8 +18,19 @@ class CustomerRegisterRequest extends FormRequest
     {
         return [
           'name' => 'required|string|max:255',
-          'email' => 'required|string|email|max:255|unique:customers',
-          'phone' => 'required|string||unique:customers',
+          'email' => [
+            'required',
+            'string',
+            'email',
+            'max:255',
+            Rule::unique('customers')->whereNull('deleted_at'),
+          ],
+          'phone' => [
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('customers')->whereNull('deleted_at'),
+          ],
           'gender' => 'required|string|max:100',
         ];
     }
