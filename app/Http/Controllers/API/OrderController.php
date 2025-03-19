@@ -29,7 +29,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::where('customer_id', $request->user()->id)->get();
+        $orders = Order::where('customer_id', $request->user()->id)->latest()->get();
         return response()->json([
           'status' => true,
           'orders' => $this->formatOrders($orders)
