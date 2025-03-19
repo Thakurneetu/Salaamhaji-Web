@@ -61,6 +61,14 @@ class CabCartController extends Controller
      */
     public function store(Request $request)
     {
+        $threshold = Carbon::now()->addHours(24);
+        $serviceDate = Carbon::parse($request->service_date.' '.$request->start);
+        if ($serviceDate->lessThan($threshold)) {
+          return response()->json([
+            'status' => false,
+            'message' => 'Please select valid date.',
+          ]);
+        }
         $data = $request->only('tour_type','service_date','start','end','fare_id',
                                'instruction','pickup_location','hours','tour_location');
         if($request->tour_type == 'outstation'){

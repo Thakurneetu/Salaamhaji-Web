@@ -102,6 +102,14 @@ class LaundryCartController extends Controller
      */
     public function update(Request $request, LaundryCart $laundryCart)
     {
+        $threshold = Carbon::now()->addHours(24);
+        $serviceDate = Carbon::parse($request->service_date.' '.$request->start);
+        if ($serviceDate->lessThan($threshold)) {
+          return response()->json([
+            'status' => false,
+            'message' => 'Please select valid date.',
+          ]);
+        }
         $cart_data = $request->only('service_date', 'start','end');
         LaundryCart::where('customer_id', $laundryCart->customer_id)->update($cart_data);
         return response()->json([

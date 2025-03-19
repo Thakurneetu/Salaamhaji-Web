@@ -53,6 +53,12 @@ class OrderController extends Controller
         $order_data['landmark'] = $request->landmark;
         if($type == 'food'){
           $carts = FoodCart::where('customer_id', $request->user()->id)->get();
+          if(count($carts) < 1) {
+            return response()->json([
+              'status' => false,
+              'message' => 'Please select a service to continue.',
+            ]);
+          }
           foreach ($carts as $key => $cart) {
             if($cart->meal == 'Combo') {
               $order_data['subtotal'] = $cart->package->combo_price * $cart->quantity;
@@ -129,6 +135,12 @@ class OrderController extends Controller
           ]);
         }else if($type == 'laundry'){
           $carts = LaundryCart::where('customer_id', $request->user()->id)->with('items')->get();
+          if(count($carts) < 1) {
+            return response()->json([
+              'status' => false,
+              'message' => 'Please select a service to continue.',
+            ]);
+          }
           $order_data['subtotal'] = $carts->sum('total');
           $order_data['tax'] = $carts->sum('total') * 5 / 100;
           $order_data['grand_total'] = $order_data['subtotal'] + $order_data['tax'];
@@ -163,6 +175,12 @@ class OrderController extends Controller
           ]);
         }else if($type == 'cab') {
           $cart = CabCart::where('customer_id', $request->user()->id)->latest()->first();
+          if(!$cart) {
+            return response()->json([
+              'status' => false,
+              'message' => 'Please select a service to continue.',
+            ]);
+          }
           $subtotal = $cart->tour_type == 'local' ? ($cart->hours * $cart->fare->price) : $cart->fare->price;
           $order_data['subtotal'] = $subtotal;
           $order_data['tax'] = $subtotal * 5 / 100;
