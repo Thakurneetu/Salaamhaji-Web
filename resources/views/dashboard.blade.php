@@ -136,7 +136,7 @@
                   @if($orders)
                     @foreach($orders as $item)
                     <tr>
-                      <td><a href="order/{{$item->id}}?type={{$item->type}}">{{$item->id}}</a></td>
+                      <td><a href="order/{{$item->id}}?type={{$item->type}}">{{$item->uuid}}</a></td>
                       <td>{{$item->type}}</td>
                       <td>{{$item->customer_name}}</td>
                       <td>{{$item->grand_total}}</td>

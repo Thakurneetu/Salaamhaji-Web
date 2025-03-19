@@ -46,7 +46,7 @@ class DashboardController extends Controller
         $data['orders'] = '';
         if(count($orders_data)>0){
           foreach($orders_data as $item){
-            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->id.'</a></td>
+            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->uuid.'</a></td>
               <td>'.$item->type.'</td>
               <td>'.$item->customer_name.'</td>
               <td>'.$item->grand_total.'</td>
@@ -81,7 +81,7 @@ class DashboardController extends Controller
         $data['orders'] = '';
         if(count($orders_data)>0){
           foreach($orders_data as $item){
-            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->id.'</a></td>
+            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->uuid.'</a></td>
               <td>'.$item->type.'</td>
               <td>'.$item->customer_name.'</td>
               <td>'.$item->grand_total.'</td>
@@ -117,7 +117,7 @@ class DashboardController extends Controller
         $data['orders'] = '';
         if(count($orders_data)>0){
           foreach($orders_data as $item){
-            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->id.'</a></td>
+            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->uuid.'</a></td>
               <td>'.$item->type.'</td>
               <td>'.$item->customer_name.'</td>
               <td>'.$item->grand_total.'</td>
@@ -152,7 +152,7 @@ class DashboardController extends Controller
         $data['orders'] = '';
         if(count($orders_data)>0){
           foreach($orders_data as $item){
-            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->id.'</a></td>
+            $data['orders'] .='<tr><td><a href="order/'.$item->id.'?type='.$item->type.'">'.$item->uuid.'</a></td>
               <td>'.$item->type.'</td>
               <td>'.$item->customer_name.'</td>
               <td>'.$item->grand_total.'</td>
@@ -178,6 +178,8 @@ class DashboardController extends Controller
         $data['pending_order_count'] = Order::select('*')->where('status','Active')->count()+1;
         $data['orders'] = Order::select('orders.*','customers.name as customer_name')
         ->join('customers', 'customers.id','orders.customer_id')
+        ->latest()
+        ->take(10)
         ->get();
         return view('dashboard',$data);
       }
