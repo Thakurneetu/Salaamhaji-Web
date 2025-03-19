@@ -22,8 +22,14 @@ class LoundryMasterDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'laundry_master.action')
-            ->rawColumns(['status','action'])
+            ->addColumn('action', 'laundry_master.action') 
+            ->editColumn('icon', function ($data) {
+              if($data->icon) {
+                return "<img style='width:50px' src='" . asset($data->icon) . "' alt='Icon'>";
+              }
+              return '';
+            })
+            ->rawColumns(['status','action','icon'])
             ->addIndexColumn();
     }
 
@@ -71,6 +77,7 @@ class LoundryMasterDataTable extends DataTable
           Column::make('name'),
           Column::make('category.name')->title('Category'),
           Column::make('price'),
+          Column::make('icon')->width('7%')->orderable(false)->defaultContent('')->addClass('text-center'),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

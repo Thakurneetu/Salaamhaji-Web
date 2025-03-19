@@ -13,17 +13,29 @@ class LoundryMaster extends Model implements Auditable
   use AuditableTrait;
   
   use SoftDeletes;
+  
   protected $fillable = [
     'category_id',
     'name',
     'price',
     'status',
+    'icon',
   ];
   protected $dates = ['deleted_at'];
+  protected $appends = ['icon_url'];
 
   public function category() : BelongsTo
   {
     return $this->belongsTo(LoundryCategory::class, 'category_id');
+  }
+
+  public function getIconUrlAttribute()
+  {
+    if($this->icon != ''){
+      return asset($this->icon);
+    }else{
+      return '';
+    }
   }
 }
 

@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use App\DataTables\LoundryMasterDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Traits\HelperTrait;
 
 class LoundryMasterController extends Controller
 {
+  use HelperTrait;
     /**
      * Display a listing of the resource.
      */
@@ -36,6 +38,9 @@ class LoundryMasterController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
+        if($request->hasFile('icon')){
+          $data['icon'] = $this->save_file($request->icon, '/uploads/laundry');
+        }
         $customer = LoundryMaster::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
@@ -72,6 +77,11 @@ class LoundryMasterController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
+        if($request->hasFile('icon')){
+          if($laundryMaster->icon != '')
+          $this->delete_file($laundryMaster->icon);
+          $data['icon'] = $this->save_file($request->icon, '/uploads/laundry');
+        }
         $laundryMaster->update($data);
         DB::commit();
         Alert::toast('Service Updated Successfully','success');

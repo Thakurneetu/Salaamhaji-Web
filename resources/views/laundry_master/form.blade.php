@@ -25,6 +25,18 @@
       <div class="text-danger">{{ $message }}</div>
       @enderror
     </div>
+    <div class="form-group col-md-6 col-12">
+      <label for="icon">Icon</label>
+      <div class="input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="icon" name="icon">
+          <label class="custom-file-label" for="icon">Select Icon</label>
+        </div>
+      </div>
+    </div>
+    @if(isset($laundryMaster) && $laundryMaster->icon)
+      <img style='width:100px' src="{{asset(@$laundryMaster->icon)}}" alt='Icon'>
+    @endif
   </div>
 </div>
 

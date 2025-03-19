@@ -75,6 +75,7 @@ class CabController extends Controller
         DB::beginTransaction();
         $data = $request->only('type','seats','luggage');
         if($request->hasFile('icon')){
+          if($cab->icon != '')
           $this->delete_file($cab->icon);
           $data['icon'] = $this->save_file($request->icon, '/uploads/cab');
         }
