@@ -98,22 +98,26 @@ trait HelperTrait {
     $key=0;
     foreach ($orders as $order) {
       if($order->type == 'food'){
-        foreach ($order->food_items as $item) {
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['type'] = $order->type;
-          $bookings[$key]['time_slot'] = $order->formatted_service_time;
-          $bookings[$key]['service_date'] = $order->service_date;
-          $bookings[$key]['start'] = $order->start;
-          $bookings[$key]['end'] = $order->end;
+          $bookings[$key]['time_slot'] = '';
+          $bookings[$key]['service_date'] = date('d/m/Y',strtotime($order->food_order->from)) .' - '. date('d/m/Y',strtotime($order->food_order->to));
+          $bookings[$key]['start'] = '';
+          $bookings[$key]['end'] = '';
           $bookings[$key]['status'] = $order->status;
-          $bookings[$key]['quantity'] = (string)$item->quantity;
-          $bookings[$key]['price'] = $item->total_price;
-          $bookings[$key]['service_name'] = $item->service_name;
+          $bookings[$key]['quantity'] = (string)$order->food_order->quantity;
+          $bookings[$key]['price'] = $order->grand_total;
+          $bookings[$key]['service_name'] = $order->food_order->package.' - '.$order->food_order->meal;
+          if($order->food_order->meal == 'All') {
+            $bookings[$key]['service_name'] .= '(Breakfast, Lunch, Dinner)';
+          }
+          else {
+            $bookings[$key]['service_name'] .= '('.implode(', ', array_map('ucfirst', explode('-', $order->food_order->meal_type))).')';
+          }
           $bookings[$key]['from'] = '';
           $bookings[$key]['to'] = '';
           $bookings[$key]['pickup_location'] = '';
           $key++;
-        }
       }else if($order->type == 'laundry'){
         foreach ($order->laundry_orders as $item) {
           $bookings[$key]['id'] = $order->id;
