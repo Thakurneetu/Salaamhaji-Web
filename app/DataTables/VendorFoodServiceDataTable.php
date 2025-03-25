@@ -23,9 +23,6 @@ class VendorFoodServiceDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('action', 'vendor_food_service.action')
-        ->editColumn('serves', function($data){
-          return $data->serves.' People';
-        })
         ->rawColumns(['status','action'])
         ->addIndexColumn();
     }
@@ -35,10 +32,7 @@ class VendorFoodServiceDataTable extends DataTable
      */
     public function query(VendorFoodService $model): QueryBuilder
     {
-      return $model->newQuery()
-        ->select('vendor_food_services.*', 'food_categories.name as category')
-        ->join('food_categories', 'vendor_food_services.category_id', '=', 'food_categories.id')
-        ->where('vendor_id', $this->id);
+      return $model->newQuery()->where('vendor_id', $this->id);
     }
 
     /**
@@ -71,10 +65,9 @@ class VendorFoodServiceDataTable extends DataTable
         return [
           Column::make('id')->visible(false),
           Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
-          Column::make('name')->title('item'),
-          Column::make('category')->title('Category'),
-          Column::make('price'),
-          Column::make('serves'),
+          Column::make('package')->title('Hotel Package'),
+          Column::make('all_price'),
+          Column::make('combo_price'),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

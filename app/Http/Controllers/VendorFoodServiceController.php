@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\VendorFoodService;
+use App\Models\VendorFoodServiceItem;
 use Illuminate\Http\Request;
-use App\Models\FoodCategory;
 use App\DataTables\VendorFoodServiceDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -25,8 +25,7 @@ class VendorFoodServiceController extends Controller
     public function create(Request $request)
     {
       $vendor_id = $request->id;
-      $categories = FoodCategory::where('status',1)->get();
-      return view('vendor_food_service.create', compact('categories','vendor_id'));
+      return view('vendor_food_service.create', compact('vendor_id'));
     }
 
     /**
@@ -36,10 +35,21 @@ class VendorFoodServiceController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->except('_token');
-        $customer = VendorFoodService::create($data);
+        $data = $request->only('vendor_id','package','all_price','combo_price','breakfast_start','breakfast_end',
+                               'lunch_start','lunch_end','dinner_start','dinner_end',);
+        $menu = VendorFoodService::create($data);
+        $menu_items = $request->menu;
+        $item['vendor_food_service_id'] = $menu->id;
+        foreach ($menu_items as $day => $meals) {
+          $item['day'] = $day;
+          foreach ($meals as $meal => $items) {
+            $item['meal'] = $meal;
+            $item['meal_items'] = $items;
+            VendorFoodServiceItem::create($item);
+          }
+        }
         DB::commit();
-        Alert::toast('Service Added Successfully','success');
+        Alert::toast('Service Menu Added Successfully','success');
         return redirect(route('vendor-food-service.index', ['id'=>$request->vendor_id]));
       }catch (\Throwable $th) {
         DB::rollback();
@@ -61,8 +71,7 @@ class VendorFoodServiceController extends Controller
      */
     public function edit(VendorFoodService $vendorFoodService)
     {
-      $categories = FoodCategory::where('status',1)->get();
-      return view('vendor_food_service.edit', compact('vendorFoodService', 'categories'));
+      return view('vendor_food_service.edit', compact('vendorFoodService'));
     }
 
     /**
@@ -72,10 +81,20 @@ class VendorFoodServiceController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->except('_token');
+        $data = $request->only('package','all_price','combo_price','breakfast_start','breakfast_end',
+                               'lunch_start','lunch_end','dinner_start','dinner_end',);
         $vendorFoodService->update($data);
+        $menu_items = $request->menu;
+        $item['vendor_food_service_id'] = $vendorFoodService->id;
+        foreach ($menu_items as $day => $meals) {
+          foreach ($meals as $meal => $items) {
+            $item['day'] = $day;
+            $item['meal'] = $meal;
+            VendorFoodServiceItem::updateOrCreate($item, ['meal_items' => $items]);
+          }
+        }
         DB::commit();
-        Alert::toast('Service Updated Successfully','success');
+        Alert::toast('Service Menu Updated Successfully','success');
         return redirect(route('vendor-food-service.index', ['id'=>$vendorFoodService->vendor_id]));
       }catch (\Throwable $th) {
         DB::rollback();
@@ -90,8 +109,9 @@ class VendorFoodServiceController extends Controller
     public function destroy(VendorFoodService $vendorFoodService)
     {
       try{
+        VendorFoodServiceItem::where('vendor_food_service_id', $foodMenu->id)->delete();
         $vendorFoodService->delete();
-        Alert::toast('Service Deleted Successfully','success');
+        Alert::toast('Service Menu Deleted Successfully','success');
         return redirect()->back();
       }catch (\Throwable $th) {
         Alert::error($th->getMessage());
