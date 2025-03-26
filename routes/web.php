@@ -19,6 +19,8 @@ use App\Http\Controllers\LocalFareController;
 use App\Http\Controllers\OutstationController;
 use App\Http\Controllers\FoodMenuController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\VendorLocalFareController;
+use App\Http\Controllers\VendorOutstationController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -53,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
     'food-menu' => FoodMenuController::class,
     'vendor-laundry-service' => VendorLaundryServiceController::class,
     'vendor-food-service' => VendorFoodServiceController::class,
+    'vendor-local-service' => VendorLocalFareController::class,
+    'vendor-outstation-service' => VendorOutstationController::class,
     'order' => OrderController::class,
     'location' => LocationController::class,
     'cab' => CabController::class,

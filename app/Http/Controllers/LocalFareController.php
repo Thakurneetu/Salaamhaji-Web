@@ -60,7 +60,7 @@ class LocalFareController extends Controller
      */
     public function edit($id)
     {
-      $cabs = Cab::get();
+      $cabs = Cab::whereId($id)->get();
       $cab = Cab::find($id);
       return view('local_fare.edit', compact('cabs','cab'));
     }

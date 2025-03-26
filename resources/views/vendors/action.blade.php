@@ -9,7 +9,7 @@
       <a href="{{ route('vendor-laundry-service.index', ['id'=>$id]) }}" class='btn btn-sm btn-primary tooltip-box'>
       <i class="fas fa-tshirt"></i>
     @elseif($services == 'CAB')
-      <a href="#" class='btn btn-sm btn-primary tooltip-box'>
+      <a href="{{ route('vendor-local-service.index', ['id'=>$id]) }}" class='btn btn-sm btn-primary tooltip-box'>
       <i class="fas fa-taxi"></i>
     @else
       <a href="{{ route('vendor-food-service.index', ['id'=>$id]) }}" class='btn btn-sm btn-primary tooltip-box'>

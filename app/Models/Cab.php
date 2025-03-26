@@ -36,4 +36,8 @@ class Cab extends Model implements Auditable
   {
     return $this->hasOne(LocalFare::class);
   }
+  public function vendor_local_fare() : HasOne
+  {
+    return $this->hasOne(VendorLocalFare::class);
+  }
 }
