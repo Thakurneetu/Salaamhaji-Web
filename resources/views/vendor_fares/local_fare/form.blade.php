@@ -19,5 +19,5 @@
 <input type="hidden" id="vendor_id" name="vendor_id" value="{{$vendor_id}}">
 <div class="card-footer d-flex justify-content-center">
   <button type="submit" class="btn btn-success text_black">Save</button>
-  <a href="{{ route('vendor-local-service.index') }}" class="btn btn-secondary ml-3">Cancel</a>
+  <a href="{{ route('vendor-local-service.index') }}?id={{$vendor_id}}" class="btn btn-secondary ml-3">Cancel</a>
 </div>

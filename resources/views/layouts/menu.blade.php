@@ -15,13 +15,13 @@ $module=explode("/", url()->current());
 </li>
 <li class="nav-item">
     <a href="{{ route('vendor-users.index') }}" class="nav-link {{Request::url() == route('vendor-users.index') ? 'active' : ''}}">
-        <i class="nav-icon fas fa-users"></i>
+        <i class="nav-icon fab fa-vimeo-v"></i>
         <p>Manage Vendors</p>
     </a>
 </li>
 <li class="nav-item">
     <a href="{{ route('banner.index') }}" class="nav-link {{Request::url() == route('banner.index') ? 'active' : ''}}">
-        <i class="nav-icon fas fa-users"></i>
+        <i class="nav-icon fas fa-object-ungroup"></i>
         <p>Promotional Banners</p>
     </a>
 </li>
