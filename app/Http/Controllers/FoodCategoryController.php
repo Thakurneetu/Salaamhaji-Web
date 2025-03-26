@@ -34,7 +34,7 @@ class FoodCategoryController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $customer = FoodCategory::create($data);
+        FoodCategory::create($data);
         DB::commit();
         Alert::toast('Category Added Successfully','success');
         return redirect(route('food_category.index'));

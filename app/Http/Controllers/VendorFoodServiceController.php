@@ -109,7 +109,7 @@ class VendorFoodServiceController extends Controller
     public function destroy(VendorFoodService $vendorFoodService)
     {
       try{
-        VendorFoodServiceItem::where('vendor_food_service_id', $foodMenu->id)->delete();
+        VendorFoodServiceItem::where('vendor_food_service_id', $vendorFoodService->id)->delete();
         $vendorFoodService->delete();
         Alert::toast('Service Menu Deleted Successfully','success');
         return redirect()->back();

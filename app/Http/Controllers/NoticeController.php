@@ -41,7 +41,6 @@ class NoticeController extends Controller
     public function store(Request $request)
     {
       try{
-        // dd($request->all());
         DB::beginTransaction();
         Notice::updateOrCreate(['module'=>'cab'],['message'=>$request->cab_notice]);
         Notice::updateOrCreate(['module'=>'food'],['message'=>$request->food_notice]);

@@ -34,7 +34,7 @@ class LocationController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->only('name');
-        $location = Location::create($data);
+        Location::create($data);
         DB::commit();
         Alert::toast('Location Added Successfully','success');
         return redirect(route('location.index'));

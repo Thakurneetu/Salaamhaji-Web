@@ -29,7 +29,7 @@ class FoodMasterDataTable extends DataTable
         ->editColumn('thumbnail', function ($data) {
           if($data->thumbnail){
             return "<img class='rounded' style='width:50px' src='" . asset($data->thumbnail) . "' alt='thumb'>";
-          }else if($data->image){
+          }elseif($data->image){
             return "<img style='width:50px' src='" . asset($data->image) . "' alt='thumb'>";
           }else{
             return '';

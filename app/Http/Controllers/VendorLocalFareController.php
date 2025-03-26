@@ -38,7 +38,6 @@ class VendorLocalFareController extends Controller
     try{
       DB::beginTransaction();
       $data = $request->only('cab_id','price','vendor_id');
-      // dd($data);
       VendorLocalFare::create($data);
       DB::commit();
       Alert::toast('Fare Added Successfully','success');

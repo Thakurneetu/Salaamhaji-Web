@@ -39,4 +39,3 @@ class LoundryMaster extends Model implements Auditable
   }
 }
 
-// LoundryMaster::withTrashed()->get();

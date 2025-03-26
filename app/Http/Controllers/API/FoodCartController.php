@@ -21,10 +21,9 @@ class FoodCartController extends Controller
     {
       $customer_id = $request->user()->id;
       $threshold = Carbon::now()->addHours(24);
-      $foodCarts =  FoodCart::where('customer_id', $customer_id)->where(function ($query) use ($threshold) {
-            $query->where('from', '<', $threshold);
-        })
-        ->delete();
+      FoodCart::where('customer_id', $customer_id)->where(function ($query) use ($threshold) {
+        $query->where('from', '<', $threshold);
+      })->delete();
       $carts = FoodCart::where('customer_id', $customer_id)->get();
       $data = $this->foodOrders($carts);
       $subtotal = $data['subtotal'];

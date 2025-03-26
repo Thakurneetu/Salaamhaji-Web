@@ -72,15 +72,7 @@ class CustomerAuthController extends Controller
 
     public function register(CustomerRegisterRequest $request)
     {
-      // $checkOtp = CustomerOtp::where(['phone'=>$request->phone, 'otp'=>$request->otp])->first();
-      // if(!$checkOtp){
-      //   return response()->json([
-      //     'status' => false,
-      //     'message' => 'Invalid OTP',
-      //   ], 401);
-      // }
       try {
-        // Create the customer
         $customer = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -88,10 +80,8 @@ class CustomerAuthController extends Controller
             'gender' => $request->gender,
         ]);
 
-        // Generate a Sanctum token
         $token = $customer->createToken('customer-token')->plainTextToken;
 
-        // Return response with the token
         return response()->json([
             'status' => true,
             'message' => 'Your account has been created successfully.',
@@ -111,7 +101,7 @@ class CustomerAuthController extends Controller
     public function profile(ProfileRequest $request){
       try {
         $data = $request->only('name', 'email', 'phone', 'gender');
-        $customer = $request->user()->update($data);
+        $request->user()->update($data);
 
         return response()->json([
             'status' => true,
@@ -130,7 +120,7 @@ class CustomerAuthController extends Controller
     public function location(Request $request){
       try {
         $data = $request->only('latitude', 'longitude');
-        $customer = $request->user()->update($data);
+        $request->user()->update($data);
         return response()->json([
             'status' => true,
             'message' => 'Your location has been updated successfully.',

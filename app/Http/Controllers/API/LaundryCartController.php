@@ -23,7 +23,7 @@ class LaundryCartController extends Controller
             $query->where(DB::raw("CONCAT(service_date, ' ', start)"), '<=', $threshold);
         })
         ->get();
-      foreach ($laundryCarts as $key => $laundryCart) {
+      foreach ($laundryCarts as $laundryCart) {
         $laundryCart->items()->delete();
         $laundryCart->delete();
       }

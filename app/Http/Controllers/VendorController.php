@@ -41,15 +41,15 @@ class VendorController extends Controller
         DB::beginTransaction();
         $data = $request->except('_token', 'catalogue');
         if($request->hasFile('laundry_catalogue')){
-          $data['laundry_catalogue'] = $this->save_file($request->laundry_catalogue, '/uploads/catalogue');
+          $data['laundry_catalogue'] = $this->saveFile($request->laundry_catalogue, config('constants.CATALOGUE'));
         }
         if($request->hasFile('food_catalogue')){
-          $data['food_catalogue'] = $this->save_file($request->food_catalogue, '/uploads/catalogue');
+          $data['food_catalogue'] = $this->saveFile($request->food_catalogue, config('constants.CATALOGUE'));
         }
         if($request->hasFile('cab_catalogue')){
-          $data['cab_catalogue'] = $this->save_file($request->cab_catalogue, '/uploads/catalogue');
+          $data['cab_catalogue'] = $this->saveFile($request->cab_catalogue, config('constants.CATALOGUE'));
         }
-        $vendor = Vendor::create($data);
+        Vendor::create($data);
         DB::commit();
         Alert::toast('Vendor Added Successfully','success');
         return redirect(route('vendor-users.index'));
@@ -97,29 +97,29 @@ class VendorController extends Controller
         $data = $request->except('_token', 'cab_catalogue', 'food_catalogue', 'laundry_catalogue');
         $services = explode(',',$request->services);
         if($request->hasFile('laundry_catalogue')){
-          $this->delete_file($vendor->laundry_catalogue);
-          $data['laundry_catalogue'] = $this->save_file($request->laundry_catalogue, '/uploads/catalogue');
+          $this->deleteFile($vendor->laundry_catalogue);
+          $data['laundry_catalogue'] = $this->saveFile($request->laundry_catalogue, config('constants.CATALOGUE'));
         }else{
           if(!in_array('Laundry',$services)){
-            $this->delete_file($vendor->laundry_catalogue);
+            $this->deleteFile($vendor->laundry_catalogue);
             $data['laundry_catalogue'] = '';
           }
         }
         if($request->hasFile('food_catalogue')){
-          $this->delete_file($vendor->food_catalogue);
-          $data['food_catalogue'] = $this->save_file($request->food_catalogue, '/uploads/catalogue');
+          $this->deleteFile($vendor->food_catalogue);
+          $data['food_catalogue'] = $this->saveFile($request->food_catalogue, config('constants.CATALOGUE'));
         }else{
           if(!in_array('Food',$services)){
-            $this->delete_file($vendor->food_catalogue);
+            $this->deleteFile($vendor->food_catalogue);
             $data['food_catalogue'] = '';
           }
         }
         if($request->hasFile('cab_catalogue')){
-          $this->delete_file($vendor->cab_catalogue);
-          $data['cab_catalogue'] = $this->save_file($request->cab_catalogue, '/uploads/catalogue');
+          $this->deleteFile($vendor->cab_catalogue);
+          $data['cab_catalogue'] = $this->saveFile($request->cab_catalogue, config('constants.CATALOGUE'));
         }else{
           if(!in_array('CAB',$services)){
-            $this->delete_file($vendor->cab_catalogue);
+            $this->deleteFile($vendor->cab_catalogue);
             $data['cab_catalogue'] = '';
           }
         }
@@ -141,9 +141,9 @@ class VendorController extends Controller
     {
       try{
         $vendor = Vendor::find($id);
-        if($vendor->laundry_catalogue) {$this->delete_file($vendor->laundry_catalogue);}
-        if($vendor->food_catalogue) {$this->delete_file($vendor->food_catalogue);}
-        if($vendor->cab_catalogue) {$this->delete_file($vendor->cab_catalogue);}
+        if($vendor->laundry_catalogue) {$this->deleteFile($vendor->laundry_catalogue);}
+        if($vendor->food_catalogue) {$this->deleteFile($vendor->food_catalogue);}
+        if($vendor->cab_catalogue) {$this->deleteFile($vendor->cab_catalogue);}
         $vendor->delete();
         Alert::toast('Vendor Deleted Successfully','success');
         return redirect()->back();
@@ -165,11 +165,11 @@ class VendorController extends Controller
         $data = $request->except('_token', 'catalogue');
         if($request->hasFile('catalogue')){
           if($request->services == 'Laundry'){
-            $data['laundry_catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
-          }else if($request->services == 'Food'){
-            $data['food_catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+            $data['laundry_catalogue'] = $this->saveFile($request->catalogue, config('constants.CATALOGUE'));
+          }elseif($request->services == 'Food'){
+            $data['food_catalogue'] = $this->saveFile($request->catalogue, config('constants.CATALOGUE'));
           }else{
-            $data['cab_catalogue'] = $this->save_file($request->catalogue, '/uploads/catalogue');
+            $data['cab_catalogue'] = $this->saveFile($request->catalogue, config('constants.CATALOGUE'));
           }
         }
         $vendor = Vendor::create($data);

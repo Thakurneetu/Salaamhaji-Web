@@ -12,7 +12,7 @@ class CabController extends Controller
 {
     public function locations(Request $request)
     {
-      if($request->has('origin') AND $request->origin != '') {
+      if($request->has('origin') && $request->origin != '') {
         $ids = Outstation::where(['origin_id'=>$request->origin])->pluck('destination_id');
         $locations = Location::select('id', 'name')->whereIn('id', $ids)->get();
       }else {

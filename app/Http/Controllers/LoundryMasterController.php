@@ -39,9 +39,9 @@ class LoundryMasterController extends Controller
         DB::beginTransaction();
         $data = $request->except('_token');
         if($request->hasFile('icon')){
-          $data['icon'] = $this->save_file($request->icon, '/uploads/laundry');
+          $data['icon'] = $this->saveFile($request->icon, '/uploads/laundry');
         }
-        $customer = LoundryMaster::create($data);
+        LoundryMaster::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
         return redirect(route('laundry_master.index'));
@@ -78,9 +78,10 @@ class LoundryMasterController extends Controller
         DB::beginTransaction();
         $data = $request->except('_token');
         if($request->hasFile('icon')){
-          if($laundryMaster->icon != '')
-          $this->delete_file($laundryMaster->icon);
-          $data['icon'] = $this->save_file($request->icon, '/uploads/laundry');
+          if($laundryMaster->icon != '') {
+            $this->deleteFile($laundryMaster->icon);
+          }
+          $data['icon'] = $this->saveFile($request->icon, '/uploads/laundry');
         }
         $laundryMaster->update($data);
         DB::commit();

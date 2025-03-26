@@ -17,11 +17,10 @@ class CabCartController extends Controller
     public function index(Request $request)
     {
       $threshold = Carbon::now()->addHours(24);
-      $cabCarts =  CabCart::where('customer_id', $request->user()->id)->where(function ($query) use ($threshold) {
-            $query->where(DB::raw("CONCAT(service_date, ' ', start)"), '<=', $threshold);
-        })
-        ->delete();
-        
+      CabCart::where('customer_id', $request->user()->id)->where(function ($query) use ($threshold) {
+        $query->where(DB::raw("CONCAT(service_date, ' ', start)"), '<=', $threshold);
+      })->delete();
+
       $tours = CabCart::where('customer_id', $request->user()->id)->get();
       $carts = []; $subtotal=0;
       foreach ($tours as $key => $tour) {
@@ -32,10 +31,10 @@ class CabCartController extends Controller
         $carts[$key]['end'] = $tour->end;
         $carts[$key]['hours'] = $tour->hours;
         $carts[$key]['price'] = $tour->fare->price;
-        $carts[$key]['total_price'] = $tour->tour_type == 'local' 
-                                      ? number_format($tour->hours * $tour->fare->price, 2, '.', '') 
+        $carts[$key]['total_price'] = $tour->tour_type == 'local'
+                                      ? number_format($tour->hours * $tour->fare->price, 2, '.', '')
                                       : number_format($tour->fare->price, 2, '.', '');
-        $carts[$key]['origin'] = $tour->tour_type == 'local' 
+        $carts[$key]['origin'] = $tour->tour_type == 'local'
                                  ? $tour->tour_location
                                  : $tour->fare->outstation->origin->name;
         $carts[$key]['destination'] = $tour->tour_type == 'local' ? '' : $tour->fare->outstation->destination->name;
@@ -50,8 +49,8 @@ class CabCartController extends Controller
       return response()->json([
         'status' => true,
         'subtotal' => number_format($subtotal, 2, '.', '') ,
-        'tax' => number_format($subtotal * 5 / 100, 2, '.', '') ,
-        'grand_total' => number_format($subtotal + $subtotal * 5 / 100, 2, '.', '') ,
+        'tax' => number_format($subtotal * 5 / 100, 2, '.', ''),
+        'grand_total' => number_format($subtotal + $subtotal * 5 / 100, 2, '.', ''),
         'carts' => $carts
       ]);
     }

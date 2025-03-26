@@ -19,7 +19,7 @@ class Family extends Model
 
   public function members() : HasMany
   {
-    return $this->hasMany(Customer::class)->orderBy('family_joined_at', 'asc');;
+    return $this->hasMany(Customer::class)->orderBy('family_joined_at', 'asc');
   }
 
   public function firstMember()

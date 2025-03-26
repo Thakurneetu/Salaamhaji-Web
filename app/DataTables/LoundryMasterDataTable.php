@@ -22,7 +22,7 @@ class LoundryMasterDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'laundry_master.action') 
+            ->addColumn('action', 'laundry_master.action')
             ->editColumn('icon', function ($data) {
               if($data->icon) {
                 return "<img style='width:50px' src='" . asset($data->icon) . "' alt='Icon'>";

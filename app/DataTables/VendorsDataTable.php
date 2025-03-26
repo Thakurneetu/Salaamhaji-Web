@@ -35,7 +35,7 @@ class VendorsDataTable extends DataTable
     public function query(Vendor $model): QueryBuilder
     {
         return $model->newQuery()
-        ->select('vendors.*', 'countries.name as country_name', 
+        ->select('vendors.*', 'countries.name as country_name',
         DB::raw("CONCAT(vendors.address1,', ',vendors.address2,', ',vendors.city,', ',vendors.state,', ',countries.name) as address"))
         ->join('countries', 'vendors.country_id', '=', 'countries.id');
     }

@@ -41,14 +41,14 @@ class FoodMasterController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $data['image'] = $this->save_file($request->image, '/uploads/food_items');
+        $data['image'] = $this->saveFile($request->image, '/uploads/food_items');
         $image_name = explode('/',$data['image']);
         $thumb = $this->createThumbnail(public_path($data['image']), 100, 100);
         $data['thumbnail'] = $data['image'];
         if($thumb){
           $data['thumbnail'] = '/uploads/food_items/thumbnails/'.end($image_name);
         }
-        $customer = FoodMaster::create($data);
+        FoodMaster::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
         return redirect(route('food_master.index'));
@@ -85,9 +85,9 @@ class FoodMasterController extends Controller
         DB::beginTransaction();
         $data = $request->except('_token');
         if($request->hasFile('image')){
-          $this->delete_file($foodMaster->image);
-          $this->delete_file($foodMaster->thumbnail);
-          $data['image'] = $this->save_file($request->image, '/uploads/food_items');
+          $this->deleteFile($foodMaster->image);
+          $this->deleteFile($foodMaster->thumbnail);
+          $data['image'] = $this->saveFile($request->image, '/uploads/food_items');
           $image_name = explode('/',$data['image']);
           $thumb = $this->createThumbnail(public_path($data['image']), 100, 100);
           $data['thumbnail'] = $data['image'];

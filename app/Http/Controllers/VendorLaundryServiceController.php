@@ -37,7 +37,7 @@ class VendorLaundryServiceController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->except('_token');
-        $customer = VendorLaundryService::create($data);
+        VendorLaundryService::create($data);
         DB::commit();
         Alert::toast('Service Added Successfully','success');
         return redirect(route('vendor-laundry-service.index', ['id'=>$request->vendor_id]));

@@ -44,7 +44,6 @@ class OrderController extends Controller
       try{
         DB::beginTransaction();
         $type = $request->type;
-        $cart_id = $request->cart_id;
         $order_data['uuid'] = $this->generateUniqueOrderId();
         $order_data['customer_id'] = $request->user()->id;
         $order_data['type'] = $type;
@@ -62,7 +61,7 @@ class OrderController extends Controller
           foreach ($carts as $key => $cart) {
             if($cart->meal == 'Combo') {
               $order_data['subtotal'] = $cart->package->combo_price * $cart->quantity;
-            }else if($cart->meal == 'Single') {
+            }elseif($cart->meal == 'Single') {
               $order_data['subtotal'] = $cart->package->single_price * $cart->quantity;
             }else {
               $order_data['subtotal'] = $cart->package->all_price * $cart->quantity;
@@ -94,7 +93,7 @@ class OrderController extends Controller
             $dates=[];
             if($cart->meal == 'All') {
               $meals = ['breakfast', 'lunch', 'dinner'];
-            }else if($cart->meal == 'Combo') {
+            }elseif($cart->meal == 'Combo') {
               $meals = explode('-', $cart->meal_type);
             }else {
               $meals = [$cart->meal_type];
@@ -133,7 +132,7 @@ class OrderController extends Controller
             'status' => true,
             'message' => 'Order Placed Successfully',
           ]);
-        }else if($type == 'laundry'){
+        }elseif($type == 'laundry'){
           $carts = LaundryCart::where('customer_id', $request->user()->id)->with('items')->get();
           if(count($carts) < 1) {
             return response()->json([
@@ -173,7 +172,7 @@ class OrderController extends Controller
             'status' => true,
             'message' => 'Order Placed Successfully',
           ]);
-        }else if($type == 'cab') {
+        }elseif($type == 'cab') {
           $cart = CabCart::where('customer_id', $request->user()->id)->latest()->first();
           if(!$cart) {
             return response()->json([

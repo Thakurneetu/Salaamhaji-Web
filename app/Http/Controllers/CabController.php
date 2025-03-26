@@ -37,9 +37,9 @@ class CabController extends Controller
         DB::beginTransaction();
         $data = $request->only('type','seats','luggage');
         if($request->hasFile('icon')){
-          $data['icon'] = $this->save_file($request->icon, '/uploads/cab');
+          $data['icon'] = $this->saveFile($request->icon, '/uploads/cab');
         }
-        $cab = Cab::create($data);
+        Cab::create($data);
         DB::commit();
         Alert::toast('CAB Type Added Successfully','success');
         return redirect(route('cab.index'));
@@ -75,9 +75,10 @@ class CabController extends Controller
         DB::beginTransaction();
         $data = $request->only('type','seats','luggage');
         if($request->hasFile('icon')){
-          if($cab->icon != '')
-          $this->delete_file($cab->icon);
-          $data['icon'] = $this->save_file($request->icon, '/uploads/cab');
+          if($cab->icon != '') {
+            $this->deleteFile($cab->icon);
+          }
+          $data['icon'] = $this->saveFile($request->icon, '/uploads/cab');
         }
         $cab->update($data);
         DB::commit();
@@ -96,7 +97,7 @@ class CabController extends Controller
     public function destroy(Cab $cab)
     {
       try{
-        $this->delete_file($cab->icon);
+        $this->deleteFile($cab->icon);
         $cab->delete();
         Alert::toast('CAB Type Deleted Successfully','success');
         return redirect()->back();

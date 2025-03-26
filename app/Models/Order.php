@@ -61,7 +61,15 @@ class Order extends Model implements Auditable
       $isToday = $serviceDate->isSameDay($today);
       $isNext = $serviceDate->isNextDay($today);
 
-      $dateString = $isToday ? 'Today' : ($isNext ? 'Tomorrow' : $serviceDate->format('M jS, Y'));
+      if($isToday) {
+        $dateString = 'Today';
+      } else {
+        if($isNext) {
+          $dateString = 'Tomorrow';
+        } else {
+          $dateString = $serviceDate->format('M jS, Y');
+        }
+      }
 
       $startTimeString = $startTime->format('g:i A');
       $endTimeString = $endTime->format('g:i A');

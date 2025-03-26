@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Traits;
 
@@ -13,9 +13,6 @@ use Spatie\Permission\Models\Role;
 use Intervention\Image\Laravel\Facades\Image;
 
 trait HelperTrait {
-
-  function __construct() {
-  }
 
   private function generateUniqueOrderId(): string
   {
@@ -36,14 +33,14 @@ trait HelperTrait {
     return $str;
   }
 
-  private function save_file($file, $store_path){
+  private function saveFile($file, $store_path){
     $extension = File::extension($file->getClientOriginalName());
     $filename = rand(10,99).date('YmdHis').rand(10,99).'.'.$extension;
     $file-> move(public_path($store_path), $filename);
     return $store_path.'/'.$filename;
   }
 
-  private function delete_file($file_path){
+  private function deleteFile($file_path){
     File::delete(public_path().$file_path);
   }
 
@@ -118,7 +115,7 @@ trait HelperTrait {
           $bookings[$key]['to'] = '';
           $bookings[$key]['pickup_location'] = '';
           $key++;
-      }else if($order->type == 'laundry'){
+      }elseif($order->type == 'laundry'){
         foreach ($order->laundry_orders as $item) {
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['type'] = $order->type;
@@ -135,7 +132,7 @@ trait HelperTrait {
           $bookings[$key]['pickup_location'] = '';
           $key++;
         }
-      }else if($order->type == 'cab'){
+      }elseif($order->type == 'cab'){
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['type'] = $order->type;
           $bookings[$key]['time_slot'] = $order->formatted_service_time;
@@ -167,7 +164,7 @@ trait HelperTrait {
       if($cart->meal == 'Combo') {
         $items[$key]['price'] = $cart->package->combo_price;
         $price = $cart->package->combo_price * $cart->quantity;
-      }else if($cart->meal == 'Single') {
+      }elseif($cart->meal == 'Single') {
         $items[$key]['price'] = $cart->package->single_price;
         $price = $cart->package->single_price * $cart->quantity;
       }else {

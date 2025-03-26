@@ -25,10 +25,10 @@ class OrdersDataTable extends DataTable
         ->addColumn('action', 'order.action')
         ->rawColumns(['status','action'])
         ->editColumn('created_at', function($data){
-          return date('d/m/Y', strtotime($data->created_at));
+          return date(config('constants.DATE'), strtotime($data->created_at));
         })
         ->editColumn('service_date', function($data){
-          return $data->service_date != '' ? date('d/m/Y', strtotime($data->service_date)) : '';
+          return $data->service_date != '' ? date(config('constants.DATE'), strtotime($data->service_date)) : '';
         })
         ->editColumn('slot', function($data){
           return $data->start != '' ? date('H:i', strtotime($data->start)).'-'.date('H:i', strtotime($data->end)) : '';
@@ -37,10 +37,10 @@ class OrdersDataTable extends DataTable
         
         if($this->type == 'food') {
           $table->editColumn('food_order.from', function($data){
-            return $data->food_order->from != '' ? date('d/m/Y', strtotime($data->food_order->from)) : '';
+            return $data->food_order->from != '' ? date(config('constants.DATE'), strtotime($data->food_order->from)) : '';
           });
           $table->editColumn('food_order.to', function($data){
-            return $data->food_order->to != '' ? date('d/m/Y', strtotime($data->food_order->to)) : '';
+            return $data->food_order->to != '' ? date(config('constants.DATE'), strtotime($data->food_order->to)) : '';
           });
         }
         return $table;
@@ -52,8 +52,8 @@ class OrdersDataTable extends DataTable
     public function query(Order $model): QueryBuilder
     {
         return $model->newQuery()
-        // ->select('orders.*', 
-        //   'customers.name as customer_name', 
+        // ->select('orders.*',
+        //   'customers.name as customer_name',
         //   'customers.email as email',
         //   'customers.phone as phone'
         // )

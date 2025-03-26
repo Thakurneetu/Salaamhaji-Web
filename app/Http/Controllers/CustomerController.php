@@ -39,7 +39,7 @@ class CustomerController extends Controller
         if($request->password != ''){
           $data['password'] = Hash::make($request->password);
         }
-        $customer = Customer::create($data);
+        Customer::create($data);
         DB::commit();
         Alert::toast('Customer Added Successfully','success');
         return redirect(route('customer.index'));

@@ -36,8 +36,8 @@ class BannerController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->only('name');
-        $data['image'] = $this->save_file($request->image, '/uploads/banners');
-        $banner = Banner::create($data);
+        $data['image'] = $this->saveFile($request->image, '/uploads/banners');
+        Banner::create($data);
         DB::commit();
         Alert::toast('Promotional Banner Added Successfully','success');
         return redirect(route('banner.index'));
@@ -80,8 +80,8 @@ class BannerController extends Controller
         DB::beginTransaction();
         $data = $request->only('name');
         if($request->hasFile('image')){
-          $this->delete_file($banner->image);
-          $data['image'] = $this->save_file($request->image, '/uploads/banners');
+          $this->deleteFile($banner->image);
+          $data['image'] = $this->saveFile($request->image, '/uploads/banners');
         }
         $banner->update($data);
         DB::commit();
@@ -100,7 +100,7 @@ class BannerController extends Controller
     public function destroy(Banner $banner)
     {
       try{
-        $this->delete_file($banner->image);
+        $this->deleteFile($banner->image);
         $banner->delete();
         Alert::toast('Promotional Banner Deleted Successfully','success');
         return redirect()->back();
