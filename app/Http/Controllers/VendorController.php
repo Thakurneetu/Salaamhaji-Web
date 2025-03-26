@@ -172,7 +172,7 @@ class VendorController extends Controller
             $data['cab_catalogue'] = $this->saveFile($request->catalogue, config('constants.CATALOGUE'));
           }
         }
-        $vendor = Vendor::create($data);
+        Vendor::create($data);
         DB::commit();
         return view('registration_success');
       }catch (\Throwable $th) {
