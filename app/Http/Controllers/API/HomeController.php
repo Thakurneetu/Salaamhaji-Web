@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Banner;
 use App\Models\Customer;
 use App\Models\Notice;
+use App\Models\Area;
 use Carbon\Carbon;
 use App\Traits\HelperTrait;
 
@@ -41,6 +42,15 @@ class HomeController extends Controller
       return response()->json([
         'status' => true,
         'notice' => $message,
+      ]);
+    }
+
+    public function areas()
+    {
+      $areas = Area::select('id','name')->get();
+      return response()->json([
+        'status' => true,
+        'areas' => $areas,
       ]);
     }
 }

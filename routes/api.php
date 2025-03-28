@@ -65,5 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('notice/{module}', [HomeController::class, 'notice']);
 
+    Route::get('area-list', [HomeController::class, 'areas']);
+
 });
 
