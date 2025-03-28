@@ -32,7 +32,7 @@ class FoodMenuDataTable extends DataTable
      */
     public function query(FoodMenu $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('area');
     }
 
     /**
@@ -66,6 +66,7 @@ class FoodMenuDataTable extends DataTable
           Column::make('id')->visible(false),
           Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
           Column::make('package')->title('Hotel Package'),
+          Column::make('area.name')->title('Area')->sortable(false),
           Column::make('all_price'),
           Column::make('combo_price'),
           Column::computed('action')

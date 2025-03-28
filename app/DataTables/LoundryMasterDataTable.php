@@ -41,7 +41,7 @@ class LoundryMasterDataTable extends DataTable
         return $model->newQuery()
         // ->select('loundry_masters.*', 'loundry_categories.name as category')
         // ->join('loundry_categories', 'loundry_masters.category_id', '=', 'loundry_categories.id')
-        ->with('category:id,name');
+        ->with('category:id,name','area');
     }
 
     /**
@@ -77,6 +77,7 @@ class LoundryMasterDataTable extends DataTable
           Column::make('name'),
           Column::make('category.name')->title('Category'),
           Column::make('price'),
+          Column::make('area.name')->title('Area')->sortable(false),
           Column::make('icon')->width('7%')->orderable(false)->defaultContent('')->addClass('text-center'),
           Column::computed('action')
                 ->exportable(false)

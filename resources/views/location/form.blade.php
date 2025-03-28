@@ -1,6 +1,15 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
+      <label>Area</label>
+      <select name="area_id" id="area" class="form-control">
+        <option value="" selected disabled>Select Area</option>
+        @foreach($areas as $area)
+        <option value="{{$area->id}}" {{old('area_id' , @$location->area_id) == $area->id ? 'selected' : ''}}>{{$area->name}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="form-group col-md-6 col-12">
       <label for="name">Location Name</label>
       <input type="text" name="name" value="{{old('name') ?? (@$location->name ?? '')}}" 
       class="form-control @error('name') is-invalid @enderror" placeholder="Enter Location Name" required>

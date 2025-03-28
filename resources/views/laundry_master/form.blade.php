@@ -1,6 +1,15 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
+      <label>Area</label>
+      <select name="area_id" id="area" class="form-control">
+        <option value="" selected disabled>Select Area</option>
+        @foreach($areas as $area)
+        <option value="{{$area->id}}" {{old('area_id' , @$laundryMaster->area_id) == $area->id ? 'selected' : ''}}>{{$area->name}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="form-group col-md-6 col-12">
       <label>Service Category</label>
       <select name="category_id" id="category" class="form-control">
         <option value="" selected disabled>Select Service Category</option>

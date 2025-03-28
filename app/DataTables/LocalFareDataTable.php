@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Cab;
+use App\Models\LocalFare;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -23,9 +23,6 @@ class LocalFareDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('action', 'local_fare.action')
-        ->editColumn('fare', function ($cab) {
-          return $cab->local_fare->price;
-        })
         ->rawColumns(['action', 'fares'])
         ->addIndexColumn();
     }
@@ -33,9 +30,9 @@ class LocalFareDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Cab $model): QueryBuilder
+    public function query(LocalFare $model): QueryBuilder
     {
-        return $model->newQuery()->has('local_fare');
+        return $model->newQuery()->with('cab','area');
     }
 
     /**
@@ -68,8 +65,9 @@ class LocalFareDataTable extends DataTable
       return [
         Column::make('id')->visible(false),
         Column::make('DT_RowIndex')->title('Sl No.')->width('8%')->addClass('text-center')->sortable(false)->searchable(false),
-        Column::make('type')->title('Cab Type')->width('45%'),
-        Column::make('fare')->title('Fare / Hour')->width('37%')->sortable(false)->searchable(false),
+        Column::make('cab.type')->title('Cab Type')->width('30%')->sortable(false),
+        Column::make('area.name')->title('Area')->width('15%')->sortable(false),
+        Column::make('price')->title('Fare / Hour')->width('37%')->sortable(false)->searchable(false),
         Column::computed('action')
               ->exportable(false)
               ->printable(false)

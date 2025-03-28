@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cab;
+use App\Models\Area;
 use App\Models\LocalFare;
 use Illuminate\Http\Request;
 use App\DataTables\LocalFareDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\LocalFareCreateRequest;
+use App\Http\Requests\LocalFareUpdateRequest;
 
 class LocalFareController extends Controller
 {
@@ -24,18 +27,19 @@ class LocalFareController extends Controller
      */
     public function create()
     {
-      $cabs = Cab::doesntHave('local_fare')->get();
-      return view('local_fare.create', compact('cabs'));
+      $cabs = Cab::get();
+      $areas = Area::get();
+      return view('local_fare.create', compact('cabs','areas'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LocalFareCreateRequest $request)
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('cab_id','price');
+        $data = $request->only('cab_id','price','area_id');
         LocalFare::create($data);
         DB::commit();
         Alert::toast('Fare Added Successfully','success');
@@ -60,21 +64,21 @@ class LocalFareController extends Controller
      */
     public function edit($id)
     {
-      $cabs = Cab::whereId($id)->get();
-      $cab = Cab::find($id);
-      return view('local_fare.edit', compact('cabs','cab'));
+      $cabs = Cab::get();
+      $local_fare = LocalFare::find($id);
+      $areas = Area::get();
+      return view('local_fare.edit', compact('cabs','local_fare','areas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(LocalFareUpdateRequest $request, $id)
     {
       try{
-        $data = $request->only('cab_id');
-        $price = $request->only('price');
+        $data = $request->only('cab_id','area_id','price');
         DB::beginTransaction();
-        LocalFare::updateOrCreate($data,$price);
+        LocalFare::find($id)->update($data);
         DB::commit();
         Alert::toast('Fare Updated Successfully','success');
         return redirect(route('local-fare.index'));

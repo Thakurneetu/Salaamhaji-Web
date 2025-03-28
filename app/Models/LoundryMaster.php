@@ -20,6 +20,7 @@ class LoundryMaster extends Model implements Auditable
     'price',
     'status',
     'icon',
+    'area_id'
   ];
   protected $dates = ['deleted_at'];
   protected $appends = ['icon_url'];
@@ -27,6 +28,11 @@ class LoundryMaster extends Model implements Auditable
   public function category() : BelongsTo
   {
     return $this->belongsTo(LoundryCategory::class, 'category_id');
+  }
+
+  public function area() : BelongsTo
+  {
+    return $this->belongsTo(Area::class);
   }
 
   public function getIconUrlAttribute()

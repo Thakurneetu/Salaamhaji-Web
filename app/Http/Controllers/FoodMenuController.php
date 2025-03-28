@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\FoodMenu;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
@@ -24,7 +25,8 @@ class FoodMenuController extends Controller
      */
     public function create()
     {
-      return view('food_menu.create');
+      $areas = Area::get();
+      return view('food_menu.create', compact('areas'));
     }
 
     /**
@@ -35,7 +37,7 @@ class FoodMenuController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->only('package','all_price','combo_price','breakfast_start','breakfast_end',
-                               'lunch_start','lunch_end','dinner_start','dinner_end',);
+                               'lunch_start','lunch_end','dinner_start','dinner_end','area_id');
         $menu = FoodMenu::create($data);
         $menu_items = $request->menu;
         $item['food_menu_id'] = $menu->id;
@@ -70,7 +72,8 @@ class FoodMenuController extends Controller
      */
     public function edit(FoodMenu $foodMenu)
     {
-      return view('food_menu.edit', compact('foodMenu'));
+      $areas = Area::get();
+      return view('food_menu.edit', compact('foodMenu','areas'));
     }
 
     /**
@@ -81,7 +84,7 @@ class FoodMenuController extends Controller
       try{
         DB::beginTransaction();
         $data = $request->only('package','all_price','combo_price','breakfast_start','breakfast_end',
-                               'lunch_start','lunch_end','dinner_start','dinner_end',);
+                               'lunch_start','lunch_end','dinner_start','dinner_end','area_id');
         $foodMenu->update($data);
         $menu_items = $request->menu;
         $item['food_menu_id'] = $foodMenu->id;

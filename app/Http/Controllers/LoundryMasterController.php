@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\LoundryMaster;
 use App\Models\LoundryCategory;
 use Illuminate\Http\Request;
@@ -26,8 +27,9 @@ class LoundryMasterController extends Controller
      */
     public function create()
     {
+      $areas = Area::get();
       $categories = LoundryCategory::where('status',1)->get();
-      return view('laundry_master.create', compact('categories'));
+      return view('laundry_master.create', compact('categories','areas'));
     }
 
     /**
@@ -65,8 +67,9 @@ class LoundryMasterController extends Controller
      */
     public function edit(LoundryMaster $laundryMaster)
     {
+      $areas = Area::get();
       $categories = LoundryCategory::where('status',1)->get();
-      return view('laundry_master.edit', compact('laundryMaster', 'categories'));
+      return view('laundry_master.edit', compact('laundryMaster', 'categories','areas'));
     }
 
     /**

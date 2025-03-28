@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\DataTables\LocationDataTable;
@@ -23,7 +24,8 @@ class LocationController extends Controller
      */
     public function create()
     {
-      return view('location.create');
+      $areas = Area::get();
+      return view('location.create', compact('areas'));
     }
 
     /**
@@ -33,7 +35,7 @@ class LocationController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('name');
+        $data = $request->only('name','area_id');
         Location::create($data);
         DB::commit();
         Alert::toast('Location Added Successfully','success');
@@ -58,7 +60,8 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-      return view('location.edit', compact('location'));
+      $areas = Area::get();
+      return view('location.edit', compact('location','areas'));
     }
 
     /**
@@ -68,7 +71,7 @@ class LocationController extends Controller
     {
       try{
         DB::beginTransaction();
-        $data = $request->only('name');
+        $data = $request->only('name','area_id');
         $location->update($data);
         DB::commit();
         Alert::toast('Location Updated Successfully','success');

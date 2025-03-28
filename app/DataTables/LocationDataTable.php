@@ -32,7 +32,7 @@ class LocationDataTable extends DataTable
      */
     public function query(Location $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('area');
     }
 
     /**
@@ -66,6 +66,7 @@ class LocationDataTable extends DataTable
         Column::make('id')->visible(false),
         Column::make('DT_RowIndex')->title('Sl No.')->width(50)->addClass('text-center')->sortable(false)->searchable(false),
         Column::make('name')->title('Location'),
+        Column::make('area.name')->title('Area')->sortable(false),
         Column::computed('action')
               ->exportable(false)
               ->printable(false)

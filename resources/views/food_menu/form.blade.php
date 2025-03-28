@@ -1,8 +1,19 @@
 
 <div class="card-body">
-  <div class="form-group">
+  <div class="row">
+    <div class="form-group col-md-6 col-12">
+      <h4>Area</h4>
+      <select name="area_id" id="area" class="form-control">
+        <option value="" selected disabled>Select Area</option>
+        @foreach($areas as $area)
+        <option value="{{$area->id}}" {{old('area_id' , @$foodMenu->area_id) == $area->id ? 'selected' : ''}}>{{$area->name}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="form-group col-md-6 col-12">
       <h4>Hotel Package</h4>
       <input type="text" class="form-control" name="package" value="{{old('package') ?? (@$foodMenu->package ?? '')}}" required>
+    </div>
   </div>
   <div class="form-group">
       <h4>Pricing</h4>
