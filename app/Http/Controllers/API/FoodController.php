@@ -35,9 +35,9 @@ class FoodController extends Controller
         'services' => $services,
       ]);
     }
-    public function packages()
+    public function packages(Request $request)
     {
-      $packages = FoodMenu::select('id','package')->get();
+      $packages = FoodMenu::select('id','package')->where('area_id', $request->area_id)->get();
       return response()->json([
         'status' => true,
         'packages' => $packages,

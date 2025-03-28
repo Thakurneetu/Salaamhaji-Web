@@ -16,7 +16,7 @@ class CabController extends Controller
         $ids = Outstation::where(['origin_id'=>$request->origin])->pluck('destination_id');
         $locations = Location::select('id', 'name')->whereIn('id', $ids)->get();
       }else {
-        $locations = Location::select('id', 'name')->get();
+        $locations = Location::select('id', 'name')->where('area_id', $request->area_id)->get();
       }
       return response()->json([
         'status' => true,
@@ -24,9 +24,9 @@ class CabController extends Controller
       ]);
     }
 
-    public function local_fares()
+    public function local_fares(Request $request)
     {
-      $fares = LocalFare::get();
+      $fares = LocalFare::where('area_id', $request->area_id)->get();
       $data = [];
       foreach ($fares as $key => $fare) {
         $data[$key]['id'] = $fare->id;
