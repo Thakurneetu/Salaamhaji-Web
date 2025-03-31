@@ -12,6 +12,7 @@ use App\Http\Requests\API\CustomerVerifyOtpRequest;
 use App\Http\Requests\API\CustomerRegisterRequest;
 use App\Http\Requests\API\ProfileRequest;
 use App\Traits\HelperTrait;
+use Illuminate\Support\Facades\Http;
 
 class CustomerAuthController extends Controller
 {
@@ -19,6 +20,7 @@ class CustomerAuthController extends Controller
 
     public function send_otp(CustomerOTPRequest $request)
     {
+      $number = '';
       if($request->has('type') && $request->type == 'login_otp'){
         $customer = Customer::where('phone', $request->phone)->first();
         if(!$customer){
@@ -26,8 +28,11 @@ class CustomerAuthController extends Controller
             'status' => false,
             'message' => 'Phone number doesn\'t exist.',
           ], 401);
+        }else{
+          $number .= $customer->country_code;
         }
       }
+      $number .= $request->phone;
       $otp = $this->randomToken(4);
       $find = CustomerOtp::where(['phone'=>$request->phone])->first();
       if($find){
@@ -35,11 +40,20 @@ class CustomerAuthController extends Controller
       }else{
         CustomerOtp::create(['phone'=>$request->phone,'otp'=>$otp]);
       }
-      return response()->json([
-        'status' => true,
-        'message' => 'OTP sent successfully',
-        'test_otp' => $otp,
-      ]);
+      $response = Http::get(env('WATSAPP_LOGIN_OTP_URL').'?number='.$number.'&otp='.$otp);
+      $result = $response->json();
+      if($result['accepted']) {
+        return response()->json([
+          'status' => true,
+          'message' => 'OTP sent successfully',
+          'test_otp' => $otp,
+        ]);
+      }else {
+        return response()->json([
+          'status' => false,
+          'message' => 'Something went wrong, please try again later.',
+        ]);
+      }
     }
 
     public function verify_otp(CustomerVerifyOtpRequest $request)
