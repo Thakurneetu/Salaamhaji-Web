@@ -17,7 +17,10 @@ class FamilyController extends Controller
     {
       $members = [];
       if($request->user()->family_id){
-        $members = $request->user()->family->members->pluck('id')->toArray();
+        $family = Family::find($request->user()->family_id);
+        if($family) {
+          $members = $request->user()->family->members->pluck('id')->toArray();
+        }
       }
       $phone = $request->search;
       $results = $phone != '' ? Customer::select('id', 'phone')->whereNotIn('id', $members)->where('phone', 'like', '%'.$phone.'%')->get() : [];
@@ -57,7 +60,8 @@ class FamilyController extends Controller
         $family = Family::find($request->user()->family_id);
         $members = [];$head=[];
         if($family && $family->has('members')){
-          foreach ($family->members as $key => $member) {
+          $key = 0;
+          foreach ($family->members as $member) {
             if($family->head->id != $member->id) {
               $members[$key]['id'] = $member->id;
               $members[$key]['name'] = $member->name;
@@ -66,6 +70,7 @@ class FamilyController extends Controller
               $members[$key]['gender'] = $member->gender;
               $members[$key]['latitude'] = $member->latitude;
               $members[$key]['longitude'] = $member->longitude;
+              $key++;
             }
           }
         }
