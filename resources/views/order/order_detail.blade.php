@@ -26,15 +26,22 @@
     <td>{{$order->landmark}}</td>
   </tr>
   @endif
-  @if($order->type != 'food')
+  @if(in_array($order->type,['cab','laundry']))
   <tr>
     <th>Service Date:</th>
     <td>{{date('d/m/Y',strtotime($order->service_date))}}</td>
   </tr>
-  <tr>
-    <th>Time Slot:</th>
-    <td>{{date('H:i',strtotime($order->start))}} - {{date('H:i',strtotime($order->end))}}</td>
-  </tr>
+    @if($order->type =='cab')
+    <tr>
+      <th>Pickup Time:</th>
+      <td>{{date('h:i A',strtotime($order->start))}}</td>
+    </tr>
+    @else
+    <tr>
+      <th>Time Slot:</th>
+      <td>{{date('H:i',strtotime($order->start))}} - {{date('H:i',strtotime($order->end))}}</td>
+    </tr>
+    @endif
   @endif
   <tr>
     <th>Order Status:</th>

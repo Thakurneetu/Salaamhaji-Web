@@ -23,7 +23,7 @@ class VendorsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('status', 'layouts.includes.status')
+            // ->addColumn('status', 'layouts.includes.status')
             ->addColumn('action', 'vendors.action')
             ->rawColumns(['action','status'])
             ->addIndexColumn();
@@ -75,11 +75,11 @@ class VendorsDataTable extends DataTable
           Column::make('email'),
           Column::make('services'),
           Column::make('address')->title('Address')->searchable(false),
-          Column::make('status')
-                ->exportable(false)
-                ->printable(false)
-                ->width('5%')
-                ->addClass('text-center'),
+          // Column::make('status')
+          //       ->exportable(false)
+          //       ->printable(false)
+          //       ->width('5%')
+          //       ->addClass('text-center'),
           Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
