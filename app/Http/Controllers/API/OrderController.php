@@ -202,6 +202,7 @@ class OrderController extends Controller
           $cab_data['pickup_location'] = $cart->pickup_location;
           $cab_data['instruction'] = $cart->instruction;
           $cab_data['cab_type'] = $cart->fare->cab->type;
+          $cab_data['fare_id'] = $cart->fare_id;
           $cab_data['seats'] = $cart->fare->cab->seats;
           $cab_data['luggage'] = $cart->fare->cab->luggage;
           CabOrder::create($cab_data);
@@ -224,11 +225,12 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(Request $request, Order $order)
     {
+      $subOrderId = $request->subOrderId ?? null;
       return response()->json([
         'status' => true,
-        'order' => $order
+        'order_details' => $this->formatOrderDetail($order, $subOrderId)
       ]);
     }
 

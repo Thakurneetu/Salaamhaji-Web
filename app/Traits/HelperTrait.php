@@ -96,6 +96,7 @@ trait HelperTrait {
     foreach ($orders as $order) {
       if($order->type == 'food'){
           $bookings[$key]['id'] = $order->id;
+          $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
           $bookings[$key]['time_slot'] = '';
           $bookings[$key]['service_date'] = date('d/m/Y',strtotime($order->food_order->from)) .' - '. date('d/m/Y',strtotime($order->food_order->to));
@@ -118,6 +119,7 @@ trait HelperTrait {
       }elseif($order->type == 'laundry'){
         foreach ($order->laundry_orders as $item) {
           $bookings[$key]['id'] = $order->id;
+          $bookings[$key]['sub_order_id'] = $item->id;
           $bookings[$key]['type'] = $order->type;
           $bookings[$key]['time_slot'] = $order->formatted_service_time;
           $bookings[$key]['service_date'] = $order->service_date;
@@ -134,6 +136,7 @@ trait HelperTrait {
         }
       }elseif($order->type == 'cab'){
           $bookings[$key]['id'] = $order->id;
+          $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
           $bookings[$key]['time_slot'] = $order->formatted_service_time;
           $bookings[$key]['service_date'] = $order->service_date;
@@ -150,6 +153,97 @@ trait HelperTrait {
       }
     }
     return $bookings;
+  }
+
+  private function formatOrderDetail($order, $subOrderId = null){
+    $booking = array();
+    if($order->type == 'food'){
+        $booking['id'] = $order->id;
+        $booking['sub_order_id'] = null;
+        $booking['type'] = $order->type;
+        $booking['order_date'] = date('d M Y',strtotime($order->created_at));
+        $booking['service_date'] = null;
+        $booking['service_name'] = $order->food_order->meal.', '.$order->food_order->package;
+        $booking['quantity'] = (string)$order->food_order->quantity;
+        $booking['from'] = null;
+        $booking['to'] = null;
+        $booking['price'] = $order->subtotal;
+        $booking['status'] = $order->status;
+        $booking['address_line_1'] = $order->address_line_1;
+        $booking['address_line_2'] =  $order->address_line_2;
+        $booking['landmark'] =  $order->landmark;
+        $booking['pickup_location'] = null;
+        $booking['icon'] = null;
+        $booking['seats'] = null;
+        $booking['luggage'] = null;
+        $booking['hours'] = null;
+        $booking['laoundry_items'] = null;
+        $booking['subtotal'] = $order->subtotal;
+        $booking['tax'] = $order->tax;
+        $booking['grand_total'] = $order->grand_total;
+    }elseif($order->type == 'laundry'){
+      foreach ($order->laundry_orders as $item) {
+        if($item->id == $subOrderId) {
+          $booking['id'] = $order->id;
+          $booking['sub_order_id'] = $subOrderId;
+          $booking['type'] = $order->type;
+          $booking['order_date'] = date('d M Y',strtotime($order->created_at));
+          $booking['service_date'] = $order->formatted_service_time;
+          $booking['service_name'] = $item->category_name;
+          $booking['quantity'] = null;
+          $booking['from'] = null;
+          $booking['to'] = null;
+          $booking['price'] = $item->total;
+          $booking['status'] = $order->status;
+          $booking['address_line_1'] = $order->address_line_1;
+          $booking['address_line_2'] =  $order->address_line_2;
+          $booking['landmark'] =  $order->landmark;
+          $booking['pickup_location'] = null;
+          $booking['icon'] = null;
+          $booking['seats'] = null;
+          $booking['luggage'] = null;
+          $booking['hours'] = null;
+          foreach ($item->items as $key => $value) {
+            $booking['laoundry_items'][$key]['name'] = $value->service_name;
+            $booking['laoundry_items'][$key]['price'] = $value->price_per_piece;
+            $booking['laoundry_items'][$key]['quantity'] = $value->quantity;
+            $booking['laoundry_items'][$key]['total'] = $value->total_price;
+          }
+          $booking['subtotal'] = $item->total;
+          if($order->tax > 0) {
+            $booking['tax'] = number_format(($order->tax * $item->total / $order->subtotal), 2, '.', '');
+          }else {
+            $booking['tax'] = '0.00';
+          }
+          $booking['grand_total'] = number_format(($booking['subtotal'] + $booking['tax']), 2, '.', '');
+        }
+      }
+    }elseif($order->type == 'cab'){
+        $booking['id'] = $order->id;
+        $booking['sub_order_id'] = null;
+        $booking['type'] = $order->type;
+        $booking['order_date'] = date('d M Y',strtotime($order->created_at));
+        $booking['service_date'] = $order->formatted_service_time;
+        $booking['service_name'] = $order->cab_order->tour_type;
+        $booking['quantity'] = null;
+        $booking['from'] = $order->cab_order->origin;
+        $booking['to'] = $order->cab_order->destination;
+        $booking['price'] = $order->subtotal;
+        $booking['status'] = $order->status;
+        $booking['address_line_1'] = null;
+        $booking['address_line_2'] =  null;
+        $booking['landmark'] =  null;
+        $booking['pickup_location'] = $order->cab_order->pickup_location;
+        $booking['icon'] = $order->cab_order->fare->cab->icon_url ?? null;
+        $booking['seats'] = $order->cab_order->seats;
+        $booking['luggage'] = $order->cab_order->luggage;
+        $booking['hours'] = $order->cab_order->hours;
+        $booking['laoundry_items'] = null;
+        $booking['subtotal'] = $order->subtotal;
+        $booking['tax'] = $order->tax;
+        $booking['grand_total'] = $order->grand_total;
+    }
+    return $booking;
   }
 
   private function foodOrders($carts){

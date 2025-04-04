@@ -74,6 +74,11 @@ class Order extends Model implements Auditable
       $startTimeString = $startTime->format('g:i A');
       $endTimeString = $endTime->format('g:i A');
 
-      return $dateString . ', ' . $startTimeString . ' - ' . $endTimeString;
+      $time = $dateString . ', ' . $startTimeString;
+      if($this->end != '') {
+        $time .= ' - ' . $endTimeString;
+      }
+
+      return $time;
   }
 }
