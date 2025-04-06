@@ -13,6 +13,13 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
+      if($request->has('type') && $request->type == 'count') {
+        $count = Notification::where('customer_id',$request->user()->id)->where('is_read',false)->count();
+        return response()->json([
+          'status' => true,
+          'count' => $count
+        ]);
+      }
       $notifications = Notification::where('customer_id',$request->user()->id)->latest()->get();
       Notification::where('customer_id',$request->user()->id)->update(['is_read'=>true]);
       return response()->json([
