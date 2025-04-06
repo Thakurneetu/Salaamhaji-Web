@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Family;
 use App\Models\FamilyInvite;
+use App\Models\Notification;
 
 class FamilyController extends Controller
 {
@@ -105,7 +106,18 @@ class FamilyController extends Controller
       $data['sender_id'] = $request->user()->id;
       $data['receiver_id'] = $id;
       $data['family_id'] = $family->id;
-      FamilyInvite::create($data);
+      
+      $invite = FamilyInvite::create($data);
+      Notification::create([
+        'data' => [
+            'invite_id' => $invite->id,
+            'family_id' => $invite->family_id,
+        ],
+        'type' => 'family-invite',
+        'customer_id' => $id,
+        'message' => $request->user()->name.' is inviting you to join his family.',
+        'is_read' => false,
+      ]);
       return response()->json([
         'status' => true,
         'message' => 'Invite sent to user.'

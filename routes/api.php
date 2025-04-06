@@ -12,6 +12,7 @@ use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\FamilyController;
 use App\Http\Controllers\API\CabController;
 use App\Http\Controllers\API\CabCartController;
+use App\Http\Controllers\API\NotificationController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -59,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('order', OrderController::class);
 
     Route::apiResource('family', FamilyController::class);
+    Route::apiResource('notification', NotificationController::class);
 
     Route::apiResource('cab-cart', CabCartController::class);
     Route::get('clear-cab-cart', [CabCartController::class, 'clear']);
