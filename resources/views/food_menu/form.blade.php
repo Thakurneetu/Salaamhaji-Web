@@ -32,6 +32,7 @@
           </tbody>
       </table>
   </div>
+  {{--
   <div class="form-group">
       <h4>Meal Timings</h4>
       <table class="table table-bordered table-dark">
@@ -61,6 +62,7 @@
           </tbody>
       </table>
   </div>
+  --}}
   <div class="form-group">
       <label for="week_menu">Weekly Menu</label>
       <table class="table table-bordered table-dark">
