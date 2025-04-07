@@ -10,6 +10,8 @@ use App\DataTables\LoundryMasterDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Traits\HelperTrait;
+use App\Http\Requests\LaundryServiceStoreRequest;
+use App\Http\Requests\LaundryServiceUpdateRequest;
 
 class LoundryMasterController extends Controller
 {
@@ -35,7 +37,7 @@ class LoundryMasterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LaundryServiceStoreRequest $request)
     {
       try{
         DB::beginTransaction();
@@ -75,7 +77,7 @@ class LoundryMasterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LoundryMaster $laundryMaster)
+    public function update(LaundryServiceUpdateRequest $request, LoundryMaster $laundryMaster)
     {
       try{
         DB::beginTransaction();

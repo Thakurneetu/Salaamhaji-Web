@@ -27,7 +27,7 @@ class LoundryMaster extends Model implements Auditable
 
   public function category() : BelongsTo
   {
-    return $this->belongsTo(LoundryCategory::class, 'category_id');
+    return $this->belongsTo(LoundryCategory::class, 'category_id')->withTrashed();
   }
 
   public function area() : BelongsTo
