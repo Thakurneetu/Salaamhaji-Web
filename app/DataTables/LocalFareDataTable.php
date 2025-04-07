@@ -67,7 +67,7 @@ class LocalFareDataTable extends DataTable
         Column::make('DT_RowIndex')->title('Sl No.')->width('8%')->addClass('text-center')->sortable(false)->searchable(false),
         Column::make('cab.type')->title('Cab Type')->width('30%')->sortable(false),
         Column::make('area.name')->title('Area')->width('15%')->sortable(false),
-        Column::make('price')->title('Fare / Hour')->width('37%')->sortable(false)->searchable(false),
+        Column::make('price')->title('Fare / Hour')->width('37%')->sortable(false),
         Column::computed('action')
               ->exportable(false)
               ->printable(false)
