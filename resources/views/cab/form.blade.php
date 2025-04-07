@@ -28,10 +28,13 @@
       <label for="icon">Icon</label>
       <div class="input-group">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" id="icon" name="icon">
+          <input type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon" name="icon">
           <label class="custom-file-label" for="icon">Select Icon</label>
         </div>
       </div>
+      @error('icon')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
     </div>
     @if(isset($cab) && $cab->icon)
       <img style='width:100px' src="{{asset(@$cab->icon)}}" alt='Icon'>

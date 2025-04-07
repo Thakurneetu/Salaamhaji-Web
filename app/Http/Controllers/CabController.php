@@ -8,6 +8,8 @@ use App\DataTables\CabDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Traits\HelperTrait;
+use App\Http\Requests\CabTypeStoreRequest;
+use App\Http\Requests\CabTypeUpdateRequest;
 
 class CabController extends Controller
 {
@@ -31,7 +33,7 @@ class CabController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CabTypeStoreRequest $request)
     {
       try{
         DB::beginTransaction();
@@ -69,7 +71,7 @@ class CabController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cab $cab)
+    public function update(CabTypeUpdateRequest $request, Cab $cab)
     {
       try{
         DB::beginTransaction();
