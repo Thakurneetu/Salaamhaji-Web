@@ -38,6 +38,14 @@ class FamilyController extends Controller
     {
       $request->user()->update(['family_id'=>$request->family_id, 'family_joined_at'=>now()]);
       FamilyInvite::find($request->invite_id)->update(['status'=>'accepted']);
+      if($request->has('notification_id') && $request->notification_id != '') {
+        $data = [
+          'invite_id' => $request->invite_id,
+          'family_id' => $request->family_id,
+          'status' => 'Accepted'
+        ];
+        Notification::find($request->notification_id)->update(['data'=>$data]);
+      }
       return response()->json([
         'status' => true,
         'message' => 'Request accepted successfully.'
@@ -112,6 +120,7 @@ class FamilyController extends Controller
         'data' => [
             'invite_id' => $invite->id,
             'family_id' => $invite->family_id,
+            'status' => 'Pending'
         ],
         'type' => 'family-invite',
         'customer_id' => $id,
@@ -151,6 +160,15 @@ class FamilyController extends Controller
         ]);
       }
       FamilyInvite::find($id)->update(['status'=>'rejected']);
+      $invite = FamilyInvite::find($id);
+      if($request->has('notification_id') && $request->notification_id != '') {
+        $data = [
+          'invite_id' => $invite->id,
+          'family_id' => $request->family_id,
+          'status' => 'Rejected'
+        ];
+        Notification::find($request->notification_id)->update(['data'=>$data]);
+      }
       return response()->json([
         'status' => true,
         'message' => 'Request rejected successfully.'
