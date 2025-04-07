@@ -22,7 +22,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="phone">Mobile Number</label>
-      <input type="text" name="phone" value="{{old('phone') ?? (@$vendor->phone ?? '')}}" 
+      <input type="text" name="phone" oninput="onlyNumber(this)" value="{{old('phone') ?? (@$vendor->phone ?? '')}}" 
       class="form-control @error('phone') is-invalid @enderror" placeholder="Enter Mobile Number" required>
       @error('phone')
       <div class="text-danger">{{ $message }}</div>
@@ -63,7 +63,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Zipcode</label>
-      <input type="text" name="zip" value="{{old('zip') ?? (@$vendor->zip ?? '')}}" 
+      <input type="text" name="zip" oninput="onlyNumber(this)" value="{{old('zip') ?? (@$vendor->zip ?? '')}}" 
       class="form-control @error('zip') is-invalid @enderror" placeholder="Enter Zipcode" >
       @error('zip')
       <div class="text-danger">{{ $message }}</div>
@@ -71,7 +71,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label>Country</label>
-      <select name="country_id" id="country_id" class="form-control">
+      <select name="country_id" id="country_id" class="form-control" @error('state') is-invalid @enderror>
         <option value="" selected disabled>Select Country</option>
         @foreach($countries as $country)
           <option value="{{$country->id}}" 
@@ -79,12 +79,18 @@
           >{{$country->name}}</option>
         @endforeach
       </select>
+      @error('country_id')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
     </div>
     <div class="col-12"><h1>Service</h1></div>
     <div class="form-group col-md-6 col-12" >
       <label>Select Service</label>
       <input type="hidden" name="services" id="service" value="{{@$vendor->services}}">
       <div class="" id="services"></div>
+      @error('services')
+      <div class="text-danger">{{ $message }}</div>
+      @enderror
     </div>
     <div class="form-group col-md-6 col-12" id="Laundry-div" @if(isset($services) && in_array('Laundry',$services )) style="display:block;" @else style="display:none;" @endif>
       <label for="exampleInputFile">Upload Laundry Catalog</label>

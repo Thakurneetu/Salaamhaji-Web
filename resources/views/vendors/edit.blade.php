@@ -79,7 +79,6 @@
   });
 
   function toggleFileUpload(key, services, uploaded){
-    {{--if (services.includes(key)) { --}}
     if(services == key){
       $('#'+key+'-div').show();
       if(!uploaded){ $('#'+key).attr('required', true); }
@@ -88,6 +87,13 @@
       if(!uploaded){ $('#'+key).removeAttr('required'); }
     }
     
+  }
+
+  function onlyNumber(e) {
+    var inputElement = e;
+    var inputValue = inputElement.value;
+    var sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+    inputElement.value = sanitizedValue;
   }
 
 </script>

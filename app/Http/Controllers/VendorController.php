@@ -11,6 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Traits\HelperTrait;
 use File;
 use App\Http\Requests\VendorRegisterRequest;
+use App\Http\Requests\VendorStoreRequest;
 
 class VendorController extends Controller
 {
@@ -35,7 +36,7 @@ class VendorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(VendorStoreRequest $request)
     {
       try{
         DB::beginTransaction();
@@ -82,7 +83,7 @@ class VendorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(VendorStoreRequest $request, $id)
     {
       $vendor = Vendor::find($id);
       if($request->ajax()){
