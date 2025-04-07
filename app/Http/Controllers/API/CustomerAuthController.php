@@ -29,6 +29,12 @@ class CustomerAuthController extends Controller
             'message' => 'Phone number doesn\'t exist.',
           ], 401);
         }else{
+          if($customer->status != 1){
+            return response()->json([
+              'status' => false,
+              'message' => 'Your account has been deactivated. Please contact admin.',
+            ], 401);
+          }
           $number .= $customer->country_code;
         }
       }

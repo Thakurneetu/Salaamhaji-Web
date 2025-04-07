@@ -33,3 +33,21 @@
     </form>
   </div>
 @endsection
+
+@section('script')
+<script>
+  function onlyAlpha(e) {
+    var inputElement = e;
+    var inputValue = inputElement.value;
+    var sanitizedValue = inputValue.replace(/[^a-zA-Z ]/g, '');
+    inputElement.value = sanitizedValue;
+  }
+
+  function onlyNumber(e) {
+    var inputElement = e;
+    var inputValue = inputElement.value;
+    var sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+    inputElement.value = sanitizedValue;
+  }
+</script>
+@endsection
