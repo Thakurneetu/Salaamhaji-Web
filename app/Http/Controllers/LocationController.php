@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\DataTables\LocationDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\LocationCreateRequest;
+use App\Http\Requests\LocationUpdateRequest;
 
 class LocationController extends Controller
 {
@@ -31,7 +33,7 @@ class LocationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LocationCreateRequest $request)
     {
       try{
         DB::beginTransaction();
@@ -67,7 +69,7 @@ class LocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Location $location)
+    public function update(LocationUpdateRequest $request, Location $location)
     {
       try{
         DB::beginTransaction();
