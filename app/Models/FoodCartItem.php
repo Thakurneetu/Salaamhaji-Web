@@ -23,7 +23,7 @@ class FoodCartItem extends Model
 
   public function service() : BelongsTo
   {
-    return $this->belongsTo(FoodMaster::class);
+    return $this->belongsTo(FoodMaster::class)->withTrashed();
   }
   protected function serviceName(): Attribute
   {
@@ -39,7 +39,7 @@ class FoodCartItem extends Model
   }
   public function category() : BelongsTo
   {
-    return $this->belongsTo(FoodCategory::class);
+    return $this->belongsTo(FoodCategory::class)->withTrashed();
   }
   protected function categoryName(): Attribute
   {

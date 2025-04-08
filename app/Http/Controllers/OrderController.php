@@ -56,15 +56,18 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-      if($request->type == 'laundry'){
-        LaundryOrder::find($request->order_id)->update(['status'=>$request->status]);
-      }else{
+      if($request->ajax()){
         $order->update(['status'=>$request->status]);
+        return response()->json([
+          'success'=>true,
+          'message'=>'Status Updated Successfully.',
+          $order
+        ]);
       }
-      return response()->json([
-        'success'=>true,
-        'message'=>'Status Updated Successfully.'
-      ]);
+      $data = $request->except('_token','_method');
+      $order->update($data);
+      Alert::toast('Vendor Details Updated Successfully','success');
+      return redirect()->back();  
     }
 
     /**

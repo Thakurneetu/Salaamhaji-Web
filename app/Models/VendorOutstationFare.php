@@ -15,7 +15,7 @@ class VendorOutstationFare extends Model
 
   public function cab() : BelongsTo
   {
-    return $this->belongsTo(Cab::class);
+    return $this->belongsTo(Cab::class)->withTrashed();
   }
 
   public function outstation() : BelongsTo

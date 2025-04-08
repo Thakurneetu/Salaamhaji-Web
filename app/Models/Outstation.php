@@ -19,11 +19,11 @@ class Outstation extends Model implements Auditable
 
   public function origin() : BelongsTo
   {
-    return $this->belongsTo(Location::class, 'origin_id');
+    return $this->belongsTo(Location::class, 'origin_id')->withTrashed();
   }
   public function destination() : BelongsTo
   {
-    return $this->belongsTo(Location::class, 'destination_id');
+    return $this->belongsTo(Location::class, 'destination_id')->withTrashed();
   }
   public function fares() : HasMany
   {

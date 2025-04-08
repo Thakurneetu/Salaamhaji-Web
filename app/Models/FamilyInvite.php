@@ -16,6 +16,6 @@ class FamilyInvite extends Model
 
   public function inviter() : BelongsTo
   {
-    return $this->belongsTo(Customer::class, 'sender_id');
+    return $this->belongsTo(Customer::class, 'sender_id')->withTrashed();
   }
 }

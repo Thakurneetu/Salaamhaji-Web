@@ -31,12 +31,16 @@ class Order extends Model implements Auditable
     'payment_type',
     'address_line_1',
     'address_line_2',
-    'landmark'
+    'landmark',
+    'vendor_name',
+    'vendor_phone',
+    'vendor_address',
+    'delivered_at'
   ];
 
   public function customer() : BelongsTo
   {
-    return $this->belongsTo(Customer::class);
+    return $this->belongsTo(Customer::class)->withTrashed();
   }
   public function food_order() : HasOne
   {

@@ -27,7 +27,7 @@ class LaundryCart extends Model
   }
   public function category() : BelongsTo
   {
-    return $this->belongsTo(LoundryCategory::class);
+    return $this->belongsTo(LoundryCategory::class)->withTrashed();
   }
   protected function categoryName(): Attribute
   {

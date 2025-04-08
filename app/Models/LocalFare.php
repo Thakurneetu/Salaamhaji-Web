@@ -19,7 +19,7 @@ class LocalFare extends Model implements Auditable
 
   public function cab() : BelongsTo
   {
-    return $this->belongsTo(Cab::class);
+    return $this->belongsTo(Cab::class)->withTrashed();
   }
   public function area() : BelongsTo
   {

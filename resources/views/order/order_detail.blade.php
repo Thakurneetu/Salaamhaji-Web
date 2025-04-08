@@ -46,13 +46,12 @@
   <tr>
     <th>Order Status:</th>
     <td>
-      <select class="form-control" style="width:200px;" onchange="changeStatus({{$order->id}}, this.value, 'food')">
-        <option value="Active" {{$order->status == 'Active' ? 'selected' : ''}}>Active</option>
-        <option value="Confirmed" {{$order->status == 'Confirmed' ? 'selected' : ''}}>Confirmed</option>
-        @if($order->type == 'laundry')
-        <option value="Out for delivery" {{$order->status == 'Out for delivery' ? 'selected' : ''}}>Out for delivery</option>
-        @endif
-        <option value="Completed" {{$order->status == 'Completed' ? 'selected' : ''}}>Completed</option>
+      <select class="form-control" style="width:300px;" onchange="changeStatus({{$order->id}}, this.value, 'food')">
+        <option value="Order accepted" {{$order->status == 'Order accepted' ? 'selected' : ''}}>Order accepted</option>
+        <option value="Order assigned to vendor" {{$order->status == 'Order assigned to vendor' ? 'selected' : ''}}>Order assigned to vendor</option>
+        <option value="Order in progress" {{$order->status == 'Order in progress' ? 'selected' : ''}}>Order in progress</option>
+        <option value="Order completed" {{$order->status == 'Order completed' ? 'selected' : ''}}>Order completed</option>
+        <option value="Order cancelled" {{$order->status == 'Order cancelled' ? 'selected' : ''}}>Order cancelled</option>
       </select>
     </td>
   </tr>

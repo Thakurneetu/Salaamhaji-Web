@@ -39,7 +39,7 @@
 @endsection
 
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" defer></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js" defer></script>
 <script>
   $(document).ready(function () {
@@ -51,5 +51,5 @@
       clearButton: false,
     });
   });
-</script>
+</script> -->
 @endsection

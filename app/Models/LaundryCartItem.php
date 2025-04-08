@@ -21,7 +21,7 @@ class LaundryCartItem extends Model
 
   public function service() : BelongsTo
   {
-    return $this->belongsTo(LoundryMaster::class);
+    return $this->belongsTo(LoundryMaster::class)->withTrashed();
   }
   protected function serviceName(): Attribute
   {
