@@ -75,6 +75,7 @@ class CabCartController extends Controller
           $data['pickup_location'] = null;
         }
         $data['customer_id'] = $request->user()->id;
+        $data['area_id'] = $request->area_id;
         CabCart::updateOrCreate(['customer_id'=>$request->user()->id],$data);
         return response()->json([
           'status' => true,

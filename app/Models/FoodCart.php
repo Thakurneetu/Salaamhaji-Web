@@ -16,6 +16,7 @@ class FoodCart extends Model
     'meal',
     'meal_type',
     'quantity',
+    'area_id'
   ];
 
   public function package() : BelongsTo

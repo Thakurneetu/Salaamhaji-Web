@@ -15,7 +15,8 @@ class LaundryCart extends Model
     'total',
     'service_date',
     'start',
-    'end'
+    'end',
+    'area_id'
   ];
 
   protected $appends = ['category_name'];

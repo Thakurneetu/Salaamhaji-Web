@@ -50,6 +50,7 @@ class OrderController extends Controller
         $order_data['address_line_1'] = $request->address_line_1;
         $order_data['address_line_2'] = $request->address_line_2;
         $order_data['landmark'] = $request->landmark;
+        $order_data['status'] = 'Order accepted';
         if($type == 'food'){
           $carts = FoodCart::where('customer_id', $request->user()->id)->get();
           if(count($carts) < 1) {
@@ -68,7 +69,7 @@ class OrderController extends Controller
             }
             $order_data['tax'] = $order_data['subtotal'] * 5 / 100;
             $order_data['grand_total'] = $order_data['subtotal'] + ($order_data['subtotal'] * 5 / 100);
-            $order_data['status'] = 'Active';
+            $order_data['area_id'] = $cart->area_id;
             $order = Order::create($order_data);
             $food_data['customer_id'] = $request->user()->id;
             $food_data['order_id'] = $order->id;
@@ -143,10 +144,10 @@ class OrderController extends Controller
           $order_data['subtotal'] = $carts->sum('total');
           $order_data['tax'] = $carts->sum('total') * 5 / 100;
           $order_data['grand_total'] = $order_data['subtotal'] + $order_data['tax'];
-          $order_data['status'] = 'Active';
           $order_data['service_date'] = $carts->first()->service_date;
           $order_data['start'] = $carts->first()->start;
           $order_data['end'] = $carts->first()->end;
+          $order_data['area_id'] = $carts->first()->area_id;
           $order = Order::create($order_data);
           $laundry_order_data['order_id'] = $order->id;
           $laundry_order_data['customer_id'] = $request->user()->id;
@@ -184,10 +185,10 @@ class OrderController extends Controller
           $order_data['subtotal'] = $subtotal;
           $order_data['tax'] = $subtotal * 5 / 100;
           $order_data['grand_total'] = $subtotal + $subtotal * 5 / 100;
-          $order_data['status'] = 'Active';
           $order_data['service_date'] = $cart->service_date;
           $order_data['start'] = $cart->start;
           $order_data['end'] = $cart->end;
+          $order_data['area_id'] = $cart->area_id;
           $order = Order::create($order_data);
 
           $cab_data['order_id'] = $order->id;

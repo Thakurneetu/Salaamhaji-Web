@@ -35,12 +35,17 @@ class Order extends Model implements Auditable
     'vendor_name',
     'vendor_phone',
     'vendor_address',
-    'delivered_at'
+    'delivered_at',
+    'area_id'
   ];
 
   public function customer() : BelongsTo
   {
     return $this->belongsTo(Customer::class)->withTrashed();
+  }
+  public function area() : BelongsTo
+  {
+    return $this->belongsTo(Area::class);
   }
   public function food_order() : HasOne
   {

@@ -52,6 +52,7 @@ class LaundryCartController extends Controller
 
       $cart = LaundryCart::where($cart_data)->first();
       if(!$cart){
+        $cart_data['area_id'] = $request->area_id;
         $cart = LaundryCart::create($cart_data);
       }
 

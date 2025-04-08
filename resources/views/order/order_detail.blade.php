@@ -12,6 +12,10 @@
     <th>Order Date:</th>
     <td>{{date('d/m/Y',strtotime($order->created_at))}}</td>
   </tr>
+  <tr>
+    <th>Area:</th>
+    <td>{{$order->area_id != '' ? $order->area->name : '-'}}</td>
+  </tr>
   @if($order->type != 'cab')
   <tr>
     <th>Address Line One:</th>
