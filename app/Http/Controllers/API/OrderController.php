@@ -51,6 +51,9 @@ class OrderController extends Controller
         $order_data['address_line_2'] = $request->address_line_2;
         $order_data['landmark'] = $request->landmark;
         $order_data['status'] = 'Order accepted';
+        $order_data['payment_type'] = $request->payment_type;
+        $order_data['payment_id'] = $request->payment_id;
+        $order_data['payment_status'] = $request->payment_status;
         if($type == 'food'){
           $carts = FoodCart::where('customer_id', $request->user()->id)->get();
           if(count($carts) < 1) {
