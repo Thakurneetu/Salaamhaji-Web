@@ -4,6 +4,24 @@
   Edit Customer | 
 @endsection
 
+@section('style')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
+<style>
+  @media (prefers-color-scheme: dark) {
+  .iti {
+    width: 100%;
+    --iti-border-color: #5b5b5b;
+    --iti-dialcode-color: #999999;
+    --iti-dropdown-bg: #0d1117;
+    --iti-arrow-color: #aaaaaa;
+    --iti-hover-color: #30363d;
+    --iti-path-globe-1x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/img/globe_light.webp");
+    --iti-path-globe-2x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/img/globe_light@2x.webp");
+  }
+}
+</style>
+@endsection
+
 @section('content')
   <div class="content-header">
     <div class="container-fluid">
@@ -35,7 +53,18 @@
 @endsection
 
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 <script>
+  var input = document.querySelector("#phone");
+  var iti = window.intlTelInput(input, {
+      separateDialCode: true,
+      utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js",
+  });
+  input.addEventListener("countrychange", () => {
+    let number = iti.getSelectedCountryData();
+    console.log(number);
+    $('#code').val('+'+number.dialCode);
+  });
   function onlyAlpha(e) {
     var inputElement = e;
     var inputValue = inputElement.value;

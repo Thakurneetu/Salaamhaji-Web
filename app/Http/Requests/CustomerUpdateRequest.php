@@ -16,12 +16,16 @@ class CustomerUpdateRequest extends FormRequest
 
     public function rules()
     {
-      return [
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:customers,email,'.$this->customer->id,
-        'phone' => 'required|string|max:20|unique:customers,phone,'.$this->customer->id,
-        'gender' => 'required|string|max:500',
-        'country_code' => 'required|string|max:10',
-      ];
+      if (!$this->ajax()) {
+        return [
+          'name' => 'required|string|max:255',
+          'email' => 'required|string|email|max:255|unique:customers,email,'.$this->customer->id,
+          'phone' => 'required|string|max:20|unique:customers,phone,'.$this->customer->id,
+          'gender' => 'required|string|max:500',
+          'country_code' => 'required|string|max:10',
+        ];
+      }else{
+        return [];
+      }
     }
 }
