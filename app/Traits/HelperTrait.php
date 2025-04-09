@@ -162,7 +162,7 @@ trait HelperTrait {
         $booking['sub_order_id'] = null;
         $booking['type'] = $order->type;
         $booking['order_date'] = date('d M Y',strtotime($order->created_at));
-        $booking['service_date'] = null;
+        $booking['service_date'] = date('d/m/Y',strtotime($order->food_order->from)) - date('d/m/Y',strtotime($order->food_order->to));
         $booking['service_name'] = $order->food_order->meal.', '.$order->food_order->package;
         $booking['quantity'] = (string)$order->food_order->quantity;
         $booking['from'] = null;
