@@ -29,6 +29,9 @@
           <div class="card-header">
             <h5 class="card-title">Monthly Recap Report</h5>
             <div class="card-tools">
+            <div class="spinner-border spinner-border-sm text-light" role="status" id="data_loader" style="display:none;">
+              <span class="sr-only">Loading...</span>
+            </div>
               <div class="btn-group">
                 <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                   <i class="fas fa-wrench"></i>
@@ -127,9 +130,11 @@
                 <tr>
                   <th>Order ID</th>
                   <th>Order Type</th>
+                  <th>Area</th>
                   <th>Customer name</th>
-                  <th>Amount</th>
-                  <th>Status</th>
+                  <th class="text-right">Amount</th>
+                  <th class="text-center">Status</th>
+                  <th>Order On</th>
                 </tr>
                 </thead>
                 <tbody id="orders">
@@ -137,18 +142,24 @@
                     @foreach($orders as $item)
                     <tr>
                       <td><a href="order/{{$item->id}}?type={{$item->type}}">{{$item->uuid}}</a></td>
-                      <td>{{$item->type}}</td>
-                      <td>{{$item->customer_name}}</td>
-                      <td>{{$item->grand_total}}</td>
-                      <td>
-                        @if($item->status=='Active')
-                        <span class="badge badge-danger">{{$item->status}}</span>
-                        @elseif($item->status=='Out for delivery')
+                      <td>{{ucfirst($item->type)}}</td>
+                      <td>{{$item->area_id ? $item->area->name : '-'}}</td>
+                      <td>{{$item->customer->name}}</td>
+                      <td class="text-right">{{$item->grand_total}}</td>
+                      <td class="text-center">
+                        @if($item->status=='Order accepted')
                         <span class="badge badge-warning">{{$item->status}}</span>
-                        @elseif($item->status=='Confirmed')
+                        @elseif($item->status=='Order assigned to vendor')
+                        <span class="badge badge-light">{{$item->status}}</span>
+                        @elseif($item->status=='Order in progress')
+                        <span class="badge badge-info">{{$item->status}}</span>
+                        @elseif($item->status=='Order completed')
                         <span class="badge badge-success">{{$item->status}}</span>
+                        @elseif($item->status=='Order cancelled')
+                        <span class="badge badge-danger">{{$item->status}}</span>
                         @endif
                       </td>
+                      <td>{{date('d M Y', strtotime($item->created_at))}}</td>
                     </tr>
                     @endforeach
                   @else
@@ -213,44 +224,27 @@
       options: barChartOptions
     })
   })
-</script>
-
-<!-- <link rel="stylesheet" href="{{asset('css/helper.css')}}">
-<link rel="stylesheet" href="{{asset('css/sweetalert.css')}}">
-<link rel="stylesheet" href="{{asset('css/jquery.toast.css')}}">
-<script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
-<script src="{{asset('js/smooth-scroll.min.js')}}"></script>
-<script src="{{asset('js/helper.js')}}"></script>
-<script src="{{asset('js/jquery.toast.js')}}"></script>
-<script src="{{asset('js/sweetalert.min.js')}}"></script> -->
-<script>
-  
 
   $('#demolist a ').click(function () { 
-            // alert('hi');  
+    $('#data_loader').show();
     $.ajax({
       url: "{{ route('home') }}",
-      //container: '#dashbordForm',
-      //type: "POST",
-      //redirect: true,
-      data: {val:$(this).text(),action:'filter'},
+      type: "GET",
+      data: {
+        val:$(this).text()
+      },
       success: function(response) {
-        console.log(response);
-
         $('#customer_count').html(response.customer_count);
         $('#order_count').html(response.order_count);
         $('#pending_order_count').html(response.pending_order_count);
         $('#vendor_count').html(response.vendor_count);
-        $('#orders').html(response.orders);
-        //if (response.status) {
-          
-         // swal("Sent!", response.message, "success");
-          // setInterval(function () {
-          //   window.location.reload();
-          // }, 4000);
-       // }
-      }                    
-    })
+        $('#data_loader').hide();
+      },
+      error: function(xhr, status, error) {
+        console.error("AJAX Error:", error);
+        $('#data_loader').hide();
+      }
+    });
   });
 </script>
 @endsection

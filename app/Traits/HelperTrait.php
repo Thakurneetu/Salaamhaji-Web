@@ -102,7 +102,7 @@ trait HelperTrait {
           $bookings[$key]['service_date'] = date('d/m/Y',strtotime($order->food_order->from)) .' - '. date('d/m/Y',strtotime($order->food_order->to));
           $bookings[$key]['start'] = '';
           $bookings[$key]['end'] = '';
-          $bookings[$key]['status'] = $order->status;
+          $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
           $bookings[$key]['quantity'] = (string)$order->food_order->quantity;
           $bookings[$key]['price'] = $order->grand_total;
           $bookings[$key]['service_name'] = $order->food_order->package.' - '.$order->food_order->meal;
@@ -125,7 +125,7 @@ trait HelperTrait {
           $bookings[$key]['service_date'] = $order->service_date;
           $bookings[$key]['start'] = $order->start;
           $bookings[$key]['end'] = $order->end;
-          $bookings[$key]['status'] = $order->status;
+          $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
           $bookings[$key]['quantity'] = '';
           $bookings[$key]['price'] = $item->total;
           $bookings[$key]['service_name'] = $item->category_name;
@@ -142,7 +142,7 @@ trait HelperTrait {
           $bookings[$key]['service_date'] = $order->service_date;
           $bookings[$key]['start'] = $order->start;
           $bookings[$key]['end'] = $order->end;
-          $bookings[$key]['status'] = $order->status;
+          $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
           $bookings[$key]['quantity'] = '';
           $bookings[$key]['price'] = $order->grand_total;
           $bookings[$key]['service_name'] = $order->cab_order->tour_type;
@@ -168,7 +168,7 @@ trait HelperTrait {
         $booking['from'] = null;
         $booking['to'] = null;
         $booking['price'] = $order->subtotal;
-        $booking['status'] = $order->status;
+        $booking['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
         $booking['address_line_1'] = $order->address_line_1;
         $booking['address_line_2'] =  $order->address_line_2;
         $booking['landmark'] =  $order->landmark;
@@ -194,7 +194,7 @@ trait HelperTrait {
           $booking['from'] = null;
           $booking['to'] = null;
           $booking['price'] = $item->total;
-          $booking['status'] = $order->status;
+          $booking['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
           $booking['address_line_1'] = $order->address_line_1;
           $booking['address_line_2'] =  $order->address_line_2;
           $booking['landmark'] =  $order->landmark;
@@ -229,7 +229,7 @@ trait HelperTrait {
         $booking['from'] = $order->cab_order->origin;
         $booking['to'] = $order->cab_order->destination;
         $booking['price'] = $order->subtotal;
-        $booking['status'] = $order->status;
+        $booking['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
         $booking['address_line_1'] = null;
         $booking['address_line_2'] =  null;
         $booking['landmark'] =  null;
