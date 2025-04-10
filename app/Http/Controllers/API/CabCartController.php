@@ -88,7 +88,10 @@ class CabCartController extends Controller
      */
     public function show(CabCart $cabCart)
     {
-        //
+      return response()->json([
+        'status' => true,
+        'cart' => $cabCart
+      ]);
     }
 
     /**

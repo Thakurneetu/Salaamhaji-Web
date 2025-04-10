@@ -60,7 +60,10 @@ class FoodCartController extends Controller
      */
     public function show(FoodCart $foodCart)
     {
-        //
+      return response()->json([
+        'status' => true,
+        'cart' => $foodCart
+      ]);
     }
 
     /**

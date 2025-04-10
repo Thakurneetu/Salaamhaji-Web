@@ -95,7 +95,11 @@ class LaundryCartController extends Controller
      */
     public function show(LaundryCart $laundryCart)
     {
-        //
+      $laundryCart->items;
+      return response()->json([
+        'status' => true,
+        'cart' => $laundryCart
+      ]);
     }
 
     /**
