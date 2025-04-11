@@ -47,7 +47,7 @@ class FoodCartController extends Controller
       $cart_data = $request->only('meal','meal_type','package_id','from','to','quantity');
       $cart_data['customer_id'] = $request->user()->id;
       $cart_data['area_id'] = $request->area_id;
-      $cart = FoodCart::create($cart_data);
+      $cart = FoodCart::updateOrcreate(['customer_id' => $request->user()->id],$cart_data);
       return response()->json([
         'status' => true,
         'message' => 'Item added to cart successfully.',
