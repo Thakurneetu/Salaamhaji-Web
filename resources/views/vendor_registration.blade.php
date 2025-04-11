@@ -175,7 +175,7 @@
 
             <div class="form-group">
                 <label for="zip">Zipcode:</label>
-                <input type="text" id="zip" name="zip" value="{{old('zip')}}" placeholder="Enter zipcode" required>
+                <input type="text" id="zip" name="zip" value="{{old('zip')}}" placeholder="Enter zipcode" oninput="onlyNumber(this)"  required>
                 @error('zip')
                   <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -221,5 +221,13 @@
         </form>
     </div>
 
+    <script>
+      function onlyNumber(e) {
+        var inputElement = e;
+        var inputValue = inputElement.value;
+        var sanitizedValue = inputValue.replace(/[^0-9]/g, '');
+        inputElement.value = sanitizedValue;
+      }
+    </script>
 </body>
 </html>

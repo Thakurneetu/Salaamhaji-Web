@@ -2,7 +2,7 @@
   <div class="row">
     <div class="form-group col-md-6 col-12">
       <label>Area</label>
-      <select name="area_id" id="area" class="form-control @error('area_id') is-invalid @enderror">
+      <select name="area_id" id="area" class="form-control @error('area_id') is-invalid @enderror" required>
         <option value="" selected disabled>Select Area</option>
         @foreach($areas as $area)
         <option value="{{$area->id}}" {{old('area_id' , @$location->area_id) == $area->id ? 'selected' : ''}}>{{$area->name}}</option>

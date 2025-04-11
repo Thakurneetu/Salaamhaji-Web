@@ -40,5 +40,12 @@
   $(document).ready(function () {
     bsCustomFileInput.init();
   });
+
+  function onlyString(e) {
+    var inputElement = e;
+    var inputValue = inputElement.value;
+    var sanitizedValue = inputValue.replace(/[^a-zA-Z0-9,. ]/g, '');
+    inputElement.value = sanitizedValue;
+  }
 </script>
 @endsection

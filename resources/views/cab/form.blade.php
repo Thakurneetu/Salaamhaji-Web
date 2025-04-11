@@ -10,7 +10,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="seats">Seats / Passengers</label>
-      <input type="text" name="seats" value="{{old('seats') ?? (@$cab->seats ?? '')}}" 
+      <input type="text" name="seats" value="{{old('seats') ?? (@$cab->seats ?? '')}}" oninput="onlyString(this)" 
       class="form-control @error('seats') is-invalid @enderror" placeholder="Enter Seats / Passengers">
       @error('seats')
       <div class="text-danger">{{ $message }}</div>
@@ -18,7 +18,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="luggage">Luggage</label>
-      <input type="text" name="luggage" value="{{old('luggage') ?? (@$cab->luggage ?? '')}}" 
+      <input type="text" name="luggage" value="{{old('luggage') ?? (@$cab->luggage ?? '')}}" oninput="onlyString(this)"
       class="form-control @error('luggage') is-invalid @enderror" placeholder="Enter Allowed Luggage">
       @error('luggage')
       <div class="text-danger">{{ $message }}</div>
