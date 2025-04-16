@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\CabCart;
 use App\Models\LocalFare;
+use App\Models\OutstationFare;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -88,6 +89,14 @@ class CabCartController extends Controller
      */
     public function show(CabCart $cabCart)
     {
+      if($cabCart->tour_type == 'outstation') {
+        $fare = OutstationFare::find($cabCart->fare_id);
+        $cabCart->origin_id = $fare->outstation->origin_id;
+        $cabCart->destination_id = $fare->outstation->destination_id;
+      }else{
+        $cabCart->origin_id = null;
+        $cabCart->destination_id = null;
+      }
       return response()->json([
         'status' => true,
         'cart' => $cabCart

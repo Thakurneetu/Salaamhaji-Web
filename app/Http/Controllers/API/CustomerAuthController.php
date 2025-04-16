@@ -120,7 +120,7 @@ class CustomerAuthController extends Controller
 
     public function profile(ProfileRequest $request){
       try {
-        $data = $request->only('name', 'email', 'phone', 'gender');
+        $data = $request->only('name', 'email', 'phone', 'gender', 'country_code');
         $request->user()->update($data);
 
         return response()->json([
