@@ -46,7 +46,7 @@ class LaundryCart extends Model
         }else {
           $service_date = Carbon::parse($this->service_date);
         }
-        $dateString = $service_date->format('jS M, D');
+        $dateString = $service_date->format('jS M, D - h:i A');
       }
 
       return $dateString;

@@ -30,6 +30,7 @@ class CabCartController extends Controller
         $carts[$key]['service_date'] = $tour->service_date;
         $carts[$key]['start'] = $tour->start;
         $carts[$key]['end'] = $tour->end;
+        $carts[$key]['formatted_date'] = $tour->formatted_date;
         $carts[$key]['hours'] = $tour->hours;
         $carts[$key]['price'] = $tour->fare->price;
         $carts[$key]['total_price'] = $tour->tour_type == 'local'

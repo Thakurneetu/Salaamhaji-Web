@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class CabCart extends Model
 {
@@ -19,5 +20,20 @@ class CabCart extends Model
     }else{
       return $this->belongsTo(OutstationFare::class, 'fare_id');
     }
+  }
+
+  public function getFormattedDateAttribute()
+  {
+      $dateString = null;
+      if($this->service_date != '') {
+        if($this->start != '') {
+          $service_date = Carbon::parse($this->service_date.' '.$this->start);
+        }else {
+          $service_date = Carbon::parse($this->service_date);
+        }
+        $dateString = $service_date->format('jS M, D - h:i A');
+      }
+
+      return $dateString;
   }
 }
