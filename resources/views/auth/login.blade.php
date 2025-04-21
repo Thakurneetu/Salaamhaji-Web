@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     {{--  Icons  --}}
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('image/logo.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('image/logo.jpg') }}">
     
     <title>{{ config('app.name') }}</title>
 
@@ -22,7 +22,8 @@
 <body class="hold-transition dark-mode login-page">
 <div class="login-box">
     <div class="login-logo">
-        <!-- <img src="{{-- asset('image/logo.png') --}}" height=70 width=70 alt="logo"> -->
+        <img src="{{ asset('image/logo.jpg') }}" height=70 width=70 alt="logo" class="rounded">
+        <br>
          Admin login
     </div>
     <!-- /.login-logo -->
