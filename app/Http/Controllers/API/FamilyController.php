@@ -23,6 +23,7 @@ class FamilyController extends Controller
           $members = $request->user()->family->members->pluck('id')->toArray();
         }
       }
+      $members[] = $request->user()->id;
       $phone = $request->search;
       $results = $phone != '' ? Customer::select('id', 'phone')->whereNotIn('id', $members)->where('phone', 'like', '%'.$phone.'%')->get() : [];
       return response()->json([
@@ -36,6 +37,13 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
+      $family = Family::find($request->family_id);
+      if(!$family) {
+        return response()->json([
+          'status' => false,
+          'message' => 'Sorry! all members has left the family.'
+        ]);
+      }
       $request->user()->update(['family_id'=>$request->family_id, 'family_joined_at'=>now()]);
       FamilyInvite::find($request->invite_id)->update(['status'=>'accepted']);
       if($request->has('notification_id') && $request->notification_id != '') {
@@ -58,7 +66,11 @@ class FamilyController extends Controller
     public function show($id, Request $request)
     {
       if($id == 'invites'){
-        $invites = FamilyInvite::select('id','sender_id','family_id')->with('inviter:id,name,phone')->where('receiver_id', $request->user()->id)->latest()->get();
+        $invites = FamilyInvite::select('id','sender_id','family_id')->with('inviter:id,name,phone')
+                                  ->where('receiver_id', $request->user()->id)
+                                  ->where('status', 'pending')
+                                  ->latest()
+                                  ->get();
         return response()->json([
           'status' => true,
           'invites' => $invites
@@ -150,6 +162,9 @@ class FamilyController extends Controller
           if(count($family->members) > 1) {
             $family->update(['head_id'=>$family->firstMember()->id]);
           }else{
+            Notification::where('data->status', 'Pending')
+            ->where('data->family_id', (string) $family->id)
+            ->delete();
             $family->delete();
           }
         }
