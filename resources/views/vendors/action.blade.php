@@ -19,6 +19,7 @@
       <span>Services</span>
     </div>
   </a>
+    @if($laundry_catalogue || $cab_catalogue || $food_catalogue)
     @if($services == 'Laundry')
       <a href="{{asset($laundry_catalogue)}}" target="_blank" class='btn btn-sm btn-success tooltip-box'>
     @elseif($services == 'CAB')
@@ -31,6 +32,7 @@
       <span>Catalogue</span>
     </div>
   </a>
+        @endif
   <a href="javascript:void(0);" onclick="delete_data({{$id}})" class='btn btn-sm btn-danger tooltip-box'>
     <i class="fa fa-trash"></i></i>
     <div class="tooltip text-white text-xs -top-full">
