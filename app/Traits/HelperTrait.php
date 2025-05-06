@@ -94,7 +94,7 @@ trait HelperTrait {
     $bookings = array();
     $key=0;
     foreach ($orders as $order) {
-      if($order->type == 'food'){
+      if($order->type == 'food0'){
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
@@ -117,9 +117,8 @@ trait HelperTrait {
           $bookings[$key]['pickup_location'] = '';
           $key++;
       }elseif($order->type == 'laundry'){
-        foreach ($order->laundry_orders as $item) {
           $bookings[$key]['id'] = $order->id;
-          $bookings[$key]['sub_order_id'] = $item->id;
+          $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
           $bookings[$key]['time_slot'] = $order->formatted_service_time;
           $bookings[$key]['service_date'] = $order->service_date;
@@ -127,14 +126,14 @@ trait HelperTrait {
           $bookings[$key]['end'] = $order->end;
           $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
           $bookings[$key]['quantity'] = '';
-          $bookings[$key]['price'] = $item->total;
-          $bookings[$key]['service_name'] = $item->category_name;
+          $bookings[$key]['price'] = $order->grand_total;
+          $services = $order->laundry_orders->pluck('category_name')->sort()->values()->toArray();
+          $bookings[$key]['service_name'] = implode(', ',$services);
           $bookings[$key]['from'] = '';
           $bookings[$key]['to'] = '';
           $bookings[$key]['pickup_location'] = '';
           $key++;
-        }
-      }elseif($order->type == 'cab'){
+      }elseif($order->type == 'cab0'){
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
