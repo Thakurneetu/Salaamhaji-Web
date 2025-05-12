@@ -214,7 +214,7 @@ class OrderController extends Controller
         $food_item['meal_items'] = $cart->package->items->where('day',$day)->where('meal',$meal)->first()->meal_items;
         if($day == 'common' && $food_item['meal_items']) {
           FoodOrderItem::create($food_item);
-        }else{
+        }elseif($day != 'common'){
           FoodOrderItem::create($food_item);
         }
       }
