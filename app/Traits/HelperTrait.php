@@ -94,15 +94,15 @@ trait HelperTrait {
     $bookings = array();
     $key=0;
     foreach ($orders as $order) {
-      if($order->type == 'food0'){
+      if($order->type == 'food'){
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
           $bookings[$key]['time_slot'] = '';
-          $bookings[$key]['service_date'] = date('d/m/Y',strtotime($order->food_order->from)) .' - '. date('d/m/Y',strtotime($order->food_order->to));
+          $bookings[$key]['service_date'] = date(config('constants.DATE'),strtotime($order->food_order->from)) .' - '. date(config('constants.DATE'),strtotime($order->food_order->to));
           $bookings[$key]['start'] = '';
           $bookings[$key]['end'] = '';
-          $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
+          $bookings[$key]['status'] = $this->getOrderStatus($order->status);
           $bookings[$key]['quantity'] = (string)$order->food_order->quantity;
           $bookings[$key]['price'] = $order->grand_total;
           $bookings[$key]['service_name'] = $order->food_order->package.' - '.$order->food_order->meal;
@@ -124,7 +124,7 @@ trait HelperTrait {
           $bookings[$key]['service_date'] = $order->service_date;
           $bookings[$key]['start'] = $order->start;
           $bookings[$key]['end'] = $order->end;
-          $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
+          $bookings[$key]['status'] = $this->getOrderStatus($order->status);
           $bookings[$key]['quantity'] = '';
           $bookings[$key]['price'] = $order->grand_total;
           $services = $order->laundry_orders->pluck('category_name')->sort()->values()->toArray();
@@ -133,7 +133,7 @@ trait HelperTrait {
           $bookings[$key]['to'] = '';
           $bookings[$key]['pickup_location'] = '';
           $key++;
-      }elseif($order->type == 'cab0'){
+      }elseif($order->type == 'cab'){
           $bookings[$key]['id'] = $order->id;
           $bookings[$key]['sub_order_id'] = null;
           $bookings[$key]['type'] = $order->type;
@@ -141,7 +141,7 @@ trait HelperTrait {
           $bookings[$key]['service_date'] = $order->service_date;
           $bookings[$key]['start'] = $order->start;
           $bookings[$key]['end'] = $order->end;
-          $bookings[$key]['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
+          $bookings[$key]['status'] = $this->getOrderStatus($order->status);
           $bookings[$key]['quantity'] = '';
           $bookings[$key]['price'] = $order->grand_total;
           $bookings[$key]['service_name'] = $order->cab_order->tour_type;
@@ -154,20 +154,26 @@ trait HelperTrait {
     return $bookings;
   }
 
+  private function getOrderStatus($status){
+    $_status = $status == 'Order assigned to vendor' ? 'Order in progress' : $status;
+    return $_status;
+  }
+
   private function formatOrderDetail($order, $subOrderId = null){
     $booking = array();
+    $date_format = 'd M Y';
     if($order->type == 'food'){
         $booking['id'] = $order->id;
         $booking['sub_order_id'] = null;
         $booking['type'] = $order->type;
-        $booking['order_date'] = date('d M Y',strtotime($order->created_at));
-        $booking['service_date'] = date('d/m/Y',strtotime($order->food_order->from)) .' - '. date('d/m/Y',strtotime($order->food_order->to));
+        $booking['order_date'] = date($date_format,strtotime($order->created_at));
+        $booking['service_date'] = date(config('constants.DATE'),strtotime($order->food_order->from)) .' - '. date(config('constants.DATE'),strtotime($order->food_order->to));
         $booking['service_name'] = $order->food_order->meal.', '.$order->food_order->package;
         $booking['quantity'] = (string)$order->food_order->quantity;
         $booking['from'] = null;
         $booking['to'] = null;
         $booking['price'] = $order->subtotal;
-        $booking['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
+        $booking['status'] = $this->getOrderStatus($order->status);
         $booking['address_line_1'] = $order->address_line_1;
         $booking['address_line_2'] =  $order->address_line_2;
         $booking['landmark'] =  $order->landmark;
@@ -186,14 +192,14 @@ trait HelperTrait {
           $booking['id'] = $order->id;
           $booking['sub_order_id'] = $subOrderId;
           $booking['type'] = $order->type;
-          $booking['order_date'] = date('d M Y',strtotime($order->created_at));
+          $booking['order_date'] = date($date_format,strtotime($order->created_at));
           $booking['service_date'] = $order->formatted_service_time;
           $booking['service_name'] = $item->category_name;
           $booking['quantity'] = null;
           $booking['from'] = null;
           $booking['to'] = null;
           $booking['price'] = $item->total;
-          $booking['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
+          $booking['status'] = $this->getOrderStatus($order->status);
           $booking['address_line_1'] = $order->address_line_1;
           $booking['address_line_2'] =  $order->address_line_2;
           $booking['landmark'] =  $order->landmark;
@@ -209,6 +215,7 @@ trait HelperTrait {
             $booking['laoundry_items'][$key]['total'] = $value->total_price;
           }
           $booking['subtotal'] = $item->total;
+          $booking['tax'] = $this->getLaundryTax($order->tax, $item->total, $order->subtotal);
           if($order->tax > 0) {
             $booking['tax'] = number_format(($order->tax * $item->total / $order->subtotal), 2, '.', '');
           }else {
@@ -221,14 +228,14 @@ trait HelperTrait {
         $booking['id'] = $order->id;
         $booking['sub_order_id'] = null;
         $booking['type'] = $order->type;
-        $booking['order_date'] = date('d M Y',strtotime($order->created_at));
+        $booking['order_date'] = date($date_format,strtotime($order->created_at));
         $booking['service_date'] = $order->formatted_service_time;
         $booking['service_name'] = $order->cab_order->tour_type;
         $booking['quantity'] = null;
         $booking['from'] = $order->cab_order->origin;
         $booking['to'] = $order->cab_order->destination;
         $booking['price'] = $order->subtotal;
-        $booking['status'] = $order->status == 'Order assigned to vendor' ? 'Order in progress' : $order->status;
+        $booking['status'] = $this->getOrderStatus($order->status);
         $booking['address_line_1'] = null;
         $booking['address_line_2'] =  null;
         $booking['landmark'] =  null;
@@ -243,6 +250,15 @@ trait HelperTrait {
         $booking['grand_total'] = $order->grand_total;
     }
     return $booking;
+  }
+
+  private function getLaundryTax($order_tax, $total, $subtotal){
+    if($order_tax > 0) {
+      $tax = number_format(($order_tax * $total / $subtotal), 2, '.', '');
+    }else {
+      $tax = '0.00';
+    }
+    return $tax;
   }
 
   private function foodOrders($carts){

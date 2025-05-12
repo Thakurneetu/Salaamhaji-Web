@@ -29,33 +29,34 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
-    { 
+    {
+      $order_accepted = 'Order accepted';
       if($request->ajax()) {
-        if($request->val == 'Yearly'){ 
+        if($request->val == 'Yearly'){
           $currentYear = date('Y');
           $data['customer_count'] = Customer::whereYear('created_at', $currentYear)->count();
           $data['vendor_count']   = Vendor::whereYear('created_at', $currentYear)->count();
           $data['order_count']    = Order::whereYear('created_at', $currentYear)->count();
-          $data['pending_order_count'] = Order::whereYear('created_at', $currentYear)->where('status','Order accepted')->count();
+          $data['pending_order_count'] = Order::whereYear('created_at', $currentYear)->where('status',$order_accepted)->count();
         }elseif($request->val == 'Monthly'){
           $currentMonth = date('m');
           $data['customer_count'] = Customer::whereMonth('created_at', $currentMonth)->count();
           $data['vendor_count']   = Vendor::whereMonth('created_at', $currentMonth)->count();
           $data['order_count']    = Order::whereMonth('created_at', $currentMonth)->count();
-          $data['pending_order_count'] = Order::whereMonth('created_at', $currentMonth)->where('status','Order accepted')->count();
+          $data['pending_order_count'] = Order::whereMonth('created_at', $currentMonth)->where('status',$order_accepted)->count();
         }elseif($request->val == 'Weekly'){
           $weekStart = Carbon::now()->startOfWeek();
           $weekEnd = Carbon::now()->endOfWeek();
           $data['customer_count'] = Customer::where('created_at','>=', $weekStart)->where('created_at','<=', $weekEnd)->count();
           $data['vendor_count']   = Vendor::where('created_at','>=', $weekStart)->where('created_at','<=', $weekEnd)->count();
           $data['order_count']    = Order::where('created_at','>=', $weekStart)->where('created_at','<=', $weekEnd)->count();
-          $data['pending_order_count'] = Order::where('created_at','>=', $weekStart)->where('created_at','<=', $weekEnd)->where('status','Order accepted')->count();
+          $data['pending_order_count'] = Order::where('created_at','>=', $weekStart)->where('created_at','<=', $weekEnd)->where('status',$order_accepted)->count();
         }else{
           $currentDay = date('d');
           $data['customer_count'] = Customer::whereDay('created_at', $currentDay)->count();
           $data['vendor_count']   = Vendor::whereDay('created_at', $currentDay)->count();
           $data['order_count']    = Order::whereDay('created_at', $currentDay)->count();
-          $data['pending_order_count'] = Order::whereDay('created_at', $currentDay)->where('status','Order accepted')->count();
+          $data['pending_order_count'] = Order::whereDay('created_at', $currentDay)->where('status',$order_accepted)->count();
         }
         return  $data;
       }
@@ -63,7 +64,7 @@ class DashboardController extends Controller
       $customer_count = Customer::whereMonth('created_at', $currentMonth)->count();
       $vendor_count   = Vendor::whereMonth('created_at', $currentMonth)->count();
       $order_count    = Order::whereMonth('created_at', $currentMonth)->count();
-      $pending_order_count = Order::select('*')->whereMonth('created_at', $currentMonth)->where('status','Order accepted')->count();
+      $pending_order_count = Order::select('*')->whereMonth('created_at', $currentMonth)->where('status',$order_accepted)->count();
       $orders = Order::where('created_at', '>=', Carbon::now()->subDays(14))->latest()->get();
       return view('dashboard', compact('customer_count', 'vendor_count', 'order_count', 'pending_order_count', 'orders'));
     }
@@ -80,7 +81,6 @@ class DashboardController extends Controller
       return redirect()->back();
     }
     public function changeForm(){
-      $user = auth()->user();
       return view('change_password');
     }
     public function changePassword(Request $request){

@@ -43,6 +43,7 @@ class OrderController extends Controller
     {
       try{
         DB::beginTransaction();
+        $message = 'Please select a service to continue.';
         $type = $request->type;
         $order_data['uuid'] = $this->generateUniqueOrderId();
         $order_data['customer_id'] = $request->user()->id;
@@ -59,17 +60,11 @@ class OrderController extends Controller
           if(count($carts) < 1) {
             return response()->json([
               'status' => false,
-              'message' => 'Please select a service to continue.',
+              'message' => $message,
             ]);
           }
-          foreach ($carts as $key => $cart) {
-            if($cart->meal == 'Combo') {
-              $order_data['subtotal'] = $cart->package->combo_price * $cart->quantity;
-            }elseif($cart->meal == 'Single') {
-              $order_data['subtotal'] = $cart->package->single_price * $cart->quantity;
-            }else {
-              $order_data['subtotal'] = $cart->package->all_price * $cart->quantity;
-            }
+          foreach ($carts as $cart) {
+            $order_data['subtotal'] = $this->getFoodSubtotal($cart);
             $order_data['tax'] = $order_data['subtotal'] * 5 / 100;
             $order_data['grand_total'] = $order_data['subtotal'] + ($order_data['subtotal'] * 5 / 100);
             $order_data['area_id'] = $cart->area_id;
@@ -95,13 +90,9 @@ class OrderController extends Controller
             $startDate = Carbon::parse($cart->from);
             $endDate = $cart->to ? Carbon::parse($cart->to) : Carbon::parse($cart->from);
             $dates=[];
-            if($cart->meal == 'All') {
-              $meals = ['breakfast', 'lunch', 'dinner'];
-            }elseif($cart->meal == 'Combo') {
-              $meals = explode('-', $cart->meal_type);
-            }else {
-              $meals = [$cart->meal_type];
-            }
+
+            $meals = $this->getFoodMeals($cart);
+
             while ($startDate <= $endDate) {
               $date = $startDate->toDateString();
               $day = strtolower($startDate->format('l'));
@@ -109,26 +100,10 @@ class OrderController extends Controller
                 'date' => $date,
                 'day' => $day,
               ];
-              foreach($meals as $meal) {
-                $food_item['food_order_id'] = $food_order->id;
-                $food_item['date'] = $date;
-                $food_item['day'] = $day;
-                $food_item['meal'] = $meal;
-                $food_item['meal_items'] = $cart->package->items->where('day',$day)->where('meal',$meal)->first()->meal_items;
-                FoodOrderItem::create($food_item);
-              }
+              $this->craeteFoodOrderItem($meals,  $food_order, $date, $day, $cart);
               $startDate->addDay();
             }
-            foreach($meals as $meal) {
-              $food_item['food_order_id'] = $food_order->id;
-              $food_item['date'] = null;
-              $food_item['day'] = 'common';
-              $food_item['meal'] = $meal;
-              $food_item['meal_items'] = $cart->package->items->where('day','common')->where('meal',$meal)->first()->meal_items;
-              if($food_item['meal_items']) {
-                FoodOrderItem::create($food_item);
-              }
-            }
+            $this->craeteFoodOrderItem($meals,  $food_order, null, 'common', $cart);
           }
           FoodCart::where('customer_id',$request->user()->id)->delete();
           DB::commit();
@@ -141,7 +116,7 @@ class OrderController extends Controller
           if(count($carts) < 1) {
             return response()->json([
               'status' => false,
-              'message' => 'Please select a service to continue.',
+              'message' => $message,
             ]);
           }
           $order_data['subtotal'] = $carts->sum('total');
@@ -152,22 +127,7 @@ class OrderController extends Controller
           $order_data['end'] = $carts->first()->end;
           $order_data['area_id'] = $carts->first()->area_id;
           $order = Order::create($order_data);
-          $laundry_order_data['order_id'] = $order->id;
-          $laundry_order_data['customer_id'] = $request->user()->id;
-          foreach ($carts as $key => $cart) {
-            $laundry_order_data['category_name'] = $cart->category_name;
-            $laundry_order_data['total'] = $cart->total;
-            $laundry_order_data['status'] = 'Active';
-            $laundry_order = LaundryOrder::create($laundry_order_data);
-            $item_data['laundry_order_id'] = $laundry_order->id;
-            foreach ($cart->items as $key => $item) {
-              $item_data['service_name'] = $item->service_name;
-              $item_data['price_per_piece'] = $item->price_per_piece;
-              $item_data['quantity'] = $item->quantity;
-              $item_data['total_price'] = $item->total_price;
-              LaundryOrderItem::create($item_data);
-            }
-          }
+          $this->createLaundryOrder($carts, $order->id, $request->user()->id);
           $ids = LaundryCart::where('customer_id',$request->user()->id)->pluck('id');
           LaundryCartItem::whereIn('laundry_cart_id', $ids)->delete();
           LaundryCart::where('customer_id',$request->user()->id)->delete();
@@ -181,7 +141,7 @@ class OrderController extends Controller
           if(!$cart) {
             return response()->json([
               'status' => false,
-              'message' => 'Please select a service to continue.',
+              'message' => $message,
             ]);
           }
           $subtotal = $cart->tour_type == 'local' ? ($cart->hours * $cart->fare->price) : $cart->fare->price;
@@ -199,7 +159,7 @@ class OrderController extends Controller
           $cab_data['tour_type'] = $cart->tour_type;
           $cab_data['hours'] = $cart->hours;
           $cab_data['price'] = $cart->fare->price;
-          $cab_data['origin'] = $cart->tour_type == 'local' 
+          $cab_data['origin'] = $cart->tour_type == 'local'
                                   ? $cart->tour_location
                                   : $cart->fare->outstation->origin->name;
           $cab_data['destination'] = $cart->tour_type == 'local' ? '' : $cart->fare->outstation->destination->name;
@@ -224,6 +184,62 @@ class OrderController extends Controller
           'error' => $th->getMessage()
         ]);
       }
+    }
+
+    private function createLaundryOrder($carts, $order_id, $user_id){
+      $laundry_order_data['order_id'] = $order_id;
+      $laundry_order_data['customer_id'] = $user_id;
+      foreach ($carts as $cart) {
+        $laundry_order_data['category_name'] = $cart->category_name;
+        $laundry_order_data['total'] = $cart->total;
+        $laundry_order_data['status'] = 'Active';
+        $laundry_order = LaundryOrder::create($laundry_order_data);
+        $item_data['laundry_order_id'] = $laundry_order->id;
+        foreach ($cart->items as $item) {
+          $item_data['service_name'] = $item->service_name;
+          $item_data['price_per_piece'] = $item->price_per_piece;
+          $item_data['quantity'] = $item->quantity;
+          $item_data['total_price'] = $item->total_price;
+          LaundryOrderItem::create($item_data);
+        }
+      }
+    }
+
+    private function craeteFoodOrderItem($meals, $food_order, $date = null, $day, $cart){
+      foreach($meals as $meal) {
+        $food_item['food_order_id'] = $food_order->id;
+        $food_item['date'] = $date;
+        $food_item['day'] = $day;
+        $food_item['meal'] = $meal;
+        $food_item['meal_items'] = $cart->package->items->where('day',$day)->where('meal',$meal)->first()->meal_items;
+        if($day == 'common' && $food_item['meal_items']) {
+          FoodOrderItem::create($food_item);
+        }else{
+          FoodOrderItem::create($food_item);
+        }
+      }
+    }
+
+    private function getFoodSubtotal($cart) {
+      if($cart->meal == 'Combo') {
+        $subtotal = $cart->package->combo_price * $cart->quantity;
+      }elseif($cart->meal == 'Single') {
+        $subtotal = $cart->package->single_price * $cart->quantity;
+      }else {
+        $subtotal = $cart->package->all_price * $cart->quantity;
+      }
+      return $subtotal;
+    }
+
+    private function getFoodMeals($cart) {
+      if($cart->meal == 'All') {
+        $meals = ['breakfast', 'lunch', 'dinner'];
+      }elseif($cart->meal == 'Combo') {
+        $meals = explode('-', $cart->meal_type);
+      }else {
+        $meals = [$cart->meal_type];
+      }
+      return $meals;
     }
 
     /**

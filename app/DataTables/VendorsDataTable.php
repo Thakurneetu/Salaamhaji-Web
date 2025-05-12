@@ -40,7 +40,7 @@ class VendorsDataTable extends DataTable
             'countries.name as country_name',
             DB::raw("CONCAT_WS(', ', vendors.address1, vendors.address2, vendors.city, vendors.state, countries.name) as address")
         )
-        ->join('countries', 'vendors.country_id', '=', 'countries.id');  
+        ->join('countries', 'vendors.country_id', '=', 'countries.id');
     }
 
     /**

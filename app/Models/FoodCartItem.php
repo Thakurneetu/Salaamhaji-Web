@@ -27,10 +27,16 @@ class FoodCartItem extends Model
   }
   protected function serviceName(): Attribute
   {
-    return new Attribute(
-      get: fn () => $this->service ? $this->service->name : null,
-    );
-  }
+      return new Attribute(
+          get: function () {
+              $name = null;
+              if ($this->service) {
+                  $name = $this->service->name;
+              }
+              return $name;
+          },
+      );
+  }  
   protected function serviceThumbnail(): Attribute
   {
     return new Attribute(

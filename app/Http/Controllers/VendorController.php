@@ -100,29 +100,23 @@ class VendorController extends Controller
         if($request->hasFile('laundry_catalogue')){
           $this->deleteFile($vendor->laundry_catalogue);
           $data['laundry_catalogue'] = $this->saveFile($request->laundry_catalogue, config('constants.CATALOGUE'));
-        }else{
-          if(!in_array('Laundry',$services)){
-            $this->deleteFile($vendor->laundry_catalogue);
-            $data['laundry_catalogue'] = '';
-          }
+        }elseif(!in_array('Laundry',$services)){
+          $this->deleteFile($vendor->laundry_catalogue);
+          $data['laundry_catalogue'] = '';
         }
         if($request->hasFile('food_catalogue')){
           $this->deleteFile($vendor->food_catalogue);
           $data['food_catalogue'] = $this->saveFile($request->food_catalogue, config('constants.CATALOGUE'));
-        }else{
-          if(!in_array('Food',$services)){
-            $this->deleteFile($vendor->food_catalogue);
-            $data['food_catalogue'] = '';
-          }
+        }elseif(!in_array('Food',$services)){
+          $this->deleteFile($vendor->food_catalogue);
+          $data['food_catalogue'] = '';
         }
         if($request->hasFile('cab_catalogue')){
           $this->deleteFile($vendor->cab_catalogue);
           $data['cab_catalogue'] = $this->saveFile($request->cab_catalogue, config('constants.CATALOGUE'));
-        }else{
-          if(!in_array('CAB',$services)){
-            $this->deleteFile($vendor->cab_catalogue);
-            $data['cab_catalogue'] = '';
-          }
+        }elseif(!in_array('CAB',$services)){
+          $this->deleteFile($vendor->cab_catalogue);
+          $data['cab_catalogue'] = '';
         }
         $vendor->update($data);
         DB::commit();

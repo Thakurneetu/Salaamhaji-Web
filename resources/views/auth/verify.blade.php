@@ -15,10 +15,10 @@
                         @endif
                         <p>Before proceeding, please check your email for a verification link.If you did not receive
                             the email,</p>
-                            <a href="#"
+                            <button 
                                onclick="event.preventDefault(); document.getElementById('resend-form').submit();">
                                 click here to request another.
-                            </a>
+                            </button>
                             <form id="resend-form" action="{{ route('verification.resend') }}" method="POST" class="d-none">
                                 @csrf
                             </form>

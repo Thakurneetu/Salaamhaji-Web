@@ -67,7 +67,7 @@ class OrderController extends Controller
       $data = $request->except('_token','_method');
       $order->update($data);
       Alert::toast('Vendor Details Updated Successfully','success');
-      return redirect()->back();  
+      return redirect()->back();
     }
 
     /**

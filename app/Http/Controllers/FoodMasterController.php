@@ -9,9 +9,6 @@ use App\DataTables\FoodMasterDataTable;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Traits\HelperTrait;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Imagick\Driver;
-// use Intervention\Image\Laravel\Facades\Image;
 
 class FoodMasterController extends Controller
 {
