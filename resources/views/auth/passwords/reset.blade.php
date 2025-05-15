@@ -10,7 +10,6 @@
 
   <title>{{ config('app.name') }}</title>
 
-  <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
@@ -24,12 +23,10 @@
 <body class="hold-transition dark-mode login-page">
   <div class="login-box">
     <div class="login-logo">
-      <!-- <img src="{{-- asset('image/logo.png') --}}" height=70 width=70 alt="logo"> -->
+      <img src="{{ asset('image/logo.png') }}" height=70 width=70 alt="logo">
+      <br>
       Admin login
     </div>
-    <!-- /.login-logo -->
-
-    <!-- /.login-box-body -->
     <div class="card">
       <div class="card-header">{{ __('Reset Password') }}</div>
 
@@ -88,11 +85,9 @@
           </div>
         </form>
       </div>
-      <!-- /.login-card-body -->
     </div>
 
   </div>
-  <!-- /.login-box -->
 
   <script src="{{ asset('js/app.js') }}" defer></script>
 

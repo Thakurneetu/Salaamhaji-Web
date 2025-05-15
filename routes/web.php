@@ -22,10 +22,6 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\VendorLocalFareController;
 use App\Http\Controllers\VendorOutstationController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes(['register' => false]);
 
 Route::get('/home', [LoginController::class, 'showLoginForm']);

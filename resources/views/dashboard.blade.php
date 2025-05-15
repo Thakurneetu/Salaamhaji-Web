@@ -45,7 +45,6 @@
               </div>
             </div>
           </div>
-          <!-- /.card-header -->
 
           <div class="card-body">
             
@@ -58,9 +57,7 @@
                   <span class="info-box-text">Customers</span>
                   <span class="info-box-number" id="customer_count">{{$customer_count}}</span>
                 </div>
-                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box -->
             </div>
             <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box mb-3 bg-secondary">
@@ -70,9 +67,7 @@
                   <span class="info-box-text">Vendors</span>
                   <span class="info-box-number" id="vendor_count">{{$vendor_count}}</span>
                 </div>
-                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box -->
             </div>
             <div class="clearfix hidden-md-up"></div>
             <div class="col-12 col-sm-6 col-md-3">
@@ -83,9 +78,7 @@
                   <span class="info-box-text">Total Orders</span>
                   <span class="info-box-number" id="order_count">{{$order_count}}</span>
                 </div>
-                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box -->
             </div>
             <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box mb-3 bg-secondary">
@@ -95,23 +88,16 @@
                   <span class="info-box-text">Pending Orders</span>
                   <span class="info-box-number" id="pending_order_count">{{$pending_order_count}}</span>
                 </div>
-                <!-- /.info-box-content -->
               </div>
-              <!-- /.info-box -->
             </div>
           </div>
 
           </div>
         </div>
-        <!-- /.card -->
       </div>
-      <!-- /.col -->
     </div>
     <div class="row">
-      <!-- Left col -->
       <div class="col-md-12">
-
-        <!-- TABLE: LATEST ORDERS -->
         <div class="card">
           <div class="card-header border-transparent">
             <h3 class="card-title">Latest Orders</h3>
@@ -122,7 +108,6 @@
               </button>
             </div>
           </div>
-          <!-- /.card-header -->
           <div class="card-body p-0">
             <div class="table-responsive">
               <table class="table m-0">
@@ -171,17 +156,12 @@
                 </tbody>
               </table>
             </div>
-            <!-- /.table-responsive -->
           </div>
-          <!-- /.card-body -->
-          <!-- /.card-footer -->
         </div>
-        <!-- /.card -->
       </div>
     </div>
   </div>
 </section>
-<!--<div class="loader"></div>-->
 <a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
   <i class="stack-interface stack-up-open-big"></i>
 </a>

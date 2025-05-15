@@ -39,10 +39,20 @@ class FoodCartItem extends Model
   }  
   protected function serviceThumbnail(): Attribute
   {
-    return new Attribute(
-      get: fn () => $this->service ? ($this->service->thumb_url != '' ? $this->service->thumb_url : null) : null,
-    );
+      return new Attribute(
+          get: fn () => $this->getServiceThumbnail(),
+      );
   }
+
+  protected function getServiceThumbnail(): ?string
+  {
+      if (!$this->service) {
+          return null;
+      }
+
+      return $this->service->thumb_url !== '' ? $this->service->thumb_url : null;
+  }
+
   public function category() : BelongsTo
   {
     return $this->belongsTo(FoodCategory::class)->withTrashed();

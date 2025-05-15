@@ -9,8 +9,6 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
-      <label for="name"></label>
-      
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="email">Email</label>

@@ -24,7 +24,8 @@
 <body class="hold-transition dark-mode login-page">
   <div class="login-box" style="width: 500px;">
     <div class="login-logo">
-      <!-- <img src="{{-- asset('image/logo.png') --}}" height=70 width=70 alt="logo"> -->
+      <img src="{{ asset('image/logo.png') }}" height=70 width=70 alt="logo">
+      <br>
       Hi Admin
     </div>
     <!-- /.login-logo -->

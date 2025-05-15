@@ -26,7 +26,7 @@
     @endforeach
     @endforeach
   </table>
-<table class="table mb-3 table-dark table-borderless table-responsive-md">
+<table class="table mb-3 table-dark table-borderless table-responsive-md" role="presentation">
   <colgroup>
     <col style="width: 20%;">
     <col style="width: 20%;">
@@ -35,17 +35,17 @@
     <col style="width: 20%;">
   </colgroup>
   <tr>
-    <td colspan=3></td>
+    <td colspan="3"></td>
     <td class="text-right"><b>Subtotal:</b></td>
     <td class="text-right"><b>{{$order->subtotal}}</b></td>
   </tr>
   <tr>
-    <td colspan=3></td>
+    <td colspan="3"></td>
     <td class="text-right" style="border-top:1px solid gray"><b>Service Tax:</b></td>
     <td class="text-right" style="border-top:1px solid gray"><b>{{$order->tax}}</b></td>
   </tr>
   <tr>
-    <td colspan=3></td>
+    <td colspan="3"></td>
     <td class="text-right" style="border-top:1px solid gray"><b>Grand Total:</b></td>
     <td class="text-right" style="border-top:1px solid gray"><b>{{$order->grand_total}}</b></td>
   </tr>
