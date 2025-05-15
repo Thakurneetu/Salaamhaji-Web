@@ -5,12 +5,12 @@
       <span>Edit</span>
     </div>
   </a>
-  <butoon type="button" onclick="delete_data({{$id}})" class='btn btn-sm btn-danger tooltip-box'>
+  <button type="button" onclick="delete_data({{$id}})" class='btn btn-sm btn-danger tooltip-box'>
     <i class="fa fa-trash"></i></i>
     <div class="tooltip text-white text-xs -top-full">
       <span>Delete</span>
     </div>
-  </butoon>
+  </button>
 </div>
 <form id="delete_form-{{$id}}" action="{{ route('banner.destroy', $id) }}" method="post">
     @csrf @method('delete')

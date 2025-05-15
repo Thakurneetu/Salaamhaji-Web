@@ -18,7 +18,7 @@
       @enderror
     </div>
     @if(isset($banner) && $banner->image)
-      <img style='width:250px' src="{{asset(@$banner->image)}}" alt='Image'>
+      <img style='width:250px' src="{{asset(@$banner->image)}}" alt='banner'>
     @endif
   </div>
 </div>
