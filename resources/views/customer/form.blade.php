@@ -27,7 +27,7 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
-      <label>Gender</label>
+      <label for="gender">Gender</label>
       <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
         <option value="" selected disabled>Select Gender</option>
         <option value="Male" {{@$customer->gender == 'Male' ? 'selected' : ''}}>Male</option>

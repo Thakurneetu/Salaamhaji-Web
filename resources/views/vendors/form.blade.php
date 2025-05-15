@@ -70,7 +70,7 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
-      <label>Country</label>
+      <label for="country_id">Country</label>
       <select name="country_id" id="country_id" class="form-control" @error('state') is-invalid @enderror>
         <option value="" selected disabled>Select Country</option>
         @foreach($countries as $country)
@@ -85,7 +85,7 @@
     </div>
     <div class="col-12"><h1>Service</h1></div>
     <div class="form-group col-md-6 col-12" >
-      <label>Select Service</label>
+      <label for="service">Select Service</label>
       <input type="hidden" name="services" id="service" value="{{@$vendor->services}}">
       <div class="" id="services"></div>
       @error('services')

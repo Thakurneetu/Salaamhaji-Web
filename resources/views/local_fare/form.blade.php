@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
-      <label>Area</label>
+      <label for="area">Area</label>
       <select name="area_id" id="area" class="form-control @error('area_id') is-invalid @enderror">
         <option value="" selected disabled>Select Area</option>
         @foreach($areas as $area)
@@ -13,7 +13,7 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
-      <label>Select CAB</label>
+      <label for="cab_id">Select CAB</label>
       <select name="cab_id" id="cab_id" class="form-control @error('cab_id') is-invalid @enderror" required>
         <option value="" selected disabled>Select CAB</option>
         @foreach($cabs as $_cab)
@@ -25,7 +25,7 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
-      <label>Fare / Hour</label>
+      <label for="price">Fare / Hour</label>
       <input type="number" step="any" name="price" value="{{old('price') ?? (@$local_fare->price ?? '')}}" 
       class="form-control @error('price') is-invalid @enderror" placeholder="Enter Fare / Hour" required>
       @error('price')

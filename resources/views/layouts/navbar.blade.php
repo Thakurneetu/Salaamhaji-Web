@@ -1,8 +1,8 @@
 <nav class="main-header navbar navbar-expand navbar-dark">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
-      <li class="nav-item" onclick="toggleValue('sidebar-collapse')">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      <li class="nav-item">
+          <a onclick="toggleValue('sidebar-collapse')" class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
   </ul>
   <!-- Right navbar links -->
@@ -26,7 +26,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
                 <a href="{{route('profile')}}" class="btn btn-primary btn-flat">Profile</a>
-                <a href="#" class="btn btn-danger btn-flat float-right"
+                <a href="#" class="btn btn-danger btn-flat float-right" role="button"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Sign out
                 </a>

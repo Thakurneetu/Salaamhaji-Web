@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
-      <label>Origin</label>
+      <label for="origin">Origin</label>
       <select name="origin_id" id="origin" class="form-control" required onchange="getDestinations(this.value)">
         <option value="" selected disabled>Select Origin</option>
         @foreach($origins as $_location)
@@ -10,7 +10,7 @@
       </select>
     </div>
     <div class="form-group col-md-6 col-12">
-      <label>Destination</label>
+      <label for="destination">Destination</label>
       <select name="destination_id" id="destination" class="form-control" required>
         <option value="" selected disabled>Select Destination</option>
         @foreach($destinations as $_location)
@@ -21,7 +21,7 @@
     <div class="col-md-6 col-12 row">
       @foreach($cabs as $cab)
         <div class="form-group col-12">
-          <label>CAB Type: {{$cab->type}}</label>
+          <label for="price">CAB Type: {{$cab->type}}</label>
           <div class="row">
             <div class="form-group col-9">
               <input type="number" step="any" name="prices[{{$cab->id}}]" 

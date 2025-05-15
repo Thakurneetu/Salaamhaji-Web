@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
-      <label>Service Category</label>
+      <label for="category">Service Category</label>
       <select name="category_id" id="category" class="form-control">
         <option value="" selected disabled>Select Service Category</option>
         @foreach($categories as $category)

@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
-      <label>Area</label>
+      <label for="area">Area</label>
       <select name="area_id" id="area" class="form-control  @error('area_id') is-invalid @enderror">
         <option value="" selected disabled>Select Area</option>
         @foreach($areas as $area)
@@ -13,7 +13,7 @@
       @enderror
     </div>
     <div class="form-group col-md-6 col-12">
-      <label>Service Category</label>
+      <label for="category">Service Category</label>
       <select name="category_id" id="category" class="form-control @error('category_id') is-invalid @enderror">
         <option value="" selected disabled>Select Service Category</option>
         @foreach($categories as $category)

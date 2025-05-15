@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="row">
     <div class="form-group col-md-6 col-12">
-      <label>Area</label>
+      <label for="area">Area</label>
       <select name="area_id" id="area" class="form-control @error('area_id') is-invalid @enderror" required>
         <option value="" selected disabled>Select Area</option>
         @foreach($areas as $area)
