@@ -34,7 +34,7 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                    src="{{ isset(Auth::user()->image) && Auth::user()->image ? Auth::user()->image : asset('image/user.png') }}" alt="User profile picture">
+                                    src="{{ isset(Auth::user()->image) && Auth::user()->image ? Auth::user()->image : asset('image/user.png') }}" alt="User">
                             </div>
                             <h3 class="profile-username text-center">{{$profile->name}}</h3>
 
