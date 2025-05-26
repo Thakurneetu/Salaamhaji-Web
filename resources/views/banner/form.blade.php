@@ -11,7 +11,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Banner Name</label>
-      <input type="text" name="name" value="{{old('name') ?? (@$banner->name ?? '')}}" 
+      <input type="text" name="name" value="{{old('name') ?? (@$banner->name ?? '')}}"
       class="form-control @error('name') is-invalid @enderror" placeholder="Enter Banner Name">
       @error('name')
       <div class="text-danger">{{ $message }}</div>

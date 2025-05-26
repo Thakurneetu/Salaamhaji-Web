@@ -10,12 +10,12 @@
     <col style="width: 16%;">
   </colgroup>
   <tr>
-    <th>Booking Type</th>
-    <th>Pickup Location</th>
-    <th>Tour Location</th>
-    <th class="text-right">Hours</th>
-    <th class="text-right">Fare/Hour</th>
-    <th class="text-right">Total Fare</th>
+    <th scope="col">Booking Type</th>
+    <th scope="col">Pickup Location</th>
+    <th scope="col">Tour Location</th>
+    <th scope="col" class="text-right">Hours</th>
+    <th scope="col" class="text-right">Fare/Hour</th>
+    <th scope="col" class="text-right">Total Fare</th>
   </tr>
   <tr style="border-top:1px solid gray">
     <td>{{ucfirst($order->cab_order->tour_type)}} Tour</td>
@@ -48,10 +48,10 @@
     <col style="width: 25%;">
   </colgroup>
   <tr>
-    <th>Booking Type</th>
-    <th>Origin</th>
-    <th>Destination</th>
-    <th class="text-right">Total Fare</th>
+    <th scope="col">Booking Type</th>
+    <th scope="col">Origin</th>
+    <th scope="col">Destination</th>
+    <th scope="col" class="text-right">Total Fare</th>
   </tr>
   <tr style="border-top:1px solid gray">
     <td>{{ucfirst($order->cab_order->tour_type)}} Tour</td>

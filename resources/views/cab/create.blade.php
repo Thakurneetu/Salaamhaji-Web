@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Add CAB Type | 
+  Add CAB Type |
 @endsection
 
 @section('content')

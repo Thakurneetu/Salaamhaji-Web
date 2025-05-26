@@ -7,14 +7,14 @@
       <col style="width: 20%;">
     </colgroup>
     <tr>
-      <th>Item</th>
-      <th class="text-right">Price/Piece</th>
-      <th class="text-right">Quantity</th>
-      <th class="text-right">Total</th>
+      <th scope="col">Item</th>
+      <th scope="col" class="text-right">Price/Piece</th>
+      <th scope="col" class="text-right">Quantity</th>
+      <th scope="col" class="text-right">Total</th>
     </tr>
     @foreach($order->laundry_orders as $laundry_order)
     <tr colspan="4">
-      <th><u>Category: {{$laundry_order->category_name}}</u></th>
+      <th scope="col"><u>Category: {{$laundry_order->category_name}}</u></th>
     </tr>
     @foreach($laundry_order->items as $item)
       <tr style="border-bottom:1px solid gray">

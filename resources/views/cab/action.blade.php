@@ -1,7 +1,7 @@
 <div class="btn-group">
   <a href="{{ route('cab.edit', $id) }}" class='btn btn-sm btn-info tooltip-box'>
     <i class="fa fa-edit"></i>
-    <div class="tooltip text-white text-xs -top-full"> 
+    <div class="tooltip text-white text-xs -top-full">
       <span>Edit</span>
     </div>
   </a>

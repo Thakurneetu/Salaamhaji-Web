@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-CAB Types | 
+CAB Types |
 @endsection
 
 @section('style')
-  @include('layouts.includes.datatablesCss') 
+  @include('layouts.includes.datatablesCss')
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@ CAB Types |
     </div>
   </div>
   
-  <div class="container-fluid">  
+  <div class="container-fluid">
     <div class="card mb-0">
       <div class="card-header">
         <a href="{{route('cab.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add CAB Type</a>
@@ -34,10 +34,10 @@ CAB Types |
         {!! $dataTable->table(['class' => 'table table-bordered table-dark dataTable dtr-inline'], false) !!}
       </div>
     </div>
-  </div>    
+  </div>
 @endsection
 
 @section('script')
-  @include('layouts.includes.datatablesJs') 
+  @include('layouts.includes.datatablesJs')
   @include('layouts.includes.deleteFunction')
 @endsection
