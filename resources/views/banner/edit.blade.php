@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Edit Promotional Banner | 
+  Edit Promotional Banner |
 @endsection
 
 @section('content')

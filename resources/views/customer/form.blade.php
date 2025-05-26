@@ -10,7 +10,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="email">Email</label>
-      <input type="email" name="email" value="{{old('email') ?? (@$customer->email ?? '')}}" 
+      <input type="email" name="email" value="{{old('email') ?? (@$customer->email ?? '')}}"
       class="form-control @error('email') is-invalid @enderror" placeholder="Enter Customer Email">
       @error('email')
       <div class="text-danger">{{ $message }}</div>
@@ -19,8 +19,8 @@
     <input type="hidden" id="code" name="country_code" value="+91">
     <div class="form-group col-md-6 col-12">
       <label for="phone">Mobile Number</label>
-      <input type="text" id="phone" name="phone" oninput="onlyNumber(this)" 
-      value="{{old('phone') ? old('country_code').old('phone') : (@$customer->phone ? @$customer->country_code . @$customer->phone : '+91')}}" 
+      <input type="text" id="phone" name="phone" oninput="onlyNumber(this)"
+      value="{{old('phone') ? old('country_code').old('phone') : (@$customer->phone ? @$customer->country_code . @$customer->phone : '+91')}}"
       class="form-control @error('phone') is-invalid @enderror" placeholder="Enter Mobile Number">
       @error('phone')
       <div class="text-danger">{{ $message }}</div>

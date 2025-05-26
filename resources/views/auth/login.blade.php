@@ -62,7 +62,7 @@
                     </div>
                     @error('password')
                     <span class="error invalid-feedback">{{ $message }}</span>
-                    @enderror             
+                    @enderror
                     
                 </div>
                   @if (Session::has('message'))

@@ -2,7 +2,7 @@
 
 {{--  Title  --}}
 @section('title')
- Dashboard 
+ Dashboard
 @endsection
 
 @section('content')
@@ -205,7 +205,7 @@
     })
   })
 
-  $('#demolist a ').click(function () { 
+  $('#demolist a ').click(function () {
     $('#data_loader').show();
     $.ajax({
       url: "{{ route('home') }}",

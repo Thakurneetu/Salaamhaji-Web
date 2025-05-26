@@ -15,7 +15,7 @@
                         @endif
                         <p>Before proceeding, please check your email for a verification link.If you did not receive
                             the email,</p>
-                            <button 
+                            <button
                                onclick="event.preventDefault(); document.getElementById('resend-form').submit();">
                                 click here to request another.
                             </button>
