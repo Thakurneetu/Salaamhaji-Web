@@ -26,7 +26,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="price">Fare / Hour</label>
-      <input type="number" step="any" name="price" value="{{old('price') ?? (@$local_fare->price ?? '')}}" 
+      <input type="number" step="any" name="price" value="{{old('price') ?? (@$local_fare->price ?? '')}}"
       class="form-control @error('price') is-invalid @enderror" placeholder="Enter Fare / Hour" required>
       @error('price')
         <span class="text-danger">{{ $message }}</span>

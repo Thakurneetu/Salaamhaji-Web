@@ -11,7 +11,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="price">Fare / Hour</label>
-      <input type="text" name="price" value="{{old('price') ?? (@$cab->vendor_local_fare->price ?? '')}}" 
+      <input type="text" name="price" value="{{old('price') ?? (@$cab->vendor_local_fare->price ?? '')}}"
       class="form-control @error('price') is-invalid @enderror" placeholder="Enter Fare / Hour" required>
     </div>
   </div>

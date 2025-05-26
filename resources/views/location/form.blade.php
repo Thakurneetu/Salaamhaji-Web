@@ -14,7 +14,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Location Name</label>
-      <input type="text" name="name" value="{{old('name') ?? (@$location->name ?? '')}}" 
+      <input type="text" name="name" value="{{old('name') ?? (@$location->name ?? '')}}"
       class="form-control @error('name') is-invalid @enderror" placeholder="Enter Location Name" required>
       @error('name')
       <div class="text-danger">{{ $message }}</div>

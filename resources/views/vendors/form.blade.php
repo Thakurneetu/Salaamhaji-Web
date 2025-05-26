@@ -2,7 +2,7 @@
   <div class="row">
     <div class="form-group col-md-6 col-12">
       <label for="name">Name</label>
-      <input type="text" name="name" value="{{old('name') ?? (@$vendor->name ?? '')}}" 
+      <input type="text" name="name" value="{{old('name') ?? (@$vendor->name ?? '')}}"
       class="form-control @error('name') is-invalid @enderror" placeholder="Enter Vendor Name" required>
       @error('name')
       <div class="text-danger">{{ $message }}</div>
@@ -12,7 +12,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="email">Email</label>
-      <input type="email" name="email" value="{{old('email') ?? (@$vendor->email ?? '')}}" 
+      <input type="email" name="email" value="{{old('email') ?? (@$vendor->email ?? '')}}"
       class="form-control @error('email') is-invalid @enderror" placeholder="Enter Vendor Email" required>
       @error('email')
       <div class="text-danger">{{ $message }}</div>
@@ -20,7 +20,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="phone">Mobile Number</label>
-      <input type="text" name="phone" oninput="onlyNumber(this)" value="{{old('phone') ?? (@$vendor->phone ?? '')}}" 
+      <input type="text" name="phone" oninput="onlyNumber(this)" value="{{old('phone') ?? (@$vendor->phone ?? '')}}"
       class="form-control @error('phone') is-invalid @enderror" placeholder="Enter Mobile Number" required>
       @error('phone')
       <div class="text-danger">{{ $message }}</div>
@@ -29,7 +29,7 @@
     <div class="col-12"><h1>Address</h1></div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Address Line 1</label>
-      <input type="text" name="address1" value="{{old('address1') ?? (@$vendor->address1 ?? '')}}" 
+      <input type="text" name="address1" value="{{old('address1') ?? (@$vendor->address1 ?? '')}}"
       class="form-control @error('address1') is-invalid @enderror" placeholder="Enter Address Line 1" >
       @error('address1')
       <div class="text-danger">{{ $message }}</div>
@@ -37,7 +37,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Address Line 2</label>
-      <input type="text" name="address2" value="{{old('address2') ?? (@$vendor->address2 ?? '')}}" 
+      <input type="text" name="address2" value="{{old('address2') ?? (@$vendor->address2 ?? '')}}"
       class="form-control @error('address2') is-invalid @enderror" placeholder="Enter Address Line 2" >
       @error('address2')
       <div class="text-danger">{{ $message }}</div>
@@ -45,7 +45,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">City</label>
-      <input type="text" name="city" value="{{old('city') ?? (@$vendor->city ?? '')}}" 
+      <input type="text" name="city" value="{{old('city') ?? (@$vendor->city ?? '')}}"
       class="form-control @error('city') is-invalid @enderror" placeholder="Enter City Name" >
       @error('city')
       <div class="text-danger">{{ $message }}</div>
@@ -53,7 +53,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">State</label>
-      <input type="text" name="state" value="{{old('state') ?? (@$vendor->state ?? '')}}" 
+      <input type="text" name="state" value="{{old('state') ?? (@$vendor->state ?? '')}}"
       class="form-control @error('state') is-invalid @enderror" placeholder="Enter State Name" >
       @error('state')
       <div class="text-danger">{{ $message }}</div>
@@ -61,7 +61,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Zipcode</label>
-      <input type="text" name="zip" oninput="onlyNumber(this)" value="{{old('zip') ?? (@$vendor->zip ?? '')}}" 
+      <input type="text" name="zip" oninput="onlyNumber(this)" value="{{old('zip') ?? (@$vendor->zip ?? '')}}"
       class="form-control @error('zip') is-invalid @enderror" placeholder="Enter Zipcode" >
       @error('zip')
       <div class="text-danger">{{ $message }}</div>

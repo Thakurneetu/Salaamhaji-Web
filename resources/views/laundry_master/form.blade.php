@@ -26,7 +26,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="name">Service Name</label>
-      <input type="text" name="name" value="{{old('name') ?? (@$laundryMaster->name ?? '')}}" 
+      <input type="text" name="name" value="{{old('name') ?? (@$laundryMaster->name ?? '')}}"
       class="form-control @error('name') is-invalid @enderror" placeholder="Enter Service Name" required>
       @error('name')
       <div class="text-danger">{{ $message }}</div>
@@ -34,7 +34,7 @@
     </div>
     <div class="form-group col-md-6 col-12">
       <label for="email">Price</label>
-      <input type="number" step="any" name="price" value="{{old('price') ?? (@$laundryMaster->price ?? '')}}" 
+      <input type="number" step="any" name="price" value="{{old('price') ?? (@$laundryMaster->price ?? '')}}"
       class="form-control @error('price') is-invalid @enderror" placeholder="Enter Price" required>
       @error('price')
       <div class="text-danger">{{ $message }}</div>
