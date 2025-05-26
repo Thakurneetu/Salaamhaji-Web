@@ -36,7 +36,7 @@ class FoodCartItem extends Model
               return $name;
           },
       );
-  }  
+  }
   protected function serviceThumbnail(): Attribute
   {
       return new Attribute(
