@@ -5,7 +5,7 @@ Vendor Laundry Service |
 @endsection
 
 @section('style')
-  @include('layouts.includes.datatablesCss') 
+  @include('layouts.includes.datatablesCss')
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@ Vendor Laundry Service |
     </div>
   </div>
   
-  <div class="container-fluid">  
+  <div class="container-fluid">
     <div class="card mb-0">
       <div class="card-header">
         <a href="{{route('vendor-laundry-service.create',['id'=>request()->get('id')])}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Laundry Service</a>

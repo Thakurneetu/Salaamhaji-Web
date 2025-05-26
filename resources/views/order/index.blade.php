@@ -5,7 +5,7 @@ Orders |
 @endsection
 
 @section('style')
-  @include('layouts.includes.datatablesCss') 
+  @include('layouts.includes.datatablesCss')
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@ Orders |
     </div>
   </div>
   
-  <div class="container-fluid">  
+  <div class="container-fluid">
     <div class="card mb-0">
       <div class="card-body">
         {!! $dataTable->table(['class' => 'table table-bordered table-dark dataTable dtr-inline'], false) !!}

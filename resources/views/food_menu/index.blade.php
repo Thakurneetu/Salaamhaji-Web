@@ -5,7 +5,7 @@ Food Menu |
 @endsection
 
 @section('style')
-  @include('layouts.includes.datatablesCss') 
+  @include('layouts.includes.datatablesCss')
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@ Food Menu |
     </div>
   </div>
   
-  <div class="container-fluid">  
+  <div class="container-fluid">
     <div class="card mb-0">
       <div class="card-header">
         <a href="{{route('food-menu.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Menu</a>

@@ -5,7 +5,7 @@ Local Fare |
 @endsection
 
 @section('style')
-  @include('layouts.includes.datatablesCss') 
+  @include('layouts.includes.datatablesCss')
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@ Local Fare |
     </div>
   </div>
   
-  <div class="container-fluid">  
+  <div class="container-fluid">
     <div class="card mb-0">
       <div class="card-header">
         <a href="{{route('local-fare.create')}}" class="btn btn-warning " style=""><i class="fas fa-user-plus"></i> Add Local Fare</a>

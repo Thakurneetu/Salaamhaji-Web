@@ -5,7 +5,7 @@ Outstation Fare |
 @endsection
 
 @section('style')
-  @include('layouts.includes.datatablesCss') 
+  @include('layouts.includes.datatablesCss')
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@ Outstation Fare |
     </div>
   </div>
   
-  <div class="container-fluid">  
+  <div class="container-fluid">
     <div class="card mb-0">
       <div class="card-header">
         <a href="{{route('vendor-local-service.index')}}?id={{$vendor_id}}" class="btn btn-light" style=""><i class="fas fa-map-marker-alt"></i> Local Fares</a>
