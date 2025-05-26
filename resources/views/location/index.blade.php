@@ -34,10 +34,10 @@ Locations |
         {!! $dataTable->table(['class' => 'table table-bordered table-dark dataTable dtr-inline'], false) !!}
       </div>
     </div>
-  </div>    
+  </div>
 @endsection
 
 @section('script')
-  @include('layouts.includes.datatablesJs') 
+  @include('layouts.includes.datatablesJs')
   @include('layouts.includes.deleteFunction')
 @endsection

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="form-group col-md-6 col-12">
       <label for="name">Name</label>
-      <input type="text" name="name" value="{{old('name') ?? (@$foodCategory->name ?? '')}}" 
+      <input type="text" name="name" value="{{old('name') ?? (@$foodCategory->name ?? '')}}"
       class="form-control @error('name') is-invalid @enderror" placeholder="Enter Category Name" required>
       @error('name')
       <div class="text-danger">{{ $message }}</div>
