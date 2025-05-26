@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Add Food Item | 
+  Add Food Item |
 @endsection
 
 @section('style')

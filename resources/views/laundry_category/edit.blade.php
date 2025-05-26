@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Edit Laundry Category | 
+  Edit Laundry Category |
 @endsection
 
 @section('content')

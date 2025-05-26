@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Order Details | 
+  Order Details |
 @endsection
 
 @section('style')

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Edit Service | 
+  Edit Service |
 @endsection
 
 @section('content')

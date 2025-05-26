@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Edit Laundry Service | 
+  Edit Laundry Service |
 @endsection
 
 @section('content')

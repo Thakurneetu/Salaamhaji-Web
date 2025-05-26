@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Laundry Category | 
+Laundry Category |
 @endsection
 
 @section('style')

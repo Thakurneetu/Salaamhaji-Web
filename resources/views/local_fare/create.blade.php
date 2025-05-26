@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Add Local Fare | 
+  Add Local Fare |
 @endsection
 
 @section('content')

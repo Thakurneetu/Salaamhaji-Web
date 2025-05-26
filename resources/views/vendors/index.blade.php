@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Vendor | 
+Vendor |
 @endsection
 
 @section('style')

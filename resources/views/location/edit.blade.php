@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Edit Location | 
+  Edit Location |
 @endsection
 
 @section('content')

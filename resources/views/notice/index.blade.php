@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  Notice Setting | 
+  Notice Setting |
 @endsection
 
 @section('content')

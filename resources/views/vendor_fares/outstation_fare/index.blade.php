@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Outstation Fare | 
+Outstation Fare |
 @endsection
 
 @section('style')
