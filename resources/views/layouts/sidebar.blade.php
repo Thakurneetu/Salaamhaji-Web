@@ -98,7 +98,7 @@ $module=explode("/", url()->current());
                           </li>
                           <li class="nav-item">
                             <a href="{{route('laundry_master.index')}}" class="nav-link {{ array_intersect($module, ['laundry_master']) ? 'active_child' : '' }}">
-                              <i class="nav-icon fas fa-layer-group"></i> 
+                              <i class="nav-icon fas fa-layer-group"></i>
                               <p>Laundry Service</p>
                             </a>
                           </li>
@@ -115,7 +115,7 @@ $module=explode("/", url()->current());
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
                             <a href="{{route('food-menu.index')}}" class="nav-link {{ array_intersect($module, ['food-menu']) ? 'active_child' : '' }}">
-                              <i class="nav-icon fas fa-layer-group"></i> 
+                              <i class="nav-icon fas fa-layer-group"></i>
                               <p>Food Menu</p>
                             </a>
                           </li>
@@ -128,7 +128,7 @@ $module=explode("/", url()->current());
                           </li>
                           <li class="nav-item">
                             <a href="{{route('food_master.index')}}" class="nav-link {{ array_intersect($module, ['food_master']) ? 'active_child' : '' }}">
-                              <i class="nav-icon fas fa-layer-group"></i> 
+                              <i class="nav-icon fas fa-layer-group"></i>
                               <p>Food Service</p>
                             </a>
                           </li>

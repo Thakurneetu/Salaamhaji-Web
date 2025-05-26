@@ -67,7 +67,7 @@
       }
     })
     .fail(function (err) {
-      console.log(err);              
+      console.log(err);
     });
   }
 </script>

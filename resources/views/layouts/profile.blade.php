@@ -65,7 +65,7 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 {{--  Profile Data  --}}
-                                <div class="tab-pane {{(isset($activeTab) && ($activeTab == 'profile')) ? 'active' : ''}}" id="profile-data">                                    
+                                <div class="tab-pane {{(isset($activeTab) && ($activeTab == 'profile')) ? 'active' : ''}}" id="profile-data">
                                   {!! Form::model($profile, ['route' => 'profile.update']) !!}
                                     {!! Form::hidden('id',null,) !!}
                                     <div class="form-group row">
@@ -106,7 +106,7 @@
                                       <div class="offset-sm-9 col-sm-3 pull-right">
                                         <button type="submit" class="btn btn-success">Update Profile</button>
                                       </div>
-                                    </div>                                    
+                                    </div>
                                   {!! Form::close() !!}
                                 </div>
                                 {{--  Change Password  --}}

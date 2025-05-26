@@ -27,7 +27,7 @@
     @else
       <a href="{{asset($food_catalogue)}}" target="_blank" class='btn btn-sm btn-success tooltip-box'>
     @endif
-    <i class="nav-icon text_black fas fa-layer-group"></i> 
+    <i class="nav-icon text_black fas fa-layer-group"></i>
     <div class="tooltip text-white text-xs -top-full">
       <span>Catalogue</span>
     </div>

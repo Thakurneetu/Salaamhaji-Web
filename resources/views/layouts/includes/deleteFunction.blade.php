@@ -8,7 +8,7 @@
       //             confirm: { text: "Delete", value: true, className: "bg-warning"},
       //           },
       // icon: "warning",
-      // text: 'Data will be deleted permanently!', 
+      // text: 'Data will be deleted permanently!',
       // className: "btn-danger",
       // closeModal: true
       title: "Are you sure?",
@@ -45,7 +45,7 @@
         $.ajax({
           method: "POST",
           url: url,
-          data: {_token: "{{csrf_token()}}", _method:'PUT', status: status},              
+          data: {_token: "{{csrf_token()}}", _method:'PUT', status: status},
         })
         .done(function (res) {
           if(res.success){
@@ -61,7 +61,7 @@
           }
         })
         .fail(function (err) {
-          console.log(err);              
+          console.log(err);
         });
       }else{
         if(status == '1') $(ele).prop("checked", false);

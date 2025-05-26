@@ -19,7 +19,7 @@
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    <script src="{{ asset('plugins/datatables/jquery.js') }}"></script> 
+    <script src="{{ asset('plugins/datatables/jquery.js') }}"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/datatables/datatable.styles.min.css') }}" rel="stylesheet">
@@ -65,7 +65,7 @@
       }
   });
   function toggleValue(value){
-    let collapse = 'collapse' 
+    let collapse = 'collapse'
     if (sessionStorage.getItem(collapse) !== null) {
       if(sessionStorage.getItem(collapse) != 'sidebar-collapse')
         sessionStorage.setItem('collapse', 'sidebar-collapse');

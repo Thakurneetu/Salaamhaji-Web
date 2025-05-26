@@ -72,7 +72,7 @@
       <select name="country_id" id="country_id" class="form-control" @error('state') is-invalid @enderror>
         <option value="" selected disabled>Select Country</option>
         @foreach($countries as $country)
-          <option value="{{$country->id}}" 
+          <option value="{{$country->id}}"
           {{@$vendor->country_id ? (@$vendor->country_id == $country->id ? 'selected' : '') : ($country->id == 152 ? 'selected' : '')}}
           >{{$country->name}}</option>
         @endforeach

@@ -24,8 +24,8 @@
           <label for="price">CAB Type: {{$cab->type}}</label>
           <div class="row">
             <div class="form-group col-9">
-              <input type="number" step="any" name="prices[{{$cab->id}}]" 
-              value="{{old('prices[$cab->id]') ?? (@$outstation ? @$outstation->fares->where('cab_id', $cab->id)->first()->price : '') }}" 
+              <input type="number" step="any" name="prices[{{$cab->id}}]"
+              value="{{old('prices[$cab->id]') ?? (@$outstation ? @$outstation->fares->where('cab_id', $cab->id)->first()->price : '') }}"
               class="form-control" placeholder="Enter Fare">
             </div>
             <div class="form-group col-3">
@@ -65,7 +65,7 @@
         }
       })
       .fail(function (err) {
-        console.log(err);              
+        console.log(err);
       });
     }
   </script>

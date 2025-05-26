@@ -2,7 +2,7 @@
 
 {{--  Title  --}}
 @section('title')
-Profile 
+Profile
 @endsection
 
 @section('content')
