@@ -2,7 +2,7 @@
   <!-- Left navbar links -->
   <ul class="navbar-nav">
       <li class="nav-item">
-          <a onclick="toggleValue('sidebar-collapse')" class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <button onclick="toggleValue('sidebar-collapse')" class="nav-link bg-transparent border border-transparent" data-widget="pushmenu" type="button"><i class="fas fa-bars"></i></button>
       </li>
   </ul>
   <!-- Right navbar links -->
@@ -26,10 +26,10 @@
             <!-- Menu Footer-->
             <li class="user-footer">
                 <a href="{{route('profile')}}" class="btn btn-primary btn-flat">Profile</a>
-                <a href="#" class="btn btn-danger btn-flat float-right" role="button"
+                <button class="btn btn-danger btn-flat float-right" type="button"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Sign out
-                </a>
+                </button>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
