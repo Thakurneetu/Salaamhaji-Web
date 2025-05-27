@@ -29,7 +29,7 @@
           <div class="card-header">
             <h5 class="card-title">Monthly Recap Report</h5>
             <div class="card-tools">
-            <div class="spinner-border spinner-border-sm text-light" role="status" id="data_loader" style="display:none;">
+            <div class="spinner-border spinner-border-sm text-light" id="data_loader" style="display:none;">
               <span class="sr-only">Loading...</span>
             </div>
               <div class="btn-group">
