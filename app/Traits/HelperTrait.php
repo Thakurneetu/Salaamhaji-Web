@@ -155,8 +155,7 @@ trait HelperTrait {
   }
 
   private function getOrderStatus($status){
-    $_status = $status == 'Order assigned to vendor' ? 'Order in progress' : $status;
-    return $_status;
+    return $status == 'Order assigned to vendor' ? 'Order in progress' : $status;
   }
 
   private function formatOrderDetail($order, $subOrderId = null){

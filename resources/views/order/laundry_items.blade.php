@@ -26,27 +26,24 @@
     @endforeach
     @endforeach
   </table>
-<table class="table mb-3 table-dark table-borderless table-responsive-md" role="presentation">
-  <colgroup>
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
-  </colgroup>
-  <tr>
-    <td colspan="3"></td>
-    <td class="text-right"><b>Subtotal:</b></td>
-    <td class="text-right"><b>{{$order->subtotal}}</b></td>
-  </tr>
-  <tr>
-    <td colspan="3"></td>
-    <td class="text-right" style="border-top:1px solid gray"><b>Service Tax:</b></td>
-    <td class="text-right" style="border-top:1px solid gray"><b>{{$order->tax}}</b></td>
-  </tr>
-  <tr>
-    <td colspan="3"></td>
-    <td class="text-right" style="border-top:1px solid gray"><b>Grand Total:</b></td>
-    <td class="text-right" style="border-top:1px solid gray"><b>{{$order->grand_total}}</b></td>
-  </tr>
-</table>
+  <div class="order-summary table-dark text-white mb-3 rounded">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="col-12 col-md-4 offset-md-8 d-flex justify-content-between py-2">
+        <strong>Subtotal:</strong>
+        <strong>{{ $order->subtotal }}</strong>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="col-12 col-md-4 offset-md-8 d-flex justify-content-between border-top border-gray py-2">
+        <strong>Service Tax:</strong>
+        <strong>{{ $order->tax }}</strong>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="col-12 col-md-4 offset-md-8 d-flex justify-content-between border-top border-gray py-2">
+        <strong>Grand Total:</strong>
+        <strong>{{ $order->grand_total }}</strong>
+      </div>
+    </div>
+  </div>
+

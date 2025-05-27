@@ -23,6 +23,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/datatables/datatable.styles.min.css') }}" rel="stylesheet">
+    <style>
+      .border-gray {
+        border-color: gray !important;
+      }
+    </style>
 
     @yield('style')
 
