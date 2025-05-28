@@ -123,7 +123,7 @@
                 </tr>
                 </thead>
                 <tbody id="orders">
-                  @if($orders)
+                  @if($orders->count())
                     @foreach($orders as $item)
                     <tr>
                       <td><a href="order/{{$item->id}}?type={{$item->type}}">{{$item->uuid}}</a></td>
@@ -149,10 +149,9 @@
                     @endforeach
                   @else
                   <tr>
-                      <td colspan="4">No Orders Found</td>
+                      <td colspan="7" class="text-center">No Latest Orders Found!</td>
                   </tr>
                   @endif
-               
                 </tbody>
               </table>
             </div>
