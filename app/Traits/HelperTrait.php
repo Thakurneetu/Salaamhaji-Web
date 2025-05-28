@@ -160,19 +160,19 @@ trait HelperTrait {
 
   private function formatOrderDetail($order, $subOrderId = null){
     $booking = array();
+    $date_format = 'd M Y';
     if($order->type == 'food'){
-      $booking = $this->formatFoodOrderDetail($order, $subOrderId);
+      $booking = $this->formatFoodOrderDetail($order, $date_format);
     }elseif($order->type == 'laundry'){
-      $booking = $this->formatLaundryOrderDetail($order, $subOrderId);
+      $booking = $this->formatLaundryOrderDetail($order, $date_format, $subOrderId);
     }elseif($order->type == 'cab'){
-      $booking = $this->formatCabOrderDetail($order, $subOrderId);
+      $booking = $this->formatCabOrderDetail($order, $date_format);
     }
     return $booking;
   }
 
-  private function formatFoodOrderDetail($order, $subOrderId = null){
+  private function formatFoodOrderDetail($order, $date_format){
     $booking = array();
-    $date_format = 'd M Y';
     $booking['id'] = $order->id;
     $booking['sub_order_id'] = null;
     $booking['type'] = $order->type;
@@ -199,9 +199,8 @@ trait HelperTrait {
     return $booking;
   }
 
-  private function formatLaundryOrderDetail($order, $subOrderId = null){
+  private function formatLaundryOrderDetail($order, $date_format, $subOrderId){
     $booking = array();
-    $date_format = 'd M Y';
     foreach ($order->laundry_orders as $item) {
       if($item->id == $subOrderId) {
         $booking['id'] = $order->id;
@@ -242,9 +241,8 @@ trait HelperTrait {
     return $booking;
   }
 
-  private function formatCabOrderDetail($order, $subOrderId = null){
+  private function formatCabOrderDetail($order, $date_format){
     $booking = array();
-    $date_format = 'd M Y';
     $booking['id'] = $order->id;
     $booking['sub_order_id'] = null;
     $booking['type'] = $order->type;
