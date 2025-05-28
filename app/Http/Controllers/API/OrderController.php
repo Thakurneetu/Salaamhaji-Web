@@ -100,10 +100,10 @@ class OrderController extends Controller
                 'date' => $date,
                 'day' => $day,
               ];
-              $this->craeteFoodOrderItem($meals,  $food_order, $date, $day, $cart);
+              $this->craeteFoodOrderItem($meals,  $food_order, $day, $cart, $date);
               $startDate->addDay();
             }
-            $this->craeteFoodOrderItem($meals,  $food_order, null, 'common', $cart);
+            $this->craeteFoodOrderItem($meals,  $food_order, 'common', $cart, null);
           }
           FoodCart::where('customer_id',$request->user()->id)->delete();
           DB::commit();
@@ -205,7 +205,7 @@ class OrderController extends Controller
       }
     }
 
-    private function craeteFoodOrderItem($meals, $food_order, $date = null, $day, $cart){
+    private function craeteFoodOrderItem($meals, $food_order, $day, $cart, $date = null){
       foreach($meals as $meal) {
         $food_item['food_order_id'] = $food_order->id;
         $food_item['date'] = $date;

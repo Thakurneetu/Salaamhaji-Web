@@ -23,18 +23,16 @@ class CustomerAuthController extends Controller
       $number = '';
       if($request->has('type') && $request->type == 'login_otp'){
         $customer = Customer::where('phone', $request->phone)->first();
-        if(!$customer){
+        $message = 'Phone number doesn\'t exist.';
+        if($customer->status != 1) {
+          $message = 'Your account has been deactivated. Please contact admin.';
+        }
+        if(!$customer || $customer->status != 1){
           return response()->json([
             'status' => false,
-            'message' => 'Phone number doesn\'t exist.',
+            'message' => $message,
           ], 401);
         }else{
-          if($customer->status != 1){
-            return response()->json([
-              'status' => false,
-              'message' => 'Your account has been deactivated. Please contact admin.',
-            ], 401);
-          }
           $number .= $customer->country_code;
         }
       }
